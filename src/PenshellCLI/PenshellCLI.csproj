@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <StartupObject>PenshellCLI.Program</StartupObject>
+    <AssemblyName>pen</AssemblyName>
+    <PackageId>Penshell</PackageId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.2.0" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
+    <PackageReference Include="System.Composition.TypedParts" Version="1.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Penshell.Commands.Math\Penshell.Commands.Math.csproj" />
+    <ProjectReference Include="..\Penshell.Core\Penshell.Core.csproj" />
+  </ItemGroup>
+
+</Project>

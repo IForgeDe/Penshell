@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project>
+    <PropertyGroup>
+        <Authors>Frank Weller</Authors>
+        <Product>Penshell</Product>
+        <Company>IForgeDe</Company>
+        <Copyright>Copyright (C) Frank Weller</Copyright>
+        <PackageProjectUrl></PackageProjectUrl>
+        <PackageTags>Penshell</PackageTags>
+        <PackageReleaseNotes></PackageReleaseNotes>
+        <RepositoryUrl>https://github.com/IForgeDe/Penshell</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <IncludeSymbols>true</IncludeSymbols>
+        <IncludeSource>false</IncludeSource>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <LangVersion>8.0</LangVersion>
+        <Nullable>enable</Nullable>
+        <ResolveNuGetPackages>true</ResolveNuGetPackages>
+        <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <DebugType>full</DebugType>
+
+        <!-- Common ruleset shared by all projects -->
+        <CodeAnalysisRuleset>$(MSBuildThisFileDirectory)Solution.ruleset</CodeAnalysisRuleset>
+    </PropertyGroup>
+    
+    <Choose>
+        <When Condition=" '$(Configuration)' == 'Debug' ">
+            <PropertyGroup>
+                <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+
+                <!-- Common ruleset shared by all projects -->
+                <CodeAnalysisRuleset>$(MSBuildThisFileDirectory)Solution.ruleset</CodeAnalysisRuleset>
+            </PropertyGroup>
+        </When>
+        <When Condition=" '$(Configuration)' == 'Release' ">
+            <PropertyGroup>
+                <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+
+                <!-- Common ruleset shared by all projects -->
+                <CodeAnalysisRuleset>$(MSBuildThisFileDirectory)Solution.ruleset</CodeAnalysisRuleset>
+            </PropertyGroup>
+        </When>
+    </Choose>
+
+    <PropertyGroup>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <!-- Add reference to StyleCop analyzers to all projects  -->
+        <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" />
+
+        <!-- Add reference to FxCopAnalyzers to all projects  -->
+        <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.4" />
+
+        <!-- Common StyleCop configuration -->
+        <AdditionalFiles Include="$(MSBuildThisFileDirectory)stylecop.json" />
+    </ItemGroup>
+</Project>
