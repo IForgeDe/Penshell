@@ -25,28 +25,28 @@
         <!-- Common ruleset shared by all projects -->
         <CodeAnalysisRuleset>$(MSBuildThisFileDirectory)Solution.ruleset</CodeAnalysisRuleset>
     </PropertyGroup>
-    
+
+    <!-- remove runtime identifiers -->
+    <PropertyGroup>
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+        <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+    </PropertyGroup>
+
     <Choose>
         <When Condition=" '$(Configuration)' == 'Debug' ">
             <PropertyGroup>
                 <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-
-                <!-- Common ruleset shared by all projects -->
-                <CodeAnalysisRuleset>$(MSBuildThisFileDirectory)Solution.ruleset</CodeAnalysisRuleset>
             </PropertyGroup>
         </When>
-        <When Condition=" '$(Configuration)' == 'Release' ">
+        <Otherwise>
             <PropertyGroup>
                 <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-
-                <!-- Common ruleset shared by all projects -->
-                <CodeAnalysisRuleset>$(MSBuildThisFileDirectory)Solution.ruleset</CodeAnalysisRuleset>
             </PropertyGroup>
-        </When>
+        </Otherwise>
     </Choose>
 
     <PropertyGroup>
-        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
     </PropertyGroup>
 
     <ItemGroup>

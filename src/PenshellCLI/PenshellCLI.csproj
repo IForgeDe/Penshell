@@ -14,9 +14,17 @@
     <PackageReference Include="System.Composition.TypedParts" Version="1.2.0" />
   </ItemGroup>
 
+
   <ItemGroup>
-    <ProjectReference Include="..\Penshell.Commands.Math\Penshell.Commands.Math.csproj" />
     <ProjectReference Include="..\Penshell.Core\Penshell.Core.csproj" />
   </ItemGroup>
+
+  <Choose>
+    <When Condition=" '$(Configuration)' == 'Debug' ">
+      <ItemGroup>
+        <ProjectReference Include="..\Penshell.Commands.Math\Penshell.Commands.Math.csproj" />
+      </ItemGroup>
+    </When>
+  </Choose>
 
 </Project>
