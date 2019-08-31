@@ -13,22 +13,24 @@ namespace Tests
     public class AddCommandTests
     {
         [Test]
-        public async Task ExecuteAsync_WithValidValues_ExpectsValidValue()
+        [TestCase(1d, 1d, 2d)]
+        [TestCase(0.1d, 0.1d, 0.2d)]
+        public async Task ExecuteAsync_WithValidValues_ExpectsValidValue(double x, double y, double result)
         {
             // Arrange
             using var stdout = new StringWriter();
             var console = new VirtualConsole(stdout);
             var command = new AddCommand(SilentLogger.Instance)
             {
-                FirstSummand = 1,
-                SecondSummand = 2,
+                FirstSummand = x,
+                SecondSummand = y,
             };
 
             // Act
             await command.ExecuteAsync(console).ConfigureAwait(false);
 
             // Assert
-            Assert.That(Convert.ToDouble(stdout.ToString(), CultureInfo.InvariantCulture), Is.EqualTo(3));
+            Assert.That(Convert.ToDouble(stdout.ToString(), CultureInfo.CurrentCulture), Is.EqualTo(result));
         }
     }
 }
