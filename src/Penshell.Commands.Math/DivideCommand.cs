@@ -1,6 +1,7 @@
 ﻿namespace Penshell.Commands.Math
 {
     using System;
+    using System.Globalization;
     using System.Threading.Tasks;
     using CliFx.Attributes;
     using CliFx.Exceptions;
@@ -30,7 +31,7 @@
             }
 
             var result = this.Dividend / this.Divisor;
-            console.Output.WriteLine(result);
+            console.Output.WriteLine(Convert.ToString(result, CultureInfo.InvariantCulture));
 
             return Task.CompletedTask;
         }

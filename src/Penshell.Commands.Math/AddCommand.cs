@@ -1,5 +1,7 @@
 ﻿namespace Penshell.Commands.Math
 {
+    using System;
+    using System.Globalization;
     using System.Threading.Tasks;
     using CliFx.Attributes;
     using CliFx.Services;
@@ -23,7 +25,7 @@
         public override Task ExecuteAsync(IConsole console)
         {
             var result = this.FirstSummand + this.SecondSummand;
-            console.Output.WriteLine(result);
+            console.Output.WriteLine(Convert.ToString(result, CultureInfo.InvariantCulture));
 
             return Task.CompletedTask;
         }
