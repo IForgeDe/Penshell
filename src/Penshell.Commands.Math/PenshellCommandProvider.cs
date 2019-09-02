@@ -14,6 +14,8 @@
             {
                 typeof(AddCommand),
                 typeof(DivideCommand),
+                typeof(MultiplyCommand),
+                typeof(SubstractCommand),
             };
         }
     }
