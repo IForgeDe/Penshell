@@ -3,17 +3,15 @@
     using System;
     using System.Globalization;
     using System.Threading.Tasks;
+    using CliFx;
     using CliFx.Attributes;
     using CliFx.Exceptions;
     using CliFx.Services;
-    using Penshell.Core;
-    using Serilog;
 
     [Command("math divide", Description = "Calculates the division of two values.")]
-    public class DivideCommand : CommandBase
+    public class DivideCommand : ICommand
     {
-        public DivideCommand(ILogger logger)
-            : base(logger)
+        public DivideCommand()
         {
         }
 
@@ -23,7 +21,7 @@
         [CommandOption("divisor", 'y', IsRequired = true, Description = "The devisor.")]
         public double Divisor { get; set; }
 
-        public override Task ExecuteAsync(IConsole console)
+        public Task ExecuteAsync(IConsole console)
         {
             if (Math.Abs(this.Divisor) < double.Epsilon)
             {
