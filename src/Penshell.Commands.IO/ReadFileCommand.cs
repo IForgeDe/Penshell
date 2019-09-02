@@ -1,7 +1,6 @@
 ﻿namespace Penshell.Commands.IO
 {
     using System.IO;
-    using System.Text;
     using System.Threading.Tasks;
     using CliFx;
     using CliFx.Attributes;

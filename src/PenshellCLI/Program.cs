@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Composition.Hosting;
+    using System.Globalization;
     using System.IO;
     using System.Linq;
     using System.Reflection;
@@ -19,6 +20,9 @@
     {
         public static Task<int> Main(string[] args)
         {
+            // reajust culture to unify in and out
+            CultureInfo.DefaultThreadCurrentCulture = CultureInfo.InvariantCulture;
+
             // configure logging
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
@@ -83,9 +87,14 @@
                 services.AddTransient(commandSchema.Type);
             }
 
+            // prepare console
+            var console = new PenshellConsoleBuilder()
+                .Build();
+
             // run commandline
             var serviceProvider = services.BuildServiceProvider();
             var cliApplication = new CliApplicationBuilder()
+                .UseConsole(console)
                 .AddCommands(commandSchemas.Select(x => x.Type).ToArray())
                 .AllowDebugMode(true)
                 .AllowPreviewMode(true)
