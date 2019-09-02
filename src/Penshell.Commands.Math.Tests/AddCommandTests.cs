@@ -20,7 +20,7 @@ namespace Tests
             // Arrange
             using var stdout = new StringWriter();
             var console = new VirtualConsole(stdout);
-            var command = new AddCommand(SilentLogger.Instance)
+            var command = new AddCommand()
             {
                 FirstSummand = x,
                 SecondSummand = y,

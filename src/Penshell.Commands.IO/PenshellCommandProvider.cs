@@ -13,6 +13,7 @@
             return new List<Type>()
             {
                 typeof(CreateFileCommand),
+                typeof(ReadFileCommand),
             };
         }
     }
