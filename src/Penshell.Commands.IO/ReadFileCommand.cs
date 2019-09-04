@@ -5,7 +5,7 @@
     using CliFx;
     using CliFx.Attributes;
     using CliFx.Services;
-    using Dawn;
+    using Penshell.Core.Extensions;
 
     [Command("io readfile", Description = "Reads a file.")]
     public class ReadFileCommand : ICommand
@@ -15,7 +15,7 @@
 
         public Task ExecuteAsync(IConsole console)
         {
-            Guard.Argument(this.Path, nameof(this.Path)).NotEmpty();
+            this.Path.GuardNotEmpty(nameof(this.Path));
             using (var stream = new BinaryReader(File.OpenRead(this.Path)))
             {
                 var buffer = new byte[1024];

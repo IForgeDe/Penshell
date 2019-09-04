@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Penshell.Core", "Penshell.C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Penshell.Commands.Math", "Penshell.Commands.Math\Penshell.Commands.Math.csproj", "{2CF272F4-2439-43B5-84DF-076E9193CF7E}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8FFEA07D-5DD7-42EE-8654-4BDBB6713EFA}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Solution Items", "_Solution Items", "{8FFEA07D-5DD7-42EE-8654-4BDBB6713EFA}"
 	ProjectSection(SolutionItems) = preProject
 		Directory.Build.props = Directory.Build.props
 		Directory.Build.targets = Directory.Build.targets
@@ -18,9 +18,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Penshell.Commands.Math.Tests", "Penshell.Commands.Math.Tests\Penshell.Commands.Math.Tests.csproj", "{54B4AB40-6443-4751-B59D-66F0844DE4FC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Penshell.Commands.IO", "Penshell.Commands.IO\Penshell.Commands.IO.csproj", "{ECDD391A-7C64-4566-B62D-3DC9C3809ABD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Penshell.Commands.IO", "Penshell.Commands.IO\Penshell.Commands.IO.csproj", "{ECDD391A-7C64-4566-B62D-3DC9C3809ABD}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Penshell.Commands", "Penshell.Commands", "{2C9CC332-180D-47C4-8F91-330525FDCA82}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Script Examples", "_Script Examples", "{1A069DAD-9F79-4BA4-A047-8B0C40C0C13F}"
+	ProjectSection(SolutionItems) = preProject
+		ScriptExamples\Math.penshell = ScriptExamples\Math.penshell
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
