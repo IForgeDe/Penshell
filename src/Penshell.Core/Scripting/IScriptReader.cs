@@ -1,7 +1,9 @@
 ﻿namespace Penshell.Core.Scripting
 {
+    using System.Collections.Generic;
+
     public interface IScriptReader
     {
-        void Read();
+        IEnumerable<ScriptLine> Read();
     }
 }

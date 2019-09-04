@@ -1,5 +1,6 @@
 ﻿namespace Penshell.Core.Scripting
 {
+    using System.Collections.Generic;
     using System.IO;
 
     internal class ScriptReader : IScriptReader
@@ -11,9 +12,17 @@
 
         internal FileInfo ScriptFile { get; }
 
-        public void Read()
+        public IEnumerable<ScriptLine> Read()
         {
-            throw new System.NotImplementedException();
+            var fileLines = File.ReadAllLines(this.ScriptFile.FullName);
+            var scriptLines = new List<ScriptLine>(fileLines.Length);
+
+            foreach (var line in fileLines)
+            {
+                scriptLines.Add(new ScriptLine(line));
+            }
+
+            return scriptLines;
         }
     }
 }
