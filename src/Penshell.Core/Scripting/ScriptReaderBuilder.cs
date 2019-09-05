@@ -1,7 +1,6 @@
 ﻿namespace Penshell.Core.Scripting
 {
     using System.IO;
-    using Penshell.Core.Extensions;
 
     public class ScriptReaderBuilder
     {

@@ -5,7 +5,6 @@
     using CliFx;
     using CliFx.Attributes;
     using CliFx.Services;
-    using Penshell.Core.Extensions;
 
     [Command("io createfile", Description = "Creates a file.")]
     public class CreateFileCommand : ICommand
@@ -15,7 +14,6 @@
 
         public Task ExecuteAsync(IConsole console)
         {
-            this.Path.GuardNotEmpty(nameof(this.Path));
             var fileInfo = new FileInfo(this.Path);
             var fileStream = fileInfo.Create();
             fileStream.Close();

@@ -5,21 +5,31 @@
     using CliFx;
     using CliFx.Attributes;
     using CliFx.Services;
-    using Penshell.Core.Extensions;
     using Penshell.Core.Scripting;
 
     [Command("script run", Description = "Runs a penshell script.")]
     public class RunCommand : ICommand
     {
+        public RunCommand(RunCommandValidator validator)
+        {
+            this.Validator = validator;
+        }
+
         [CommandOption("path", 'p', IsRequired = true, Description = "The path to the script.")]
-        public FileInfo ScriptFilePath { get; set; } = null!;
+        public FileInfo? ScriptFilePath { get; set; } = null;
+
+        public RunCommandValidator Validator { get; }
 
         public Task ExecuteAsync(IConsole console)
         {
-            this.ScriptFilePath.GuardNotNull(nameof(this.ScriptFilePath));
-            var scriptReader = new ScriptReaderBuilder(this.ScriptFilePath)
+            this.Validator.Validate(this);
+            var scriptReader = new ScriptReaderBuilder(this.ScriptFilePath!)
                 .Build();
-            console.Output.Write(scriptReader.Read());
+            var scriptPipeline = new ScriptPipelineBuilder()
+                .UseConsole(console)
+                .UseScriptReader(scriptReader)
+                .Build();
+            scriptPipeline.Execute();
             return Task.CompletedTask;
         }
     }

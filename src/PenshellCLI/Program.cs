@@ -58,11 +58,13 @@
 
             // collect commands
             var commandTypes = new List<Type>();
+            var commandValidatorTypes = new List<Type>();
             var container = configuration.CreateContainer();
             var commandProviders = container.GetExports<IAssemblyCommandProvider>();
             foreach (var commandProvider in commandProviders)
             {
                 commandTypes.AddRange(commandProvider.GetCommandTypes());
+                commandValidatorTypes.AddRange(commandProvider.GetCommandValidatorTypes());
             }
 
             // test for commands
@@ -85,6 +87,15 @@
             foreach (var commandSchema in commandSchemas)
             {
                 services.AddTransient(commandSchema.Type);
+            }
+
+            var commandRegistry = new PenshellCommandRegistry();
+            commandRegistry.Register(commandSchemas);
+            services.AddSingleton(commandRegistry);
+
+            foreach (var commandValidatorType in commandValidatorTypes)
+            {
+                services.AddTransient(commandValidatorType);
             }
 
             // prepare console

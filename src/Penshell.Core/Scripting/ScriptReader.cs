@@ -17,9 +17,10 @@
             var fileLines = File.ReadAllLines(this.ScriptFile.FullName);
             var scriptLines = new List<ScriptLine>(fileLines.Length);
 
+            var lineNumber = 1;
             foreach (var line in fileLines)
             {
-                scriptLines.Add(new ScriptLine(line));
+                scriptLines.Add(new ScriptLine(lineNumber++, line));
             }
 
             return scriptLines;

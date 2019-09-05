@@ -2,11 +2,14 @@
 {
     public class ScriptLine
     {
-        internal ScriptLine(string content)
+        internal ScriptLine(int lineNumber, string content)
         {
+            this.LineNumber = lineNumber;
             this.Content = content;
         }
 
         public string Content { get; }
+
+        public int LineNumber { get; }
     }
 }

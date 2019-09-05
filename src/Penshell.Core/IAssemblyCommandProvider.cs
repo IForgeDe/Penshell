@@ -6,5 +6,7 @@
     public interface IAssemblyCommandProvider
     {
         IEnumerable<Type> GetCommandTypes();
+
+        IEnumerable<Type> GetCommandValidatorTypes() => new List<Type>();
     }
 }

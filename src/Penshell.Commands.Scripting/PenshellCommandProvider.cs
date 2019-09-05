@@ -15,5 +15,13 @@
                 typeof(RunCommand),
             };
         }
+
+        public IEnumerable<Type> GetCommandValidatorTypes()
+        {
+            return new List<Type>()
+            {
+                typeof(RunCommandValidator),
+            };
+        }
     }
 }
