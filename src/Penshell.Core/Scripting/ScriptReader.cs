@@ -3,14 +3,16 @@
     using System.Collections.Generic;
     using System.IO;
 
-    internal class ScriptReader : IScriptReader
+    public class ScriptReader : IScriptReader
     {
-        internal ScriptReader(FileInfo scriptFile)
+        public ScriptReader(FileInfo scriptFile)
         {
             this.ScriptFile = scriptFile;
         }
 
-        internal FileInfo ScriptFile { get; }
+        public string CommandDelimiter { get; } = "=>";
+
+        public FileInfo ScriptFile { get; }
 
         public IEnumerable<ScriptLine> Read()
         {
@@ -20,7 +22,15 @@
             var lineNumber = 1;
             foreach (var line in fileLines)
             {
-                scriptLines.Add(new ScriptLine(lineNumber++, line));
+                if (lineNumber == 1)
+                {
+                    scriptLines.Add(new ScriptLine(lineNumber++, line, string.Empty, line.Split(" ", System.StringSplitOptions.RemoveEmptyEntries)));
+                }
+                else
+                {
+                    var lineParts = line.Split(this.CommandDelimiter);
+                    scriptLines.Add(new ScriptLine(lineNumber++, line, lineParts[0], lineParts[1].Split(" ", System.StringSplitOptions.RemoveEmptyEntries)));
+                }
             }
 
             return scriptLines;

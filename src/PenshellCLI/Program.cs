@@ -9,6 +9,7 @@
     using System.Reflection;
     using System.Threading.Tasks;
     using CliFx;
+    using CliFx.Models;
     using CliFx.Services;
     using Microsoft.Extensions.DependencyInjection;
     using Penshell.Core;
@@ -18,6 +19,8 @@
 
     public static class Program
     {
+        private static ServiceProvider ServiceProvider { get; set; }
+
         public static Task<int> Main(string[] args)
         {
             // reajust culture to unify in and out
@@ -84,6 +87,7 @@
             // prepare and build di container
             var services = new ServiceCollection();
             services.AddSingleton(Log.Logger);
+
             foreach (var commandSchema in commandSchemas)
             {
                 services.AddTransient(commandSchema.Type);
@@ -102,14 +106,21 @@
             var console = new PenshellConsoleBuilder()
                 .Build();
 
+            // build command factories
+            var commandFactoryMethod = new Func<CommandSchema, ICommand>(schema => (ICommand)ServiceProvider.GetRequiredService(schema.Type));
+            var commandFactory = new DelegateCommandFactory(commandFactoryMethod);
+            services.AddSingleton<ICommandFactory>(commandFactory);
+
+            // build di container
+            ServiceProvider = services.BuildServiceProvider();
+
             // run commandline
-            var serviceProvider = services.BuildServiceProvider();
             var cliApplication = new CliApplicationBuilder()
                 .UseConsole(console)
                 .AddCommands(commandSchemas.Select(x => x.Type).ToArray())
                 .AllowDebugMode(true)
                 .AllowPreviewMode(true)
-                .UseCommandFactory(schema => (ICommand)serviceProvider.GetRequiredService(schema.Type))
+                .UseCommandFactory(commandFactoryMethod)
                 .Build();
             return cliApplication.RunAsync(args);
         }
