@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
 
-    internal class EmptyScriptReader : IScriptReader
+    public class EmptyScriptReader : IScriptReader
     {
         public IReadOnlyList<ScriptLine> Read()
         {
