@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Text;
     using CliFx.Models;
 
     public class RawScriptLineBuilder
@@ -23,24 +22,24 @@
                 return _scriptLine.CommandArguments;
             }
 
-            var result = new List<string>(_commandInput.CommandName.Split(" "));
+            var commandArguments = new List<string>(_commandInput.CommandName.Split(" "));
             foreach (var option in _commandInput.Options)
             {
-                result.Add($"-{option.Alias}");
+                commandArguments.Add($"{(option.Alias.Length > 1 ? "--" : " - ")}{option.Alias}");
                 foreach (var value in option.Values)
                 {
                     if (value.Equals(_scriptLine.Substitution, StringComparison.Ordinal))
                     {
-                        result.Add(_substitution);
+                        commandArguments.Add(_substitution);
                     }
                     else
                     {
-                        result.Add(value);
+                        commandArguments.Add(value);
                     }
                 }
             }
 
-            return result;
+            return commandArguments;
         }
 
         public RawScriptLineBuilder UseCommandInput(CommandInput commandInput)

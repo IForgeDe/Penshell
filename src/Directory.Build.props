@@ -1,62 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project>
-    <PropertyGroup>
-        <Authors>Frank Weller</Authors>
-        <Product>Penshell</Product>
-        <Company>IForgeDe</Company>
-        <Copyright>Copyright (C) Frank Weller</Copyright>
-        <PackageProjectUrl></PackageProjectUrl>
-        <PackageTags>Penshell</PackageTags>
-        <PackageReleaseNotes></PackageReleaseNotes>
-        <RepositoryUrl>https://github.com/IForgeDe/Penshell</RepositoryUrl>
-        <RepositoryType>git</RepositoryType>
-        <IncludeSymbols>true</IncludeSymbols>
-        <IncludeSource>false</IncludeSource>
-    </PropertyGroup>
+  <PropertyGroup>
+    <Authors>Frank Weller</Authors>
+    <Product>Penshell</Product>
+    <VersionPrefix>0.1.0</VersionPrefix>
+    <VersionSuffix>alpha1</VersionSuffix>
+    <Company>IForgeDe</Company>
+    <Copyright>Copyright (C) Frank Weller</Copyright>
+    <PackageProjectUrl></PackageProjectUrl>
+    <PackageTags>Penshell</PackageTags>
+    <PackageReleaseNotes></PackageReleaseNotes>
+    <RepositoryUrl>https://github.com/IForgeDe/Penshell</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <IncludeSymbols>true</IncludeSymbols>
+    <IncludeSource>false</IncludeSource>
+  </PropertyGroup>
 
-    <PropertyGroup>
-        <LangVersion>8.0</LangVersion>
-        <Nullable>enable</Nullable>
-        <ResolveNuGetPackages>true</ResolveNuGetPackages>
-        <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
-        <GenerateDocumentationFile>true</GenerateDocumentationFile>
-        <DebugType>full</DebugType>
+  <PropertyGroup>
+    <AssemblyVersion>0.1.0.0</AssemblyVersion>
+  </PropertyGroup>
 
-        <!-- Common ruleset shared by all projects -->
-        <CodeAnalysisRuleset>$(MSBuildThisFileDirectory)Solution.ruleset</CodeAnalysisRuleset>
-    </PropertyGroup>
+  <PropertyGroup>
+    <LangVersion>8.0</LangVersion>
+    <Nullable>enable</Nullable>
+    <ResolveNuGetPackages>true</ResolveNuGetPackages>
+    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <DebugType>full</DebugType>
 
-    <!-- remove runtime identifiers -->
-    <PropertyGroup>
-        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-        <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
-    </PropertyGroup>
+    <!-- Common ruleset shared by all projects -->
+    <CodeAnalysisRuleset>$(MSBuildThisFileDirectory)Solution.ruleset</CodeAnalysisRuleset>
+  </PropertyGroup>
 
-    <Choose>
-        <When Condition=" '$(Configuration)' == 'Debug' ">
-            <PropertyGroup>
-                <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-            </PropertyGroup>
-        </When>
-        <Otherwise>
-            <PropertyGroup>
-                <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-            </PropertyGroup>
-        </Otherwise>
-    </Choose>
+  <!-- remove runtime identifiers -->
+  <PropertyGroup>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+  </PropertyGroup>
 
-    <PropertyGroup>
-        <AssemblyVersion>0.0.0.0</AssemblyVersion>
-    </PropertyGroup>
+  <Choose>
+    <When Condition=" '$(Configuration)' == 'Debug' ">
+      <PropertyGroup>
+        <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+      </PropertyGroup>
+    </When>
+    <Otherwise>
+      <PropertyGroup>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+      </PropertyGroup>
+    </Otherwise>
+  </Choose>
 
-    <ItemGroup>
-        <!-- Add reference to StyleCop analyzers to all projects  -->
-        <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" />
+  <ItemGroup>
+    <!-- Add reference to StyleCop analyzers to all projects  -->
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" />
 
-        <!-- Add reference to FxCopAnalyzers to all projects  -->
-        <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.4" />
+    <!-- Add reference to FxCopAnalyzers to all projects  -->
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.4" />
 
-        <!-- Common StyleCop configuration -->
-        <AdditionalFiles Include="$(MSBuildThisFileDirectory)stylecop.json" />
-    </ItemGroup>
+    <!-- Common StyleCop configuration -->
+    <AdditionalFiles Include="$(MSBuildThisFileDirectory)stylecop.json" />
+  </ItemGroup>
 </Project>

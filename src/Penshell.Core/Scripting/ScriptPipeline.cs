@@ -45,7 +45,7 @@
                 var transformedScriptLineArguments = new ScriptLineBuilder()
                     .UseLineNumber(scriptLine.LineNumber)
                     .UseRawLine(string.Join(" ", substitutedCommandLineArgs))
-                    .UseSubstitution(false)
+                    .DoSubstitute(false)
                     .Build();
 
                 commandInput = commandInputParser.ParseCommandInput(substitutedCommandLineArgs);

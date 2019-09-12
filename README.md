@@ -1,2 +1,3 @@
 # Penshell
-A simple command line tool for common tasks.
+
+A experimental command line pipeline for common tasks.

@@ -20,12 +20,12 @@
             var lineNumber = 1;
             foreach (var fileLine in fileLines)
             {
-                var sriptLine = new ScriptLineBuilder()
+                var scriptLine = new ScriptLineBuilder()
                     .UseLineNumber(lineNumber)
                     .UseRawLine(fileLine)
-                    .UseSubstitution(lineNumber != 1)
+                    .DoSubstitute(lineNumber != 1)
                     .Build();
-                scriptLines.Add(sriptLine);
+                scriptLines.Add(scriptLine);
                 lineNumber++;
             }
 
