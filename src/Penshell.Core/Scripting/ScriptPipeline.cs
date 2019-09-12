@@ -1,79 +1,75 @@
 ﻿namespace Penshell.Core.Scripting
 {
-    using System;
     using System.Collections.Generic;
-    using System.Diagnostics;
     using System.IO;
-    using System.Linq;
     using System.Text;
     using CliFx.Models;
     using CliFx.Services;
+    using Serilog;
 
     internal class ScriptPipeline : IScriptPipeline
     {
         private readonly ICommandFactory _commandFactory;
-
-        private readonly IConsole _console;
-
+        private readonly Encoding _encoding = Encoding.UTF8;
+        private readonly ILogger? _logger = null;
         private readonly PenshellCommandRegistry _registry;
-
         private readonly IEnumerable<ScriptLine> _scriptLines;
 
         public ScriptPipeline(
-            IConsole console,
             IEnumerable<ScriptLine> scriptLines,
             PenshellCommandRegistry registry,
-            ICommandFactory commandFactory)
+            ICommandFactory commandFactory,
+            ILogger? logger)
         {
-            _console = console;
             _scriptLines = scriptLines;
             _registry = registry;
             _commandFactory = commandFactory;
+            _logger = logger;
         }
 
-        public void Execute()
+        public string Execute()
         {
-            var encoding = Encoding.UTF8;
             var commandInputParser = new CommandInputParser();
-            var commandSchemaResolver = new CommandSchemaResolver();
             var commandOptionInputConverter = new CommandOptionInputConverter();
             var commandInitializer = new CommandInitializer(commandOptionInputConverter);
             string lastOutputString = string.Empty;
             foreach (var scriptLine in _scriptLines)
             {
-                var sciptLineBytes = encoding.GetBytes(scriptLine.Content);
-                var scriptLineMemoryStream = new MemoryStream(sciptLineBytes);
                 var outputStringBuilder = new StringBuilder();
-                using var inputStream = new StreamReader(scriptLineMemoryStream);
-                var outputStream = new StringWriter(outputStringBuilder);
-                var errorStream = new StringWriter();
-
                 var commandInput = commandInputParser.ParseCommandInput(scriptLine.CommandArguments);
+                var substitutedCommandLineArgs = new RawScriptLineBuilder()
+                    .UseScriptLine(scriptLine)
+                    .UseCommandInput(commandInput)
+                    .UseSubstitution(lastOutputString)
+                    .Build();
+                var transformedScriptLineArguments = new ScriptLineBuilder()
+                    .UseLineNumber(scriptLine.LineNumber)
+                    .UseRawLine(string.Join(" ", substitutedCommandLineArgs))
+                    .UseSubstitution(false)
+                    .Build();
 
-                // perform substitution not in first line
-                if (scriptLine.LineNumber != 1)
-                {
-                    foreach (var option in commandInput.Options)
-                    {
-                        for (int optionIndex = 0; optionIndex < option.Values.Count; optionIndex++)
-                        {
-                            var value = option.Values[optionIndex];
-                            if (value.Contains(scriptLine.Substitution, StringComparison.InvariantCulture))
-                            {
-                                option.Values[optionIndex] = value.Replace(scriptLine.Substitution, lastOutputString, StringComparison.InvariantCulture);
-                            }
-                        }
-                    }
-                }
+                commandInput = commandInputParser.ParseCommandInput(substitutedCommandLineArgs);
 
                 var targetCommandSchema = _registry.CommandSchemas.FindByName(commandInput.CommandName);
                 var command = _commandFactory.CreateCommand(targetCommandSchema);
                 commandInitializer.InitializeCommand(command, targetCommandSchema, commandInput);
-                var virtualConsole = new VirtualConsole(inputStream, outputStream, errorStream);
+                var virtualConsole = this.CreateVirtualConsole(scriptLine, outputStringBuilder);
                 command.ExecuteAsync(virtualConsole).Wait();
-                lastOutputString = outputStringBuilder.ToString();
-                _console.Output.WriteLine($"{scriptLine.LineNumber} [{scriptLine.Content}] : {lastOutputString}");
+                lastOutputString = outputStringBuilder.ToString().Trim();
+                _logger?.Fatal($"Line {scriptLine.LineNumber} [{scriptLine.RawLine}] : {lastOutputString}");
             }
+
+            return lastOutputString;
+        }
+
+        private IConsole CreateVirtualConsole(ScriptLine scriptLine, StringBuilder outputStringBuilder)
+        {
+            var sciptLineBytes = _encoding.GetBytes(scriptLine.RawLine);
+            var scriptLineMemoryStream = new MemoryStream(sciptLineBytes);
+            using var inputStream = new StreamReader(scriptLineMemoryStream);
+            var outputStream = new StringWriter(outputStringBuilder);
+            var errorStream = new StringWriter();
+            return new VirtualConsole(inputStream, outputStream, errorStream);
         }
     }
 }

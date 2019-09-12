@@ -4,6 +4,6 @@
 
     public interface IScriptReader
     {
-        IEnumerable<ScriptLine> Read();
+        IReadOnlyList<ScriptLine> Read();
     }
 }

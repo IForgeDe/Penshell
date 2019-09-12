@@ -4,7 +4,7 @@
 
     internal class EmptyScriptReader : IScriptReader
     {
-        public IEnumerable<ScriptLine> Read()
+        public IReadOnlyList<ScriptLine> Read()
         {
             return new List<ScriptLine>();
         }

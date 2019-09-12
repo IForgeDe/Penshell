@@ -10,27 +10,23 @@
             this.ScriptFile = scriptFile;
         }
 
-        public string CommandDelimiter { get; } = "=>";
-
         public FileInfo ScriptFile { get; }
 
-        public IEnumerable<ScriptLine> Read()
+        public IReadOnlyList<ScriptLine> Read()
         {
             var fileLines = File.ReadAllLines(this.ScriptFile.FullName);
             var scriptLines = new List<ScriptLine>(fileLines.Length);
 
             var lineNumber = 1;
-            foreach (var line in fileLines)
+            foreach (var fileLine in fileLines)
             {
-                if (lineNumber == 1)
-                {
-                    scriptLines.Add(new ScriptLine(lineNumber++, line, string.Empty, line.Split(" ", System.StringSplitOptions.RemoveEmptyEntries)));
-                }
-                else
-                {
-                    var lineParts = line.Split(this.CommandDelimiter);
-                    scriptLines.Add(new ScriptLine(lineNumber++, line, lineParts[0], lineParts[1].Split(" ", System.StringSplitOptions.RemoveEmptyEntries)));
-                }
+                var sriptLine = new ScriptLineBuilder()
+                    .UseLineNumber(lineNumber)
+                    .UseRawLine(fileLine)
+                    .UseSubstitution(lineNumber != 1)
+                    .Build();
+                scriptLines.Add(sriptLine);
+                lineNumber++;
             }
 
             return scriptLines;

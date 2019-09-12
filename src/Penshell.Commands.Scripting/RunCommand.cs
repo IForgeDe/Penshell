@@ -7,18 +7,22 @@
     using CliFx.Services;
     using Penshell.Core;
     using Penshell.Core.Scripting;
+    using Serilog;
 
     [Command("script run", Description = "Runs a penshell script.")]
     public class RunCommand : ICommand
     {
-        public RunCommand(RunCommandValidator validator, PenshellCommandRegistry registry, ICommandFactory factory)
+        public RunCommand(RunCommandValidator validator, PenshellCommandRegistry registry, ICommandFactory factory, ILogger logger)
         {
             this.Validator = validator;
             this.Registry = registry;
             this.Factory = factory;
+            this.Logger = logger;
         }
 
         public ICommandFactory Factory { get; }
+
+        public ILogger Logger { get; }
 
         public PenshellCommandRegistry Registry { get; }
 
@@ -33,12 +37,13 @@
             var scriptReader = new ScriptReaderBuilder(this.ScriptFilePath!)
                 .Build();
             var scriptPipeline = new ScriptPipelineBuilder()
-                .UseConsole(console)
                 .UseScriptReader(scriptReader)
                 .UseCommandRegistry(this.Registry)
-                .UserCommandFactory(this.Factory)
+                .UseCommandFactory(this.Factory)
+                .UseLogger(this.Logger)
                 .Build();
-            scriptPipeline.Execute();
+            var result = scriptPipeline.Execute();
+            console.Output.WriteLine(result);
             return Task.CompletedTask;
         }
     }

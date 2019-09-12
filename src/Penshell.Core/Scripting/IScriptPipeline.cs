@@ -2,6 +2,6 @@
 {
     public interface IScriptPipeline
     {
-        void Execute();
+        string Execute();
     }
 }

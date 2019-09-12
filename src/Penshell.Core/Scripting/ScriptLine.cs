@@ -4,19 +4,19 @@
 
     public class ScriptLine
     {
-        internal ScriptLine(int lineNumber, string content, string substitution, string[] commandArguments)
+        internal ScriptLine(long lineNumber, string rawLine, string substitution, string[] commandArguments)
         {
             this.LineNumber = lineNumber;
-            this.Content = content;
+            this.RawLine = rawLine;
             this.Substitution = substitution;
             this.CommandArguments = commandArguments;
         }
 
         public IReadOnlyList<string> CommandArguments { get; }
 
-        public string Content { get; }
+        public long LineNumber { get; }
 
-        public int LineNumber { get; }
+        public string RawLine { get; }
 
         public string Substitution { get; }
     }
