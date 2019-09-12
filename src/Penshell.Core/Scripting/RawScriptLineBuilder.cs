@@ -25,7 +25,7 @@
             var commandArguments = new List<string>(_commandInput.CommandName.Split(" "));
             foreach (var option in _commandInput.Options)
             {
-                commandArguments.Add($"{(option.Alias.Length > 1 ? "--" : " - ")}{option.Alias}");
+                commandArguments.Add($"{(option.Alias.Length > 1 ? "--" : "-")}{option.Alias}");
                 foreach (var value in option.Values)
                 {
                     if (value.Equals(_scriptLine.Substitution, StringComparison.Ordinal))

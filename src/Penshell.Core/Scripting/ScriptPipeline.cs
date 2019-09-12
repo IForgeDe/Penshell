@@ -56,7 +56,7 @@
                 var virtualConsole = this.CreateVirtualConsole(scriptLine, outputStringBuilder);
                 command.ExecuteAsync(virtualConsole).Wait();
                 lastOutputString = outputStringBuilder.ToString().Trim();
-                _logger?.Fatal($"Line {scriptLine.LineNumber} [{scriptLine.RawLine}] : {lastOutputString}");
+                _logger?.Information($"Line {scriptLine.LineNumber} [{scriptLine.RawLine}] : {lastOutputString}");
             }
 
             return lastOutputString;
