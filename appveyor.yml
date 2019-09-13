@@ -1,10 +1,27 @@
 version: '{build}'
 
 image: Visual Studio 2019
+platform: Any CPU
 configuration: Release
+
+# branches to build
+branches:
+  # whitelist
+  only:
+    - master
+    - production
+
+  # blacklist
+  except:
+    - docs
+
+cache:
+  - '%LocalAppData%\NuGet\Cache'    # NuGet < v3
+  - '%LocalAppData%\NuGet\v3-cache' # NuGet v3
 
 before_build:
 - dotnet restore
 
 build:
+  project: src\Penshell.sln
   verbosity: minimal
