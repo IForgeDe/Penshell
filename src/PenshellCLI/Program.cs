@@ -20,11 +20,11 @@ namespace PenshellCLI
 
     public static class Program
     {
-        private static PenshellCommandOptionValueConverterRegistry CommandOptionValueConverterRegistry { get; set; }
+        private static ICommandOptionInputConverter? CommandOptionInputConverter { get; set; } = null;
 
-        private static ICommandOptionInputConverter CommandOptionInputConverter { get; set; }
+        private static PenshellCommandOptionValueConverterRegistry? CommandOptionValueConverterRegistry { get; set; } = null;
 
-        private static ServiceProvider ServiceProvider { get; set; }
+        private static ServiceProvider? ServiceProvider { get; set; } = null;
 
         public static Task<int> Main(string[] args)
         {
