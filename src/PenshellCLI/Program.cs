@@ -1,4 +1,4 @@
-﻿namespace PenshellCLI
+namespace PenshellCLI
 {
     using System;
     using System.Collections.Generic;
@@ -11,6 +11,7 @@
     using CliFx;
     using CliFx.Models;
     using CliFx.Services;
+    using FluentValidation;
     using Microsoft.Extensions.DependencyInjection;
     using Penshell.Core;
     using Serilog;
@@ -19,6 +20,10 @@
 
     public static class Program
     {
+        private static PenshellCommandOptionValueConverterRegistry CommandOptionValueConverterRegistry { get; set; }
+
+        private static ICommandOptionInputConverter CommandOptionInputConverter { get; set; }
+
         private static ServiceProvider ServiceProvider { get; set; }
 
         public static Task<int> Main(string[] args)
@@ -59,18 +64,25 @@
                 }
             }
 
-            // collect commands
-            var commandTypes = new List<Type>();
-            var commandValidatorTypes = new List<Type>();
+            // prepare di container
+            var services = new ServiceCollection();
+            CommandOptionValueConverterRegistry = new PenshellCommandOptionValueConverterRegistry(Log.Logger);
+            CommandOptionInputConverter = new PenshellCommandOptionInputConverter(CommandOptionValueConverterRegistry);
+            services.AddSingleton(Log.Logger);
+            services.AddSingleton(CommandOptionValueConverterRegistry);
+            services.AddSingleton(CommandOptionInputConverter);
+
+            // manage services and other injections
             var container = configuration.CreateContainer();
-            var commandProviders = container.GetExports<IAssemblyCommandProvider>();
-            foreach (var commandProvider in commandProviders)
+            var cliAdapters = container.GetExports<IPenshellCLIAdapter>();
+            foreach (var cliAdapter in cliAdapters)
             {
-                commandTypes.AddRange(commandProvider.GetCommandTypes());
-                commandValidatorTypes.AddRange(commandProvider.GetCommandValidatorTypes());
+                cliAdapter.ConfigureServices(services);
+                cliAdapter.RegisterCommandOptionValueConverters(CommandOptionValueConverterRegistry);
             }
 
             // test for commands
+            var commandTypes = services.Where(x => x.ServiceType.GetInterfaces().Contains(typeof(ICommand))).Select(x => x.ImplementationType).ToArray();
             if (!commandTypes.Any())
             {
                 Log.Information("No nommands found.");
@@ -83,24 +95,15 @@
             var commandSchemaResolver = new CommandSchemaResolver();
             var commandSchemas = commandSchemaResolver.GetCommandSchemas(commandTypes);
             commandSchemas = commandSchemas.OrderBy(x => x.Name).ToArray();
-
-            // prepare and build di container
-            var services = new ServiceCollection();
-            services.AddSingleton(Log.Logger);
-
             foreach (var commandSchema in commandSchemas)
             {
                 services.AddTransient(commandSchema.Type);
             }
 
+            // prepare command registry
             var commandRegistry = new PenshellCommandRegistry();
             commandRegistry.Register(commandSchemas);
             services.AddSingleton(commandRegistry);
-
-            foreach (var commandValidatorType in commandValidatorTypes)
-            {
-                services.AddTransient(commandValidatorType);
-            }
 
             // prepare console
             var console = new PenshellConsoleBuilder()
@@ -114,13 +117,14 @@
             // build di container
             ServiceProvider = services.BuildServiceProvider();
 
-            // run commandline
+            // build and run application
             var cliApplication = new CliApplicationBuilder()
                 .UseConsole(console)
                 .AddCommands(commandSchemas.Select(x => x.Type).ToArray())
                 .AllowDebugMode(true)
                 .AllowPreviewMode(true)
                 .UseCommandFactory(commandFactoryMethod)
+                .UseCommandOptionInputConverter(CommandOptionInputConverter)
                 .Build();
             return cliApplication.RunAsync(args);
         }

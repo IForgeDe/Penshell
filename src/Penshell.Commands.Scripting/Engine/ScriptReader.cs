@@ -1,4 +1,4 @@
-﻿namespace Penshell.Core.Scripting
+﻿namespace Penshell.Commands.Scripting.Engine
 {
     using System.Collections.Generic;
     using System.IO;

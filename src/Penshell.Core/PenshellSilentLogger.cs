@@ -1,4 +1,4 @@
-﻿namespace Penshell.Core
+namespace Penshell.Core
 {
     using System;
     using System.Collections.Generic;
@@ -6,11 +6,11 @@
     using Serilog.Core;
     using Serilog.Events;
 
-    public class SilentLogger : ILogger
+    public class PenshellSilentLogger : ILogger
     {
-        public static readonly ILogger Instance = new SilentLogger();
+        public static readonly ILogger Instance = new PenshellSilentLogger();
 
-        private SilentLogger()
+        private PenshellSilentLogger()
         {
         }
 

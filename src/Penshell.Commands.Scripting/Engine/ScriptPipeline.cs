@@ -1,15 +1,17 @@
-﻿namespace Penshell.Core.Scripting
+namespace Penshell.Commands.Scripting.Engine
 {
     using System.Collections.Generic;
     using System.IO;
     using System.Text;
     using CliFx.Models;
     using CliFx.Services;
+    using Penshell.Core;
     using Serilog;
 
     internal class ScriptPipeline : IScriptPipeline
     {
         private readonly ICommandFactory _commandFactory;
+        private readonly ICommandOptionInputConverter _commandOptionInputConverter;
         private readonly Encoding _encoding = Encoding.UTF8;
         private readonly ILogger? _logger = null;
         private readonly PenshellCommandRegistry _registry;
@@ -19,19 +21,20 @@
             IEnumerable<ScriptLine> scriptLines,
             PenshellCommandRegistry registry,
             ICommandFactory commandFactory,
+            ICommandOptionInputConverter commandOptionInputConverter,
             ILogger? logger)
         {
             _scriptLines = scriptLines;
             _registry = registry;
             _commandFactory = commandFactory;
+            _commandOptionInputConverter = commandOptionInputConverter;
             _logger = logger;
         }
 
         public string Execute()
         {
             var commandInputParser = new CommandInputParser();
-            var commandOptionInputConverter = new CommandOptionInputConverter();
-            var commandInitializer = new CommandInitializer(commandOptionInputConverter);
+            var commandInitializer = new CommandInitializer(_commandOptionInputConverter);
             string lastOutputString = string.Empty;
             foreach (var scriptLine in _scriptLines)
             {

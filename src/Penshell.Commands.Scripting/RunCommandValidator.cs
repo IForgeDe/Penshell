@@ -1,4 +1,4 @@
-﻿namespace Penshell.Commands.Scripting
+namespace Penshell.Commands.Scripting
 {
     using FluentValidation;
 
@@ -6,7 +6,7 @@
     {
         public RunCommandValidator()
         {
-            this.RuleFor(x => x.ScriptFilePath).NotNull().WithMessage("Please specify a script file path.");
+            this.RuleFor(x => x.Path).NotNull().WithMessage("Path must be set.");
         }
     }
 }

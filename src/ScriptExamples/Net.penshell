@@ -1,0 +1,2 @@
+net http -u "http://www.google.de" -m "get"
+_ => net http --uri "https://www.github.com" --method "get"
