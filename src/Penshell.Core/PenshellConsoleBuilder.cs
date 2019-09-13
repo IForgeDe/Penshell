@@ -1,10 +1,10 @@
-﻿namespace Penshell.Core
+namespace Penshell.Core
 {
     using CliFx.Services;
 
-    public class PenshellConsoleBuilder
+    public static class PenshellConsoleBuilder
     {
-        public IConsole Build()
+        public static IConsole Build()
         {
             return new PenshellConsole();
         }

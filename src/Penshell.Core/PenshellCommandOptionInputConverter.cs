@@ -2,14 +2,15 @@ namespace Penshell.Core
 {
     using System;
     using CliFx.Services;
+    using Dawn;
 
     public class PenshellCommandOptionInputConverter : CommandOptionInputConverter
     {
-        private readonly PenshellCommandOptionValueConverterRegistry _registry;
+        private readonly PenshellCommandOptionValueConverterDictionary _registry;
 
-        public PenshellCommandOptionInputConverter(PenshellCommandOptionValueConverterRegistry registry)
+        public PenshellCommandOptionInputConverter(PenshellCommandOptionValueConverterDictionary registry)
         {
-            _registry = registry ?? throw new ArgumentNullException(nameof(registry));
+            _registry = Guard.Argument(registry).NotNull().Value;
         }
 
         protected override object ConvertValue(string value, Type targetType)

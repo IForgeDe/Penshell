@@ -11,7 +11,6 @@ namespace PenshellCLI
     using CliFx;
     using CliFx.Models;
     using CliFx.Services;
-    using FluentValidation;
     using Microsoft.Extensions.DependencyInjection;
     using Penshell.Core;
     using Serilog;
@@ -22,7 +21,7 @@ namespace PenshellCLI
     {
         private static ICommandOptionInputConverter? CommandOptionInputConverter { get; set; } = null;
 
-        private static PenshellCommandOptionValueConverterRegistry? CommandOptionValueConverterRegistry { get; set; } = null;
+        private static PenshellCommandOptionValueConverterDictionary? CommandOptionValueConverterRegistry { get; set; } = null;
 
         private static ServiceProvider? ServiceProvider { get; set; } = null;
 
@@ -66,7 +65,7 @@ namespace PenshellCLI
 
             // prepare di container
             var services = new ServiceCollection();
-            CommandOptionValueConverterRegistry = new PenshellCommandOptionValueConverterRegistry(Log.Logger);
+            CommandOptionValueConverterRegistry = new PenshellCommandOptionValueConverterDictionary(Log.Logger);
             CommandOptionInputConverter = new PenshellCommandOptionInputConverter(CommandOptionValueConverterRegistry);
             services.AddSingleton(Log.Logger);
             services.AddSingleton(CommandOptionValueConverterRegistry);
@@ -106,8 +105,7 @@ namespace PenshellCLI
             services.AddSingleton(commandRegistry);
 
             // prepare console
-            var console = new PenshellConsoleBuilder()
-                .Build();
+            var console = PenshellConsoleBuilder.Build();
 
             // build command factories
             var commandFactoryMethod = new Func<CommandSchema, ICommand>(schema => (ICommand)ServiceProvider.GetRequiredService(schema.Type));

@@ -52,7 +52,7 @@ namespace Penshell.Commands.Scripting.Engine
             return this;
         }
 
-        private IScriptReader GetDefaultScriptReader()
+        private static IScriptReader GetDefaultScriptReader()
         {
             return new EmptyScriptReader();
         }

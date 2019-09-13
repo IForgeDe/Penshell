@@ -1,11 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <RuleSet Name="Solution-Ruleset" Description="Default Ruleset for Penshell-Solution." ToolsVersion="16.0">
   <Rules AnalyzerId="Microsoft.Analyzers.ManagedCodeAnalysis" RuleNamespace="Microsoft.Rules.Managed">
-    <Rule Id="CA1012" Action="None" /> <!-- notrequired -->
-    <Rule Id="CA1062" Action="None" /> <!-- notrequired -->
     <Rule Id="CA1303" Action="None" /> <!-- notrequired -->
-    <Rule Id="CA1710" Action="None" /> <!-- notrequired -->
-    <Rule Id="CA1822" Action="None" /> <!-- notrequired -->
   </Rules>
   <Rules AnalyzerId="Microsoft.CodeAnalysis.CSharp" RuleNamespace="Microsoft.CodeAnalysis.CSharp">
     <Rule Id="CS1591" Action="None" /> <!-- notrequired -->
@@ -13,7 +9,7 @@
   <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers">
     <Rule Id="SA1101" Action="None" /> <!-- notrequired -->
     <Rule Id="SA1309" Action="None" /> <!-- notrequired -->
-    <Rule Id="SA1600" Action="None" /> <!-- notrequired -->
+    <Rule Id="SA1600" Action="Info" /> <!-- notrequired -->
     <Rule Id="SA1633" Action="None" /> <!-- notrequired -->
   </Rules>
 </RuleSet>

@@ -10,6 +10,7 @@ namespace Penshell.Commands.Math
         public void ConfigureServices(ServiceCollection services)
         {
             services
+                .AddTransient<AbsCommand>()
                 .AddTransient<AddCommand>()
                 .AddTransient<DivideCommand>()
                 .AddTransient<MultiplyCommand>()

@@ -1,7 +1,6 @@
 namespace Penshell.Commands.Scripting
 {
     using System.Composition;
-    using FluentValidation;
     using Microsoft.Extensions.DependencyInjection;
     using Penshell.Core;
 
@@ -10,9 +9,7 @@ namespace Penshell.Commands.Scripting
     {
         public void ConfigureServices(ServiceCollection services)
         {
-            services
-                .AddTransient<RunCommand>()
-                .AddTransient<IValidator<RunCommand>, RunCommandValidator>();
+            services.AddTransient<RunCommand>();
         }
     }
 }

@@ -1,9 +1,11 @@
-﻿namespace Penshell.Commands.Math
+namespace Penshell.Commands.Math
 {
+    using System;
     using System.Threading.Tasks;
     using CliFx;
     using CliFx.Attributes;
     using CliFx.Services;
+    using Dawn;
 
     [Command("math add", Description = "Calculates the addition of two values.")]
     public class AddCommand : ICommand
@@ -16,6 +18,8 @@
 
         public Task ExecuteAsync(IConsole console)
         {
+            console = Guard.Argument(console).NotNull().Value;
+
             var result = this.FirstSummand + this.SecondSummand;
             console.Output.WriteLine(result);
             return Task.CompletedTask;

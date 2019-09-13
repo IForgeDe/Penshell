@@ -7,28 +7,23 @@ namespace Penshell.Commands.Net
     using CliFx;
     using CliFx.Attributes;
     using CliFx.Services;
-    using FluentValidation;
+    using Dawn;
 
     [Command("net http", Description = "Gets the response of a http method.")]
     public class HttpCommand : ICommand
     {
-        public HttpCommand(IValidator<HttpCommand> validator)
-        {
-            this.Validator = validator;
-        }
-
         [CommandOption("method", 'm', IsRequired = true, Description = "The http method (delete, get, post, put).")]
         public string? Method { get; set; }
 
         [CommandOption("uri", 'u', IsRequired = true, Description = "The uri for the http request.")]
         public Uri? Uri { get; set; }
 
-        public IValidator<HttpCommand> Validator { get; }
-
         public Task ExecuteAsync(IConsole console)
         {
             // validate
-            this.Validator.ValidateAndThrow(this);
+            console = Guard.Argument(console).NotNull().Value;
+            this.Method = Guard.Argument(this.Method).NotNull().NotEmpty().Value;
+            this.Uri = Guard.Argument(this.Uri).NotNull().Value;
 
             // perform
             using var httpClient = new HttpClient();

@@ -1,10 +1,11 @@
-﻿namespace Penshell.Commands.IO
+namespace Penshell.Commands.IO
 {
     using System.IO;
     using System.Threading.Tasks;
     using CliFx;
     using CliFx.Attributes;
     using CliFx.Services;
+    using Dawn;
 
     [Command("io readfile", Description = "Reads a file.")]
     public class ReadFileCommand : ICommand
@@ -14,6 +15,8 @@
 
         public Task ExecuteAsync(IConsole console)
         {
+            console = Guard.Argument(console).NotNull().Value;
+
             using (var stream = new BinaryReader(File.OpenRead(this.Path)))
             {
                 var buffer = new byte[1024];

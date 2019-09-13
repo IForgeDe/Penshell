@@ -6,7 +6,7 @@ namespace Penshell.Core
     {
         void ConfigureServices(ServiceCollection services);
 
-        void RegisterCommandOptionValueConverters(PenshellCommandOptionValueConverterRegistry registry)
+        void RegisterCommandOptionValueConverters(PenshellCommandOptionValueConverterDictionary registry)
         {
         }
     }

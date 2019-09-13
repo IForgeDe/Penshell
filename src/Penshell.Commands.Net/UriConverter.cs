@@ -1,6 +1,7 @@
 namespace Penshell.Commands.Net
 {
     using System;
+    using Dawn;
     using Penshell.Core;
 
     public class UriConverter : IPenshellCommandOptionValueConverter
@@ -11,7 +12,9 @@ namespace Penshell.Commands.Net
         /// <inheritdoc />
         public object Convert(string value)
         {
-            return new Uri(value.Replace("\"", string.Empty, StringComparison.Ordinal));
+            value = Guard.Argument(value).NotNull().Value;
+
+            return new Uri(value.Trim('"'));
         }
     }
 }

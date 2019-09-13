@@ -1,7 +1,7 @@
 namespace Penshell.Commands.Net
 {
     using System.Composition;
-    using FluentValidation;
+    using Dawn;
     using Microsoft.Extensions.DependencyInjection;
     using Penshell.Core;
 
@@ -11,16 +11,14 @@ namespace Penshell.Commands.Net
         /// <inheritdoc />
         public void ConfigureServices(ServiceCollection services)
         {
-            // commands
             services.AddTransient<HttpCommand>();
-
-            // validators
-            services.AddTransient<IValidator<HttpCommand>, HttpCommandValidator>();
         }
 
         /// <inheritdoc />
-        public void RegisterCommandOptionValueConverters(PenshellCommandOptionValueConverterRegistry registry)
+        public void RegisterCommandOptionValueConverters(PenshellCommandOptionValueConverterDictionary registry)
         {
+            registry = Guard.Argument(registry).NotNull().Value;
+
             registry.Add(new UriConverter());
         }
     }

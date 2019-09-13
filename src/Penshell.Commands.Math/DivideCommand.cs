@@ -1,4 +1,4 @@
-﻿namespace Penshell.Commands.Math
+namespace Penshell.Commands.Math
 {
     using System;
     using System.Globalization;
@@ -7,6 +7,7 @@
     using CliFx.Attributes;
     using CliFx.Exceptions;
     using CliFx.Services;
+    using Dawn;
 
     [Command("math divide", Description = "Calculates the division of two values.")]
     public class DivideCommand : ICommand
@@ -23,6 +24,8 @@
 
         public Task ExecuteAsync(IConsole console)
         {
+            console = Guard.Argument(console).NotNull().Value;
+
             if (Math.Abs(this.Divisor) < double.Epsilon)
             {
                 throw new CommandException("Division by zero is not supported.", 1337);

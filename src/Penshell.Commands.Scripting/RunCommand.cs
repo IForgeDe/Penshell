@@ -5,7 +5,7 @@ namespace Penshell.Commands.Scripting
     using CliFx;
     using CliFx.Attributes;
     using CliFx.Services;
-    using FluentValidation;
+    using Dawn;
     using Penshell.Commands.Scripting.Engine;
     using Penshell.Core;
     using Serilog;
@@ -14,13 +14,11 @@ namespace Penshell.Commands.Scripting
     public class RunCommand : ICommand
     {
         public RunCommand(
-            IValidator<RunCommand> validator,
             PenshellCommandRegistry registry,
             ICommandFactory factory,
             ICommandOptionInputConverter commandOptionInputConverter,
             ILogger logger)
         {
-            this.Validator = validator;
             this.Registry = registry;
             this.Factory = factory;
             this.CommandOptionInputConverter = commandOptionInputConverter;
@@ -38,12 +36,11 @@ namespace Penshell.Commands.Scripting
 
         public PenshellCommandRegistry Registry { get; }
 
-        public IValidator<RunCommand> Validator { get; }
-
         public Task ExecuteAsync(IConsole console)
         {
             // validate
-            this.Validator.ValidateAndThrow(this);
+            console = Guard.Argument(console).NotNull().Value;
+            this.Path = Guard.Argument(this.Path).NotNull().Value;
 
             // perform
             var scriptReader = new ScriptReaderBuilder(this.Path!)
