@@ -4,6 +4,9 @@ image: Visual Studio 2019
 platform: Any CPU
 configuration: Release
 
+install:
+  - cmd: choco install dotnetcore-sdk --pre
+
 # branches to build
 branches:
   # whitelist
