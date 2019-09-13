@@ -23,7 +23,7 @@ cache:
   - '%LocalAppData%\NuGet\v3-cache' # NuGet v3
 
 before_build:
-  - cmd: dotnet restore .\src\Penshell.sln
+  - cmd: dotnet restore .\src\Penshell.sln --verbosity m
 
 build_script:
-  - cmd: dotnet build .\src\Penshell.csproj
+  - cmd: dotnet build .\src\Penshell.sln --verbosity m
