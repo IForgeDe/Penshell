@@ -26,4 +26,4 @@ before_build:
   - cmd: dotnet restore .\src\Penshell.sln
 
 build_script:
-  - cmd: dotnet build .\src\src.csproj
+  - cmd: dotnet build .\src\Penshell.csproj
