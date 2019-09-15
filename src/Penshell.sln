@@ -25,6 +25,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Penshell.Commands", "Penshe
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Script Examples", "_Script Examples", "{1A069DAD-9F79-4BA4-A047-8B0C40C0C13F}"
 	ProjectSection(SolutionItems) = preProject
+		ScriptExamples\IO.penshell = ScriptExamples\IO.penshell
 		ScriptExamples\Math.penshell = ScriptExamples\Math.penshell
 		ScriptExamples\Net.penshell = ScriptExamples\Net.penshell
 	EndProjectSection

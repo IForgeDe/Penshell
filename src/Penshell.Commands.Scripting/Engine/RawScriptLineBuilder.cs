@@ -1,14 +1,31 @@
-﻿namespace Penshell.Commands.Scripting.Engine
+namespace Penshell.Commands.Scripting.Engine
 {
     using System;
     using System.Collections.Generic;
     using CliFx.Models;
+    using Dawn;
 
     public class RawScriptLineBuilder
     {
         private CommandInput? _commandInput;
         private ScriptLine? _scriptLine;
         private string? _substitution;
+
+        /// <summary>
+        /// Returns a adjusted substitution for example negative numerics.
+        /// </summary>
+        /// <param name="substitution">The original substiution value.</param>
+        /// <returns>The adjusted substitution.</returns>
+        public static string CreateAdjustedSubstitution(string substitution)
+        {
+            substitution = Guard.Argument(substitution).NotNull().Value;
+            if (substitution.StartsWith("-", StringComparison.Ordinal))
+            {
+                return $"\"{substitution}\"";
+            }
+
+            return substitution;
+        }
 
         public IReadOnlyList<string> Build()
         {
@@ -30,7 +47,7 @@
                 {
                     if (value.Equals(_scriptLine.Substitution, StringComparison.Ordinal))
                     {
-                        commandArguments.Add(_substitution);
+                        commandArguments.Add(CreateAdjustedSubstitution(_substitution));
                     }
                     else
                     {

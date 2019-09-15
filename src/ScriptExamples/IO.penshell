@@ -1,0 +1,2 @@
+io writefile -x 1 -y 1
+x => math substract -x x -y 1
