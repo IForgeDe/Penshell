@@ -2,12 +2,13 @@ namespace Penshell.Commands.IO
 {
     using System.IO;
     using System.Threading.Tasks;
+    using CliFx;
     using CliFx.Attributes;
     using CliFx.Services;
     using Dawn;
 
     [Command("io writefile", Description = "Writes content to a file.")]
-    public class WriteFileCommand
+    public class WriteFileCommand : ICommand
     {
         [CommandOption("content", 'c', IsRequired = true, Description = "The content to write.")]
         public string? Content { get; set; }
