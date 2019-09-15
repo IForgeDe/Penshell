@@ -11,7 +11,8 @@ namespace Penshell.Commands.IO
         {
             services
                 .AddTransient<CreateFileCommand>()
-                .AddTransient<ReadFileCommand>();
+                .AddTransient<ReadFileCommand>()
+                .AddTransient<WriteFileCommand>();
         }
     }
 }

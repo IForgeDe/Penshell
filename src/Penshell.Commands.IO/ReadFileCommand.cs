@@ -11,11 +11,12 @@ namespace Penshell.Commands.IO
     public class ReadFileCommand : ICommand
     {
         [CommandOption("path", 'p', IsRequired = true, Description = "The fully qualified name of the file, or the relative file name, to read.")]
-        public string Path { get; set; } = string.Empty;
+        public string? Path { get; set; }
 
         public Task ExecuteAsync(IConsole console)
         {
             console = Guard.Argument(console).NotNull().Value;
+            this.Path = Guard.Argument(this.Path).NotNull().NotEmpty().Value;
 
             using (var stream = new BinaryReader(File.OpenRead(this.Path)))
             {
