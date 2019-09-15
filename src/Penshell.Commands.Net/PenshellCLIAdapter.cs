@@ -11,7 +11,7 @@ namespace Penshell.Commands.Net
         /// <inheritdoc />
         public void ConfigureServices(ServiceCollection services)
         {
-            services.AddTransient<HttpCommand>();
+            services.AddTransient<HttpGetCommand>();
         }
 
         /// <inheritdoc />

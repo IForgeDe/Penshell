@@ -10,12 +10,9 @@ namespace Penshell.Commands.Net
     using Dawn;
     using Penshell.Core.Extension;
 
-    [Command("net http", Description = "Gets the response of a http method.")]
-    public class HttpCommand : ICommand
+    [Command("net httpget", Description = "Gets the response of a http get method call.")]
+    public class HttpGetCommand : ICommand
     {
-        [CommandOption("method", 'm', IsRequired = true, Description = "The http method (delete, get, post, put).")]
-        public string? Method { get; set; }
-
         [CommandOption("property", 'p', IsRequired = false, Description = "The property of the response for the output (default is StatusCode).")]
         public string? Property { get; set; }
 
@@ -26,8 +23,7 @@ namespace Penshell.Commands.Net
         {
             // validate
             console = Guard.Argument(console).NotNull().Value;
-            this.Method = Guard.Argument(this.Method).NotNull().NotEmpty().Value;
-            this.Property = this.Property ?? "StatusCode";
+            this.Property ??= "StatusCode";
             this.Uri = Guard.Argument(this.Uri).NotNull().Value;
 
             // perform
