@@ -30,29 +30,20 @@ namespace Penshell.Commands.Net
             // perform
             using var httpClient = new HttpClient();
             var result = httpClient.GetAsync(this.Uri).Result;
-            console.Output.WriteLine(FromProperty(result, this.Property), Thread.CurrentThread.CurrentCulture);
+            var output = FromProperty(result, this.Property);
+            console.Output.WriteLine(output, Thread.CurrentThread.CurrentCulture);
             return Task.CompletedTask;
         }
 
         private static string FromProperty(HttpResponseMessage httpResponseMessage, string property)
         {
-            switch (property)
+            return property switch
             {
-                case "Content":
-                    using (var streamReader = new StreamReader(httpResponseMessage.Content.ReadAsStreamAsync().Result, Encoding.UTF8))
-                    {
-                        return streamReader.ReadToEnd();
-                    }
-
-                case "Headers":
-                    return httpResponseMessage.Headers.ToString();
-
-                case "StatusCode":
-                    return httpResponseMessage.StatusCode.ToString();
-
-                default:
-                    throw new ArgumentException(message: "Invalid property set.", paramName: nameof(property));
-            }
+                "Content" => httpResponseMessage.Content.ReadAsStringAsync().Result,
+                "Headers" => httpResponseMessage.Headers.ToString(),
+                "StatusCode" => httpResponseMessage.StatusCode.ToString(),
+                _ => throw new ArgumentException(message: "Invalid property set.", paramName: nameof(property)),
+            };
         }
     }
 }
