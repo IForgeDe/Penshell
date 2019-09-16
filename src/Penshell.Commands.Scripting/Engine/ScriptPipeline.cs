@@ -38,6 +38,12 @@ namespace Penshell.Commands.Scripting.Engine
             string lastOutputString = string.Empty;
             foreach (var scriptLine in _scriptLines)
             {
+                if (!scriptLine.IsScript)
+                {
+                    _logger?.Information($"Line {scriptLine.LineNumber} [{scriptLine.RawLine}] : Line skipped");
+                    continue;
+                }
+
                 var outputStringBuilder = new StringBuilder();
                 var commandInput = commandInputParser.ParseCommandInput(scriptLine.CommandArguments);
                 var substitutedCommandLineArgs = new RawScriptLineBuilder()

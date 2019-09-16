@@ -1,14 +1,15 @@
 namespace Penshell.Commands.Net
 {
     using System;
+    using System.IO;
     using System.Net.Http;
+    using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
     using CliFx;
     using CliFx.Attributes;
     using CliFx.Services;
     using Dawn;
-    using Penshell.Core.Extension;
 
     [Command("net httpget", Description = "Gets the response of a http get method call.")]
     public class HttpGetCommand : ICommand
@@ -28,11 +29,30 @@ namespace Penshell.Commands.Net
 
             // perform
             using var httpClient = new HttpClient();
-            var task = httpClient.GetAsync(this.Uri);
-            task.Wait();
-            var output = task.Result.GetPropertyValue(this.Property);
-            console.Output.WriteLine(Convert.ToString(output, Thread.CurrentThread.CurrentCulture));
+            var result = httpClient.GetAsync(this.Uri).Result;
+            console.Output.WriteLine(FromProperty(result, this.Property), Thread.CurrentThread.CurrentCulture);
             return Task.CompletedTask;
+        }
+
+        private static string FromProperty(HttpResponseMessage httpResponseMessage, string property)
+        {
+            switch (property)
+            {
+                case "Content":
+                    using (var streamReader = new StreamReader(httpResponseMessage.Content.ReadAsStreamAsync().Result, Encoding.UTF8))
+                    {
+                        return streamReader.ReadToEnd();
+                    }
+
+                case "Headers":
+                    return httpResponseMessage.Headers.ToString();
+
+                case "StatusCode":
+                    return httpResponseMessage.StatusCode.ToString();
+
+                default:
+                    throw new ArgumentException(message: "Invalid property set.", paramName: nameof(property));
+            }
         }
     }
 }

@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Composition.AttributedModel" Version="1.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Penshell.Commands.Net\Penshell.Commands.Net.csproj" />
+    <ProjectReference Include="..\Penshell.Core\Penshell.Core.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -2,6 +2,7 @@
 <RuleSet Name="Solution-Ruleset" Description="Default Ruleset for Penshell-Solution." ToolsVersion="16.0">
   <Rules AnalyzerId="Microsoft.Analyzers.ManagedCodeAnalysis" RuleNamespace="Microsoft.Rules.Managed">
     <Rule Id="CA1303" Action="None" /> <!-- notrequired -->
+    <Rule Id="CA1822" Action="None" /> <!-- notrequired -->
   </Rules>
   <Rules AnalyzerId="Microsoft.CodeAnalysis.CSharp" RuleNamespace="Microsoft.CodeAnalysis.CSharp">
     <Rule Id="CS1591" Action="None" /> <!-- notrequired -->

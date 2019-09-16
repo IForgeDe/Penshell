@@ -1,4 +1,4 @@
-namespace Penshell.Commands.Scripting
+namespace Penshell.Commands.Process
 {
     using System.Composition;
     using Microsoft.Extensions.DependencyInjection;
@@ -10,8 +10,8 @@ namespace Penshell.Commands.Scripting
         public void ConfigureServices(ServiceCollection services)
         {
             services
-                .AddTransient<ExitCommand>()
-                .AddTransient<RunCommand>();
+                .AddTransient<OpenBrowserCommand>()
+                .AddTransient<StartCommand>();
         }
     }
 }

@@ -1,6 +1,8 @@
-﻿namespace Penshell.Commands.Scripting.Engine
+namespace Penshell.Commands.Scripting.Engine
 {
     using System;
+    using System.Text;
+    using Dawn;
 
     public class ScriptLineBuilder
     {
@@ -11,18 +13,78 @@
 
         public string DefaultCommandDelimiter { get; } = "=>";
 
+        public static string RemoveMatchingQuotes(string stringToTrim)
+        {
+            stringToTrim = Guard.Argument(stringToTrim).NotNull().Value;
+            int firstQuoteIndex = stringToTrim.IndexOf('"', StringComparison.Ordinal);
+            int lastQuoteIndex = stringToTrim.LastIndexOf('"');
+            while (firstQuoteIndex != lastQuoteIndex)
+            {
+                stringToTrim = stringToTrim.Remove(firstQuoteIndex, 1);
+                stringToTrim = stringToTrim.Remove(lastQuoteIndex - 1, 1); // -1 because we've shifted the indicies left by one
+                firstQuoteIndex = stringToTrim.IndexOf('"', StringComparison.Ordinal);
+                lastQuoteIndex = stringToTrim.LastIndexOf('"');
+            }
+
+            return stringToTrim;
+        }
+
+        public static string[] SplitCommandLineArgument(string argumentString)
+        {
+            StringBuilder translatedArguments = new StringBuilder(argumentString).Replace("\\\"", "\r");
+            bool insideQuote = false;
+            for (int i = 0; i < translatedArguments.Length; i++)
+            {
+                if (translatedArguments[i] == '"')
+                {
+                    insideQuote = !insideQuote;
+                }
+
+                if (translatedArguments[i] == ' ' && !insideQuote)
+                {
+                    translatedArguments[i] = '\n';
+                }
+            }
+
+            string[] toReturn = translatedArguments.ToString().Split(new char[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < toReturn.Length; i++)
+            {
+                toReturn[i] = RemoveMatchingQuotes(toReturn[i]);
+                toReturn[i] = toReturn[i].Replace("\r", "\"", StringComparison.Ordinal);
+            }
+
+            return toReturn;
+        }
+
         public ScriptLine Build()
         {
             _commandDelimiter ??= this.DefaultCommandDelimiter;
 
-            if (!_substitute)
+            // identify empty lines and comments
+            var isScriptLine = true;
+            if (_rawLine.Trim().Length < 1)
             {
-                return new ScriptLine(_lineNumber, _rawLine, string.Empty, _rawLine.Split(" ", StringSplitOptions.RemoveEmptyEntries));
+                isScriptLine = false;
+            }
+            else if (_rawLine.StartsWith("/", StringComparison.Ordinal) || _rawLine.StartsWith("#", StringComparison.Ordinal))
+            {
+                isScriptLine = false;
+            }
+
+            if (!isScriptLine)
+            {
+                return new ScriptLine(_lineNumber, _rawLine, isScriptLine, string.Empty, Array.Empty<string>());
+            }
+            else if (!_substitute)
+            {
+                var arguments = SplitCommandLineArgument(_rawLine);
+                return new ScriptLine(_lineNumber, _rawLine, isScriptLine, string.Empty, arguments);
             }
             else
             {
                 var crumbs = _rawLine.Split(_commandDelimiter);
-                return new ScriptLine(_lineNumber, _rawLine, crumbs[0].Trim(), crumbs[1].Trim().Split(" ", StringSplitOptions.RemoveEmptyEntries));
+                var arguments = SplitCommandLineArgument(crumbs[1]);
+                return new ScriptLine(_lineNumber, _rawLine, isScriptLine, crumbs[0].Trim(), arguments);
             }
         }
 
