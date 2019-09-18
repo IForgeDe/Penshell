@@ -31,7 +31,7 @@ namespace Penshell.Commands.Net
             using var httpClient = new HttpClient();
             var result = httpClient.GetAsync(this.Uri).Result;
             var output = FromProperty(result, this.Property);
-            console.Output.WriteLine(output, Thread.CurrentThread.CurrentCulture);
+            console.Output.WriteLine(output);
             return Task.CompletedTask;
         }
 
