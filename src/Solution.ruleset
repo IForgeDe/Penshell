@@ -9,7 +9,7 @@
   <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers">
     <Rule Id="SA1101" Action="None" /> <!-- neverrequired -->
     <Rule Id="SA1309" Action="None" /> <!-- neverrequired -->
-    <Rule Id="SA1600" Action="Info" /> <!-- laterrequired -->
+    <Rule Id="SA1600" Action="Warning" /> <!-- laterrequired -->
     <Rule Id="SA1633" Action="None" /> <!-- neverrequired -->
   </Rules>
 </RuleSet>
