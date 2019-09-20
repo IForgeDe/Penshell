@@ -7,6 +7,13 @@ Its is for developing short Tasks via a simple command line interface and chaini
 The command assemblies of this project are reusable in applications based on the [CliFx](https://github.com/Tyrrrz/CliFx) project.
 The PenshellCLI is for collecting, managing and enhancing the functionality for scripting.
 
+## Why Penshell
+
+The intention of this project was initially to automate recurring processes of all kind in an easy way.
+The result of this idea is a project to design simple commands in a script pipeline, which is easy to understand, write, manage and test.
+
+## How should a command looks like?
+
 ## Project status and structure
 
 Currently this project is in a inital state and there are no releases planed.
