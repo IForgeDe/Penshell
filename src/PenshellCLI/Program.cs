@@ -32,7 +32,7 @@ namespace PenshellCLI
         private static ServiceProvider? ServiceProvider { get; set; } = null;
 
         /// <summary>
-        /// The main entry pont of the program.
+        /// The main entry point of the program.
         /// </summary>
         /// <param name="args">The string array of the command line arguments.</param>
         /// <returns>The generic Task of int, defining the exit code of this console application.</returns>
