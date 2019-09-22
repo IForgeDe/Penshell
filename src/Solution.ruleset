@@ -4,7 +4,7 @@
     <Rule Id="CA1303" Action="None" /> <!-- neverrequired -->
   </Rules>
   <Rules AnalyzerId="Microsoft.CodeAnalysis.CSharp" RuleNamespace="Microsoft.CodeAnalysis.CSharp">
-    <Rule Id="CS1591" Action="Info" /> <!-- laterrequired -->
+    <Rule Id="CS1591" Action="Warning" /> <!-- laterrequired -->
   </Rules>
   <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers">
     <Rule Id="SA1101" Action="None" /> <!-- neverrequired -->

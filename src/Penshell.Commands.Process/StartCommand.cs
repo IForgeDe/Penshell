@@ -32,6 +32,7 @@ namespace Penshell.Commands.Process
             return await RunProcessAsync(process).ConfigureAwait(false);
         }
 
+        /// <inheritdoc />
         public Task ExecuteAsync(IConsole console)
         {
             console = Guard.Argument(console).NotNull().Value;

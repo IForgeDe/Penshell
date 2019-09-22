@@ -15,6 +15,7 @@ namespace Penshell.Commands.Process
         [CommandOption("url", 'u', IsRequired = true, Description = "The fully qualified name of the file for the new process, or the relative file name.")]
         public Uri? Uri { get; set; }
 
+        /// <inheritdoc />
         public Task ExecuteAsync(IConsole console)
         {
             console = Guard.Argument(console).NotNull().Value;

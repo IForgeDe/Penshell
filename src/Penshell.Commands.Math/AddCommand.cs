@@ -16,6 +16,7 @@ namespace Penshell.Commands.Math
         [CommandOption("second", 'y', IsRequired = true, Description = "The second summand.")]
         public double SecondSummand { get; set; }
 
+        /// <inheritdoc />
         public Task ExecuteAsync(IConsole console)
         {
             console = Guard.Argument(console).NotNull().Value;

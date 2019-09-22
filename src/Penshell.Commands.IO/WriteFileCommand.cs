@@ -16,6 +16,7 @@ namespace Penshell.Commands.IO
         [CommandOption("path", 'p', IsRequired = true, Description = "The fully qualified name of the file, or the relative file name, to write to.")]
         public string? Path { get; set; }
 
+        /// <inheritdoc />
         public Task ExecuteAsync(IConsole console)
         {
             console = Guard.Argument(console).NotNull().Value;

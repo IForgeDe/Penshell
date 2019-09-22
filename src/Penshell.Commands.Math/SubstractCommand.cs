@@ -15,6 +15,7 @@ namespace Penshell.Commands.Math
         [CommandOption("subtrahend", 'y', IsRequired = true, Description = "The subtrahend.")]
         public double Subtrahend { get; set; }
 
+        /// <inheritdoc />
         public Task ExecuteAsync(IConsole console)
         {
             console = Guard.Argument(console).NotNull().Value;

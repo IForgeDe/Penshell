@@ -13,6 +13,7 @@ namespace Penshell.Commands.IO
         [CommandOption("path", 'p', IsRequired = true, Description = "The fully qualified name of the new file, or the relative file name.")]
         public string Path { get; set; } = string.Empty;
 
+        /// <inheritdoc />
         public Task ExecuteAsync(IConsole console)
         {
             console = Guard.Argument(console).NotNull().Value;

@@ -22,6 +22,7 @@ namespace Penshell.Commands.Math
         [CommandOption("divisor", 'y', IsRequired = true, Description = "The devisor.")]
         public double Divisor { get; set; }
 
+        /// <inheritdoc />
         public Task ExecuteAsync(IConsole console)
         {
             console = Guard.Argument(console).NotNull().Value;

@@ -12,6 +12,7 @@ namespace Penshell.Commands.Math
         [CommandOption("value", 'v', IsRequired = true, Description = "A number that is greater than or equal to MinValue, but less than or equal to MaxValue.")]
         public double Value { get; set; }
 
+        /// <inheritdoc />
         public Task ExecuteAsync(IConsole console)
         {
             console = Guard.Argument(console).NotNull().Value;

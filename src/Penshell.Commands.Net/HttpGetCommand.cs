@@ -20,6 +20,7 @@ namespace Penshell.Commands.Net
         [CommandOption("uri", 'u', IsRequired = true, Description = "The uri for the http request.")]
         public Uri? Uri { get; set; }
 
+        /// <inheritdoc />
         public Task ExecuteAsync(IConsole console)
         {
             // validate

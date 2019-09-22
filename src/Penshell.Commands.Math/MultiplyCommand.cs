@@ -15,6 +15,7 @@ namespace Penshell.Commands.Math
         [CommandOption("multiplyer", 'x', IsRequired = true, Description = "The multiplyer.")]
         public double Multiplyer { get; set; }
 
+        /// <inheritdoc />
         public Task ExecuteAsync(IConsole console)
         {
             console = Guard.Argument(console).NotNull().Value;

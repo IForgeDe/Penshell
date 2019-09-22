@@ -36,6 +36,7 @@ namespace Penshell.Commands.Scripting
 
         public PenshellCommandRegistry Registry { get; }
 
+        /// <inheritdoc />
         public Task ExecuteAsync(IConsole console)
         {
             // validate
