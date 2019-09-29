@@ -8,6 +8,9 @@ namespace Penshell.Commands.Scripting.Engine
     using Penshell.Core;
     using Serilog;
 
+    /// <summary>
+    /// The default penshell script pipeline implementation.
+    /// </summary>
     internal class ScriptPipeline : IScriptPipeline
     {
         private readonly ICommandFactory _commandFactory;
@@ -17,6 +20,24 @@ namespace Penshell.Commands.Scripting.Engine
         private readonly PenshellCommandRegistry _registry;
         private readonly IEnumerable<ScriptLine> _scriptLines;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ScriptPipeline"/> class.
+        /// </summary>
+        /// <param name="scriptLines">
+        /// The script lines.
+        /// </param>
+        /// <param name="registry">
+        /// The <see cref="PenshellCommandRegistry"/> instance.
+        /// </param>
+        /// <param name="commandFactory">
+        /// The <see cref="ICommandFactory"/> instance.
+        /// </param>
+        /// <param name="commandOptionInputConverter">
+        /// The <see cref="ICommandOptionInputConverter"/> instance.
+        /// </param>
+        /// <param name="logger">
+        /// The <see cref="ILogger"/> instance.
+        /// </param>
         public ScriptPipeline(
             IEnumerable<ScriptLine> scriptLines,
             PenshellCommandRegistry registry,
@@ -31,6 +52,7 @@ namespace Penshell.Commands.Scripting.Engine
             _logger = logger;
         }
 
+        /// <inheritdoc />
         public string Execute()
         {
             var commandInputParser = new CommandInputParser();

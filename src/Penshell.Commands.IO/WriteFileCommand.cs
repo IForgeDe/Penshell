@@ -7,15 +7,31 @@ namespace Penshell.Commands.IO
     using CliFx.Services;
     using Dawn;
 
+    /// <summary>
+    /// Writes content to a file.
+    /// </summary>
     [Command("io writefile", Description = "Writes content to a file.")]
     public class WriteFileCommand : ICommand
     {
+        /// <summary>
+        /// Gets or sets the content to write.
+        /// </summary>
+        /// <value>
+        /// The content to write.
+        /// </value>
         [CommandOption("content", 'c', IsRequired = true, Description = "The content to write.")]
         public string? Content { get; set; }
 
+        /// <summary>
+        /// Gets or sets the fully qualified name of the file, or the relative file name, to write to.
+        /// </summary>
+        /// <value>
+        /// The fully qualified name of the file, or the relative file name, to write to.
+        /// </value>
         [CommandOption("path", 'p', IsRequired = true, Description = "The fully qualified name of the file, or the relative file name, to write to.")]
         public string? Path { get; set; }
 
+        /// <inheritdoc />
         public Task ExecuteAsync(IConsole console)
         {
             console = Guard.Argument(console).NotNull().Value;

@@ -9,12 +9,22 @@ namespace Penshell.Commands.Process
     using CliFx.Services;
     using Dawn;
 
+    /// <summary>
+    /// Command for opening the browser of the os with a specified Uri.
+    /// </summary>
     [Command("process openbrowser", Description = "Opens the browser of a uri.")]
     public class OpenBrowserCommand : ICommand
     {
-        [CommandOption("url", 'u', IsRequired = true, Description = "The fully qualified name of the file for the new process, or the relative file name.")]
+        /// <summary>
+        /// Gets or sets the Uri, which will be opened in the browser.
+        /// </summary>
+        /// <value>
+        /// The Uri, which will be opened in the browser.
+        /// </value>
+        [CommandOption("url", 'u', IsRequired = true, Description = "The Uri, which will be opened in the browser.")]
         public Uri? Uri { get; set; }
 
+        /// <inheritdoc />
         public Task ExecuteAsync(IConsole console)
         {
             console = Guard.Argument(console).NotNull().Value;

@@ -4,6 +4,9 @@ namespace Penshell.Commands.Scripting.Engine
     using System.Text;
     using Dawn;
 
+    /// <summary>
+    /// A fluent builder class for creating a <see cref="ScriptLine"/> instance.
+    /// </summary>
     public class ScriptLineBuilder
     {
         private string? _commandDelimiter;
@@ -11,8 +14,23 @@ namespace Penshell.Commands.Scripting.Engine
         private string _rawLine = string.Empty;
         private bool _substitute = false;
 
+        /// <summary>
+        /// Gets the default command delimiter.
+        /// </summary>
+        /// <value>
+        /// The default command delimiter.
+        /// </value>
         public string DefaultCommandDelimiter { get; } = "=>";
 
+        /// <summary>
+        /// Removes the matching quotes described by parameter.
+        /// </summary>
+        /// <param name="stringToTrim">
+        /// The string to trim.
+        /// </param>
+        /// <returns>
+        /// The resulting string.
+        /// </returns>
         public static string RemoveMatchingQuotes(string stringToTrim)
         {
             stringToTrim = Guard.Argument(stringToTrim).NotNull().Value;
@@ -29,6 +47,15 @@ namespace Penshell.Commands.Scripting.Engine
             return stringToTrim;
         }
 
+        /// <summary>
+        /// This method splits an argument string into an string array.
+        /// </summary>
+        /// <param name="argumentString">
+        /// The argument string.
+        /// </param>
+        /// <returns>
+        /// The corresponding string array.
+        /// </returns>
         public static string[] SplitCommandLineArgument(string argumentString)
         {
             StringBuilder translatedArguments = new StringBuilder(argumentString).Replace("\\\"", "\r");
@@ -56,6 +83,12 @@ namespace Penshell.Commands.Scripting.Engine
             return toReturn;
         }
 
+        /// <summary>
+        /// This method builds the scriptline.
+        /// </summary>
+        /// <returns>
+        /// The created <see cref="ScriptLine"/> instance.
+        /// </returns>
         public ScriptLine Build()
         {
             _commandDelimiter ??= this.DefaultCommandDelimiter;
@@ -88,24 +121,60 @@ namespace Penshell.Commands.Scripting.Engine
             }
         }
 
+        /// <summary>
+        /// A fluent method to inject the info, subtitution is desired or not.
+        /// </summary>
+        /// <param name="value">
+        /// The info, subtitution is desired or not.
+        /// </param>
+        /// <returns>
+        /// The fluent instance.
+        /// </returns>
         public ScriptLineBuilder DoSubstitute(bool value)
         {
             _substitute = value;
             return this;
         }
 
+        /// <summary>
+        /// A fluent method to inject a command delimiter.
+        /// </summary>
+        /// <param name="commandDelimiter">
+        /// The command delimiter.
+        /// </param>
+        /// <returns>
+        /// The fluent instance.
+        /// </returns>
         public ScriptLineBuilder UseCommandDelimiter(string commandDelimiter)
         {
             _commandDelimiter = commandDelimiter;
             return this;
         }
 
+        /// <summary>
+        /// A fluent method to inject a line number.
+        /// </summary>
+        /// <param name="lineNumber">
+        /// The line number.
+        /// </param>
+        /// <returns>
+        /// The fluent instance.
+        /// </returns>
         public ScriptLineBuilder UseLineNumber(long lineNumber)
         {
             _lineNumber = lineNumber;
             return this;
         }
 
+        /// <summary>
+        /// A fluent method to inject a raw line.
+        /// </summary>
+        /// <param name="rawLine">
+        /// The raw line.
+        /// </param>
+        /// <returns>
+        /// The fluent instance.
+        /// </returns>
         public ScriptLineBuilder UseRawLine(string rawLine)
         {
             _rawLine = rawLine;

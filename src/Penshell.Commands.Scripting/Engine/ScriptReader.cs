@@ -3,15 +3,31 @@
     using System.Collections.Generic;
     using System.IO;
 
+    /// <summary>
+    /// This class is the default implementation of the <see cref="IScriptReader"/> interface for reading a penshell script file.
+    /// </summary>
     public class ScriptReader : IScriptReader
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ScriptReader"/> class.
+        /// </summary>
+        /// <param name="scriptFile">
+        /// The <see cref="FileInfo"/> instance.
+        /// </param>
         public ScriptReader(FileInfo scriptFile)
         {
             this.ScriptFile = scriptFile;
         }
 
+        /// <summary>
+        /// Gets the <see cref="FileInfo"/> instance.
+        /// </summary>
+        /// <value>
+        /// The <see cref="FileInfo"/> instance.
+        /// </value>
         public FileInfo ScriptFile { get; }
 
+        /// <inheritdoc />
         public IReadOnlyList<ScriptLine> Read()
         {
             var fileLines = File.ReadAllLines(this.ScriptFile.FullName);

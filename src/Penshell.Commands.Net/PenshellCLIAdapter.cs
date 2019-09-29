@@ -5,6 +5,9 @@ namespace Penshell.Commands.Net
     using Microsoft.Extensions.DependencyInjection;
     using Penshell.Core;
 
+    /// <summary>
+    /// The adapter class for the penshell command line interface.
+    /// </summary>
     [Export(typeof(IPenshellCLIAdapter))]
     public class PenshellCLIAdapter : IPenshellCLIAdapter
     {

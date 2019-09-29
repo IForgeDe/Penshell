@@ -4,10 +4,17 @@ namespace Penshell.Core
     using CliFx.Services;
     using Dawn;
 
+    /// <summary>
+    /// A specialized command option input converter to gather and inject the converter collected via mef.
+    /// </summary>
     public class PenshellCommandOptionInputConverter : CommandOptionInputConverter
     {
         private readonly PenshellCommandOptionValueConverterDictionary _registry;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PenshellCommandOptionInputConverter"/> class.
+        /// </summary>
+        /// <param name="registry">The registry tohold the value converter instances.</param>
         public PenshellCommandOptionInputConverter(PenshellCommandOptionValueConverterDictionary registry)
         {
             _registry = Guard.Argument(registry).NotNull().Value;

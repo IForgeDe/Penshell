@@ -7,12 +7,22 @@ namespace Penshell.Commands.IO
     using CliFx.Services;
     using Dawn;
 
+    /// <summary>
+    /// Reads a file.
+    /// </summary>
     [Command("io readfile", Description = "Reads a file.")]
     public class ReadFileCommand : ICommand
     {
+        /// <summary>
+        /// Gets or sets the fully qualified name of the file, or the relative file name, to read.
+        /// </summary>
+        /// <value>
+        /// The fully qualified name of the file, or the relative file name, to read.
+        /// </value>
         [CommandOption("path", 'p', IsRequired = true, Description = "The fully qualified name of the file, or the relative file name, to read.")]
         public string? Path { get; set; }
 
+        /// <inheritdoc />
         public Task ExecuteAsync(IConsole console)
         {
             console = Guard.Argument(console).NotNull().Value;

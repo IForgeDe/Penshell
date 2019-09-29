@@ -17,14 +17,25 @@ namespace PenshellCLI
     using Serilog.Events;
     using Serilog.Sinks.SystemConsole.Themes;
 
+    /// <summary>
+    /// The main programm class.
+    /// </summary>
     public static class Program
     {
         private static ICommandOptionInputConverter? CommandOptionInputConverter { get; set; } = null;
 
         private static PenshellCommandOptionValueConverterDictionary? CommandOptionValueConverterRegistry { get; set; } = null;
 
+        /// <summary>
+        /// Gets or sets the static <see cref="ServiceProvider"/> instance.
+        /// </summary>
         private static ServiceProvider? ServiceProvider { get; set; } = null;
 
+        /// <summary>
+        /// The main entry point of the program.
+        /// </summary>
+        /// <param name="args">The string array of the command line arguments.</param>
+        /// <returns>The generic Task of int, defining the exit code of this console application.</returns>
         public static Task<int> Main(string[] args)
         {
             // reajust culture to unify in and out
