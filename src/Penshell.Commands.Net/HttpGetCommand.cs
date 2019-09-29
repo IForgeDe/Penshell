@@ -11,12 +11,27 @@ namespace Penshell.Commands.Net
     using CliFx.Services;
     using Dawn;
 
+    /// <summary>
+    /// Gets the response of a http get method call.
+    /// </summary>
     [Command("net httpget", Description = "Gets the response of a http get method call.")]
     public class HttpGetCommand : ICommand
     {
+        /// <summary>
+        /// Gets or sets the property of the response for the output (default is StatusCode).
+        /// </summary>
+        /// <value>
+        /// The property of the response for the output (default is StatusCode).
+        /// </value>
         [CommandOption("property", 'p', IsRequired = false, Description = "The property of the response for the output (default is StatusCode).")]
         public string? Property { get; set; }
 
+        /// <summary>
+        /// Gets or sets the uri for the http request.
+        /// </summary>
+        /// <value>
+        /// The uri for the http request.
+        /// </value>
         [CommandOption("uri", 'u', IsRequired = true, Description = "The uri for the http request.")]
         public Uri? Uri { get; set; }
 
