@@ -9,9 +9,15 @@ namespace Penshell.Commands.Process
     using CliFx.Services;
     using Dawn;
 
+    /// <summary>
+    /// Command for opening the browser of the os with a specified Uri.
+    /// </summary>
     [Command("process openbrowser", Description = "Opens the browser of a uri.")]
     public class OpenBrowserCommand : ICommand
     {
+        /// <summary>
+        /// The Uri, which will be opened in the browser.
+        /// </summary>
         [CommandOption("url", 'u', IsRequired = true, Description = "The fully qualified name of the file for the new process, or the relative file name.")]
         public Uri? Uri { get; set; }
 
