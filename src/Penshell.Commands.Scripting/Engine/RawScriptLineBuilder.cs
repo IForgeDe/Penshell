@@ -5,6 +5,9 @@ namespace Penshell.Commands.Scripting.Engine
     using CliFx.Models;
     using Dawn;
 
+    /// <summary>
+    /// This class builds a new raw script line with the substitution from the last command output.
+    /// </summary>
     public class RawScriptLineBuilder
     {
         private CommandInput? _commandInput;
@@ -27,6 +30,15 @@ namespace Penshell.Commands.Scripting.Engine
             return substitution;
         }
 
+        /// <summary>
+        /// Gets the new list of raw command arguments.
+        /// </summary>
+        /// <exception cref="ArgumentException">
+        /// Thrown when one or more arguments have unsupported or illegal values.
+        /// </exception>
+        /// <returns>
+        /// A new list of raw command arguments.
+        /// </returns>
         public IReadOnlyList<string> Build()
         {
             _scriptLine = _scriptLine ?? throw new ArgumentException("Script line not set.");
@@ -59,18 +71,45 @@ namespace Penshell.Commands.Scripting.Engine
             return commandArguments;
         }
 
+        /// <summary>
+        /// A fluent method to inject a <see cref="CommandInput"/> instance.
+        /// </summary>
+        /// <param name="commandInput">
+        /// The <see cref="CommandInput"/> instance.
+        /// </param>
+        /// <returns>
+        /// The fluent instance.
+        /// </returns>
         public RawScriptLineBuilder UseCommandInput(CommandInput commandInput)
         {
             _commandInput = commandInput;
             return this;
         }
 
+        /// <summary>
+        /// A fluent method to inject a <see cref="ScriptLine"/> instance.
+        /// </summary>
+        /// <param name="scriptLine">
+        /// The <see cref="ScriptLine"/> instance.
+        /// </param>
+        /// <returns>
+        /// The fluent instance.
+        /// </returns>
         public RawScriptLineBuilder UseScriptLine(ScriptLine scriptLine)
         {
             _scriptLine = scriptLine;
             return this;
         }
 
+        /// <summary>
+        /// A fluent method to inject a <see cref="string"/> instance for substitution.
+        /// </summary>
+        /// <param name="substitution">
+        /// The <see cref="string"/> instance for substitution.
+        /// </param>
+        /// <returns>
+        /// The fluent instance.
+        /// </returns>
         public RawScriptLineBuilder UseSubstitution(string substitution)
         {
             _substitution = substitution;

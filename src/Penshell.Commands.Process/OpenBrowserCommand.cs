@@ -16,9 +16,12 @@ namespace Penshell.Commands.Process
     public class OpenBrowserCommand : ICommand
     {
         /// <summary>
-        /// The Uri, which will be opened in the browser.
+        /// Gets or sets the Uri, which will be opened in the browser.
         /// </summary>
-        [CommandOption("url", 'u', IsRequired = true, Description = "The fully qualified name of the file for the new process, or the relative file name.")]
+        /// <value>
+        /// The Uri, which will be opened in the browser.
+        /// </value>
+        [CommandOption("url", 'u', IsRequired = true, Description = "The Uri, which will be opened in the browser.")]
         public Uri? Uri { get; set; }
 
         /// <inheritdoc />

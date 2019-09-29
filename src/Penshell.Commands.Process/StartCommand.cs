@@ -8,13 +8,31 @@ namespace Penshell.Commands.Process
     using CliFx.Services;
     using Dawn;
 
+    /// <summary>
+    /// Starts a process.
+    /// </summary>
     [Command("process start", Description = "Starts a process.")]
     public class StartCommand : ICommand
     {
+        /// <summary>
+        /// Gets or sets the fully qualified name of the file for the new process, or the relative file name.
+        /// </summary>
+        /// <value>
+        /// The fully qualified name of the file for the new process, or the relative file name.
+        /// </value>
         [CommandOption("path", 'p', IsRequired = true, Description = "The fully qualified name of the file for the new process, or the relative file name.")]
         public string Path { get; set; } = string.Empty;
 
-        public static async Task<int> RunProcessAsync(string fileName, string args)
+        /// <inheritdoc />
+        public Task ExecuteAsync(IConsole console)
+        {
+            console = Guard.Argument(console).NotNull().Value;
+            _ = RunProcessAsync(this.Path, string.Empty);
+            console.Output.WriteLine("Success");
+            return Task.CompletedTask;
+        }
+
+        private static async Task<int> RunProcessAsync(string fileName, string args)
         {
             using var process = new Process
             {
@@ -30,15 +48,6 @@ namespace Penshell.Commands.Process
                 EnableRaisingEvents = true,
             };
             return await RunProcessAsync(process).ConfigureAwait(false);
-        }
-
-        /// <inheritdoc />
-        public Task ExecuteAsync(IConsole console)
-        {
-            console = Guard.Argument(console).NotNull().Value;
-            _ = RunProcessAsync(this.Path, string.Empty);
-            console.Output.WriteLine("Success");
-            return Task.CompletedTask;
         }
 
         private static Task<int> RunProcessAsync(Process process)

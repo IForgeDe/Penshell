@@ -7,6 +7,9 @@ namespace Penshell.Commands.Scripting
     using CliFx.Services;
     using Dawn;
 
+    /// <summary>
+    /// Exits a penshell script.
+    /// </summary>
     [Command("script exit", Description = "Exits a penshell script.")]
     public class ExitCommand : ICommand
     {

@@ -4,6 +4,9 @@ namespace Penshell.Commands.Net
     using Dawn;
     using Penshell.Core;
 
+    /// <summary>
+    /// This class converts a string to an <see cref="Uri"/> type.
+    /// </summary>
     public class UriConverter : IPenshellCommandOptionValueConverter
     {
         /// <inheritdoc />

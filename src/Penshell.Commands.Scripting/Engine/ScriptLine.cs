@@ -2,6 +2,9 @@ namespace Penshell.Commands.Scripting.Engine
 {
     using System.Collections.Generic;
 
+    /// <summary>
+    /// The penshell script line class.
+    /// </summary>
     public class ScriptLine
     {
         /// <summary>
