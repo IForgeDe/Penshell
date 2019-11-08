@@ -7,12 +7,11 @@ namespace Tests
     using CliFx.Services;
     using NUnit.Framework;
     using Penshell.Commands.Math;
-    using Penshell.Core;
 
     /// <summary>
     /// Test class for <see cref="AddCommand"/>.
     /// </summary>
-    [TestFixture(TestOf=typeof(AddCommand))]
+    [TestFixture(TestOf = typeof(AddCommand))]
     public class AddCommandTests
     {
         /// <summary>
@@ -37,7 +36,7 @@ namespace Tests
             };
 
             // Act
-            await command.ExecuteAsync(console).ConfigureAwait(false);
+            await command.ExecuteAsync(console, console.CancellationToken).ConfigureAwait(false);
 
             // Assert
             Assert.That(Convert.ToDouble(stdout.ToString(), CultureInfo.CurrentCulture), Is.EqualTo(result));

@@ -56,7 +56,7 @@ namespace Penshell.Commands.Scripting.Engine
         public string Execute()
         {
             var commandInputParser = new CommandInputParser();
-            var commandInitializer = new CommandInitializer(_commandOptionInputConverter);
+            var commandInitializer = new CommandInitializer(_commandOptionInputConverter, new EnvironmentVariablesParser());
             string lastOutputString = string.Empty;
             foreach (var scriptLine in _scriptLines)
             {
@@ -85,7 +85,7 @@ namespace Penshell.Commands.Scripting.Engine
                 var command = _commandFactory.CreateCommand(targetCommandSchema);
                 commandInitializer.InitializeCommand(command, targetCommandSchema, commandInput);
                 var virtualConsole = this.CreateVirtualConsole(scriptLine, outputStringBuilder);
-                command.ExecuteAsync(virtualConsole).Wait();
+                command.ExecuteAsync(virtualConsole, virtualConsole.CancellationToken).Wait();
                 lastOutputString = outputStringBuilder.ToString().Trim();
                 _logger?.Information($"Line {scriptLine.LineNumber} [{scriptLine.RawLine}] : {lastOutputString}");
             }

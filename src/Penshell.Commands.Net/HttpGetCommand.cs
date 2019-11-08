@@ -36,7 +36,7 @@ namespace Penshell.Commands.Net
         public Uri? Uri { get; set; }
 
         /// <inheritdoc />
-        public Task ExecuteAsync(IConsole console)
+        public Task ExecuteAsync(IConsole console, CancellationToken cancellationToken)
         {
             // validate
             console = Guard.Argument(console).NotNull().Value;

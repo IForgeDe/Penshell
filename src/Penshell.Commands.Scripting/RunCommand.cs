@@ -1,6 +1,7 @@
 namespace Penshell.Commands.Scripting
 {
     using System.IO;
+    using System.Threading;
     using System.Threading.Tasks;
     using CliFx;
     using CliFx.Attributes;
@@ -85,7 +86,7 @@ namespace Penshell.Commands.Scripting
         public PenshellCommandRegistry Registry { get; }
 
         /// <inheritdoc />
-        public Task ExecuteAsync(IConsole console)
+        public Task ExecuteAsync(IConsole console, CancellationToken cancellationToken)
         {
             // validate
             console = Guard.Argument(console).NotNull().Value;

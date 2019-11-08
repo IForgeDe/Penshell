@@ -3,6 +3,7 @@ namespace Penshell.Commands.Process
     using System;
     using System.Diagnostics;
     using System.Runtime.InteropServices;
+    using System.Threading;
     using System.Threading.Tasks;
     using CliFx;
     using CliFx.Attributes;
@@ -25,7 +26,7 @@ namespace Penshell.Commands.Process
         public Uri? Uri { get; set; }
 
         /// <inheritdoc />
-        public Task ExecuteAsync(IConsole console)
+        public Task ExecuteAsync(IConsole console, CancellationToken cancellationToken)
         {
             console = Guard.Argument(console).NotNull().Value;
             this.Uri = Guard.Argument(this.Uri).NotNull().Value;
