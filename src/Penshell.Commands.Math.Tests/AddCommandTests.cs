@@ -36,7 +36,7 @@ namespace Tests
             };
 
             // Act
-            await command.ExecuteAsync(console, console.CancellationToken).ConfigureAwait(false);
+            await command.ExecuteAsync(console).ConfigureAwait(false);
 
             // Assert
             Assert.That(Convert.ToDouble(stdout.ToString(), CultureInfo.CurrentCulture), Is.EqualTo(result));

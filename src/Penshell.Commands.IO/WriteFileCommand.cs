@@ -1,7 +1,6 @@
 namespace Penshell.Commands.IO
 {
     using System.IO;
-    using System.Threading;
     using System.Threading.Tasks;
     using CliFx;
     using CliFx.Attributes;
@@ -33,7 +32,7 @@ namespace Penshell.Commands.IO
         public string? Path { get; set; }
 
         /// <inheritdoc />
-        public Task ExecuteAsync(IConsole console, CancellationToken cancellationToken)
+        public Task ExecuteAsync(IConsole console)
         {
             console = Guard.Argument(console).NotNull().Value;
             this.Path = Guard.Argument(this.Path).NotNull().NotEmpty().Value;

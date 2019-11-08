@@ -85,7 +85,7 @@ namespace Penshell.Commands.Scripting.Engine
                 var command = _commandFactory.CreateCommand(targetCommandSchema);
                 commandInitializer.InitializeCommand(command, targetCommandSchema, commandInput);
                 var virtualConsole = this.CreateVirtualConsole(scriptLine, outputStringBuilder);
-                command.ExecuteAsync(virtualConsole, virtualConsole.CancellationToken).Wait();
+                command.ExecuteAsync(virtualConsole).Wait();
                 lastOutputString = outputStringBuilder.ToString().Trim();
                 _logger?.Information($"Line {scriptLine.LineNumber} [{scriptLine.RawLine}] : {lastOutputString}");
             }

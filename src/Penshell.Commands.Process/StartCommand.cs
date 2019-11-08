@@ -2,7 +2,6 @@ namespace Penshell.Commands.Process
 {
     using System;
     using System.Diagnostics;
-    using System.Threading;
     using System.Threading.Tasks;
     using CliFx;
     using CliFx.Attributes;
@@ -25,7 +24,7 @@ namespace Penshell.Commands.Process
         public string Path { get; set; } = string.Empty;
 
         /// <inheritdoc />
-        public Task ExecuteAsync(IConsole console, CancellationToken cancellationToken)
+        public Task ExecuteAsync(IConsole console)
         {
             console = Guard.Argument(console).NotNull().Value;
             _ = RunProcessAsync(this.Path, string.Empty);

@@ -1,10 +1,7 @@
 namespace Penshell.Commands.Net
 {
     using System;
-    using System.IO;
     using System.Net.Http;
-    using System.Text;
-    using System.Threading;
     using System.Threading.Tasks;
     using CliFx;
     using CliFx.Attributes;
@@ -36,7 +33,7 @@ namespace Penshell.Commands.Net
         public Uri? Uri { get; set; }
 
         /// <inheritdoc />
-        public Task ExecuteAsync(IConsole console, CancellationToken cancellationToken)
+        public Task ExecuteAsync(IConsole console)
         {
             // validate
             console = Guard.Argument(console).NotNull().Value;

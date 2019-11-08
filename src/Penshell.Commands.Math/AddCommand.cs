@@ -1,7 +1,5 @@
 namespace Penshell.Commands.Math
 {
-    using System;
-    using System.Threading;
     using System.Threading.Tasks;
     using CliFx;
     using CliFx.Attributes;
@@ -33,7 +31,7 @@ namespace Penshell.Commands.Math
         public double SecondSummand { get; set; }
 
         /// <inheritdoc />
-        public Task ExecuteAsync(IConsole console, CancellationToken cancellationToken)
+        public Task ExecuteAsync(IConsole console)
         {
             console = Guard.Argument(console).NotNull().Value;
 
