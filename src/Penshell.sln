@@ -36,6 +36,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Penshell.Commands.Net", "Pe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Penshell.Commands.Process", "Penshell.Commands.Process\Penshell.Commands.Process.csproj", "{DAB70589-DFA2-42F9-8F7D-BC6449B4F77B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Penshell.Commands.Process.Tests", "Penshell.Commands.Process.Tests\Penshell.Commands.Process.Tests.csproj", "{31328B94-23F5-473A-8048-FE5653B02986}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -74,6 +76,10 @@ Global
 		{DAB70589-DFA2-42F9-8F7D-BC6449B4F77B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DAB70589-DFA2-42F9-8F7D-BC6449B4F77B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DAB70589-DFA2-42F9-8F7D-BC6449B4F77B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31328B94-23F5-473A-8048-FE5653B02986}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31328B94-23F5-473A-8048-FE5653B02986}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31328B94-23F5-473A-8048-FE5653B02986}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31328B94-23F5-473A-8048-FE5653B02986}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -85,6 +91,7 @@ Global
 		{22C3FBA8-AAB5-42E8-B948-BD10BA2BA8B5} = {2C9CC332-180D-47C4-8F91-330525FDCA82}
 		{A42FE147-1914-4286-8881-1F02ED726DBF} = {2C9CC332-180D-47C4-8F91-330525FDCA82}
 		{DAB70589-DFA2-42F9-8F7D-BC6449B4F77B} = {2C9CC332-180D-47C4-8F91-330525FDCA82}
+		{31328B94-23F5-473A-8048-FE5653B02986} = {2C9CC332-180D-47C4-8F91-330525FDCA82}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {758B9B2A-AA95-477A-99BC-554051497409}
