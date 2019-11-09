@@ -1,6 +1,6 @@
 # Penshell
 
-[![Build status](https://ci.appveyor.com/api/projects/status/vbmtwe55m4m1dlw4?svg=true)](https://ci.appveyor.com/project/IForgeDe/penshell)
+[![Build](https://github.com/IForgeDe/Penshell/workflows/CI/badge.svg?branch=master)](https://github.com/IForgeDe/Penshell/actions)
 
 Penshell is a experimental command line pipeline with scrippting support written in pure dotnet.
 Its is for developing short Tasks via a simple command line interface and chaining them to a complex scripting process.
