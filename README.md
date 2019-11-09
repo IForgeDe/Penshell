@@ -20,7 +20,7 @@ script pipeline, which is easy to understand, write, manage and test.
 
 Currently this project is in a inital state and there are no releases planed.
 You can check out this code and run it in debug mode to compile with Penshells default commands.
-The release build of Penshell is prepared for the setup process  with comiling in the designated folders.
+The release build of Penshell is prepared for the setup process  with compiling in the designated folders.
 
 ## Libraries used
 
