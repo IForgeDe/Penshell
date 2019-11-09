@@ -15,5 +15,5 @@ jobs:
       with:
         dotnet-version: 3.0.100
 
-    - name: Build & Test
-      run: dotnet test --configuration Debug
+    - name: Build & Test Debug
+      run: dotnet test src/ --configuration Debug
