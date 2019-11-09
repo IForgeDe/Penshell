@@ -13,7 +13,7 @@ namespace Penshell.Commands.Process
     /// <summary>
     /// Command to let the current process sleep for a defined time.
     /// </summary>
-    [Command("process sleep", Description = "Opens the browser of a uri.")]
+    [Command("process sleep", Description = "Let the current process sleep for a defined time.")]
     public class SleepCommand : ICommand
     {
         /// <summary>
