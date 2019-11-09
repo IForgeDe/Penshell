@@ -15,6 +15,7 @@ namespace Penshell.Commands.Process
         {
             services
                 .AddTransient<OpenBrowserCommand>()
+                .AddTransient<SleepCommand>()
                 .AddTransient<StartCommand>();
         }
     }
