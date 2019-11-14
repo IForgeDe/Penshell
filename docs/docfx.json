@@ -16,6 +16,12 @@
     "content": [
       {
         "files": [
+          "README.md"
+        ],
+        "src": "../"
+      },
+      {
+        "files": [
           "api/**.yml",
           "api/index.md"
         ]
@@ -24,8 +30,7 @@
         "files": [
           "articles/**.md",
           "articles/**/toc.yml",
-          "toc.yml",
-          "*.md"
+          "toc.yml"
         ]
       }
     ],
