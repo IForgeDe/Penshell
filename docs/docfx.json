@@ -37,6 +37,7 @@
     "resource": [
       {
         "files": [
+          "index.html",
           "images/**"
         ]
       }
@@ -54,6 +55,16 @@
     ],
     "dest": "_site",
     "globalMetadataFiles": [],
+    "globalMetadata": {
+      "_appTitle": "Penshell",
+      "_appLogoPath": "images/penshell_logo.png",
+      "_appFaviconPath": "images/favicon.ico",
+      "_enableSearch": true,
+      "_enableNewTab": true,
+      "_gitContribute": {
+        "repo": "https://github.com/IForgeDe/Penshell"
+      }
+    },
     "fileMetadataFiles": [],
     "template": [
       "default",
