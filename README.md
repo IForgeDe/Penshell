@@ -1,6 +1,6 @@
 # Penshell
 
-![Penshell](https://repository-images.githubusercontent.com/204852671/b7621980-0727-11ea-97dd-ba5479dc456f | width=350)
+<img src="https://repository-images.githubusercontent.com/204852671/b7621980-0727-11ea-97dd-ba5479dc456f" alt="Penshell" width="350" />
 
 [![Build](https://github.com/IForgeDe/Penshell/workflows/CI/badge.svg?branch=master)](https://github.com/IForgeDe/Penshell/actions)
 
