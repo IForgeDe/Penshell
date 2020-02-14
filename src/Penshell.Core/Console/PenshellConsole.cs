@@ -1,4 +1,4 @@
-﻿namespace Penshell.Core
+﻿namespace Penshell.Core.Console
 {
     using System;
     using CliFx.Services;

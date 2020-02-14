@@ -36,7 +36,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Penshell.Commands.Net", "Pe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Penshell.Commands.Process", "Penshell.Commands.Process\Penshell.Commands.Process.csproj", "{DAB70589-DFA2-42F9-8F7D-BC6449B4F77B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Penshell.Commands.Process.Tests", "Penshell.Commands.Process.Tests\Penshell.Commands.Process.Tests.csproj", "{31328B94-23F5-473A-8048-FE5653B02986}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Penshell.Commands.Process.Tests", "Penshell.Commands.Process.Tests\Penshell.Commands.Process.Tests.csproj", "{31328B94-23F5-473A-8048-FE5653B02986}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

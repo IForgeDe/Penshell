@@ -1,11 +1,11 @@
 namespace Penshell.Commands.Scripting.Engine
 {
     using System.Collections.Generic;
-    using System.IO;
     using System.Text;
     using CliFx.Models;
     using CliFx.Services;
     using Penshell.Core;
+    using Penshell.Core.Console;
     using Serilog;
 
     /// <summary>
@@ -15,7 +15,6 @@ namespace Penshell.Commands.Scripting.Engine
     {
         private readonly ICommandFactory _commandFactory;
         private readonly ICommandOptionInputConverter _commandOptionInputConverter;
-        private readonly Encoding _encoding = Encoding.UTF8;
         private readonly ILogger? _logger = null;
         private readonly PenshellCommandRegistry _registry;
         private readonly IEnumerable<ScriptLine> _scriptLines;
@@ -95,12 +94,10 @@ namespace Penshell.Commands.Scripting.Engine
 
         private IConsole CreateVirtualConsole(ScriptLine scriptLine, StringBuilder outputStringBuilder)
         {
-            var sciptLineBytes = _encoding.GetBytes(scriptLine.RawLine);
-            var scriptLineMemoryStream = new MemoryStream(sciptLineBytes);
-            using var inputStream = new StreamReader(scriptLineMemoryStream);
-            var outputStream = new StringWriter(outputStringBuilder);
-            var errorStream = new StringWriter();
-            return new VirtualConsole(inputStream, outputStream, errorStream);
+            return new VirtualConsoleBuilder()
+                .UseInput(scriptLine.RawLine)
+                .UseOutput(outputStringBuilder)
+                .Build();
         }
     }
 }

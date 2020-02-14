@@ -13,6 +13,7 @@ namespace PenshellCLI
     using CliFx.Services;
     using Microsoft.Extensions.DependencyInjection;
     using Penshell.Core;
+    using Penshell.Core.Console;
     using Serilog;
     using Serilog.Events;
     using Serilog.Sinks.SystemConsole.Themes;
