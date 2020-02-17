@@ -1,34 +1,39 @@
 namespace Penshell.Commands.Math
 {
+    using System;
+    using System.CommandLine;
+    using System.CommandLine.Invocation;
+    using System.Globalization;
     using System.Threading.Tasks;
-    using CliFx;
-    using CliFx.Attributes;
-    using CliFx.Services;
     using Dawn;
+    using Penshell.Core;
 
     /// <summary>
     /// Returns the absolute value of a specified number.
     /// </summary>
-    [Command("math abs", Description = "Returns the absolute value of a specified number.")]
-    public class AbsCommand : ICommand
+    public class AbsCommand : PenshellCommand
     {
         /// <summary>
-        /// Gets or sets a number that is greater than or equal to MinValue, but less than or equal to MaxValue.
+        /// Initializes a new instance of the <see cref="AbsCommand"/> class.
         /// </summary>
-        /// <value>
-        /// A number that is greater than or equal to MinValue, but less than or equal to MaxValue.
-        /// </value>
-        [CommandOption("value", 'v', IsRequired = true, Description = "A number that is greater than or equal to MinValue, but less than or equal to MaxValue.")]
-        public double Value { get; set; }
+        /// <param name="console">The <see cref="IConsole"/> instance.</param>
+        public AbsCommand(IConsole console)
+            : base(console, "abs", "Returns the absolute value of a specified number.")
+        {
+            this.AddOption(
+                new Option(
+                    new string[] { "-v", "--value" },
+                    "A number that is greater than or equal to MinValue, but less than or equal to MaxValue.")
+                    {
+                        Argument = new Argument<double>(),
+                        Required = true,
+                    });
+        }
 
         /// <inheritdoc />
-        public Task ExecuteAsync(IConsole console)
+        public override ICommandHandler CreateCommandHandler()
         {
-            console = Guard.Argument(console).NotNull().Value;
-
-            var result = System.Math.Abs(this.Value);
-            console.Output.WriteLine(result);
-            return Task.CompletedTask;
+            return CommandHandler.Create<double>((value) => this.Console.Out.Write(Convert.ToString(System.Math.Abs(value), CultureInfo.InvariantCulture)));
         }
     }
 }

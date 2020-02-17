@@ -3,6 +3,7 @@
   <Rules AnalyzerId="Microsoft.Analyzers.ManagedCodeAnalysis" RuleNamespace="Microsoft.Rules.Managed">
     <Rule Id="CA1056" Action="None" /> <!-- neverrequired -->
     <Rule Id="CA1303" Action="None" /> <!-- neverrequired -->
+    <Rule Id="CA1710" Action="None" /> <!-- neverrequired -->
   </Rules>
   <Rules AnalyzerId="Microsoft.CodeAnalysis.CSharp" RuleNamespace="Microsoft.CodeAnalysis.CSharp">
     <Rule Id="CS1591" Action="Warning" /> <!-- laterrequired -->
