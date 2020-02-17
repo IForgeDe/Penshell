@@ -35,7 +35,7 @@ namespace Penshell.Commands.Math
         public IFormatProvider FormatProvider { get; }
 
         /// <inheritdoc />
-        public override ICommandHandler CreateCommandHandler()
+        protected override ICommandHandler CreateCommandHandler()
         {
             return CommandHandler.Create<double>((value) => this.Console.Out.Write(Convert.ToString(System.Math.Abs(value), this.FormatProvider)));
         }

@@ -31,6 +31,6 @@
         /// Creates the command handler.
         /// </summary>
         /// <returns>The <see cref="ICommandHandler"/> instance.</returns>
-        public abstract ICommandHandler CreateCommandHandler();
+        protected abstract ICommandHandler CreateCommandHandler();
     }
 }

@@ -31,7 +31,7 @@ namespace Penshell.Commands.Scripting.Engine
             _commandRegistry = _commandRegistry ?? throw new InvalidOperationException("Command registry not set.");
             _commandOptionInputConverter = _commandOptionInputConverter ?? throw new InvalidOperationException("Command option input converter not set.");
             _commandFactory = _commandFactory ?? throw new InvalidOperationException("Command factory not set.");
-            return new ScriptPipeline(_scriptReader.Read(), _commandRegistry, _commandFactory, _commandOptionInputConverter, _logger);
+            return new ScriptPipeline(_scriptReader.Read(), _logger);
         }
 
         /// <summary>

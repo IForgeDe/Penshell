@@ -1,17 +1,17 @@
 namespace Penshell.Core.Console
 {
-    using CliFx.Services;
+    using System.CommandLine;
 
     /// <summary>
     /// A fluent builder for building the penshell console.
     /// </summary>
-    public static class PenshellConsoleBuilder
+    public class PenshellConsoleBuilder
     {
         /// <summary>
         /// Builds the <see cref="IConsole"/> instance.
         /// </summary>
         /// <returns>The <see cref="IConsole"/> instance.</returns>
-        public static IConsole Build()
+        public IConsole Build()
         {
             return new PenshellConsole();
         }

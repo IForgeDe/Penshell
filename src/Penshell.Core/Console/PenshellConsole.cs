@@ -1,24 +1,17 @@
 ﻿namespace Penshell.Core.Console
 {
-    using System;
-    using CliFx.Services;
+    using System.CommandLine.IO;
 
     /// <summary>
-    /// Specialization of <see cref="VirtualConsole"/> that wraps Penshell functionality.
+    /// Specialized console class that wraps Penshell functionality.
     /// </summary>
-    public class PenshellConsole : VirtualConsole
+    public class PenshellConsole : TestConsole
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PenshellConsole"/> class.
         /// </summary>
         public PenshellConsole()
-            : base(
-                  Console.In,
-                  Console.IsInputRedirected,
-                  Console.Out,
-                  Console.IsOutputRedirected,
-                  Console.Error,
-                  Console.IsErrorRedirected)
+            : base()
         {
         }
     }

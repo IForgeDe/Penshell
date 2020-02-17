@@ -20,6 +20,11 @@ namespace PenshellCLI
     public static class Program
     {
         /// <summary>
+        /// Gets the <see cref="PenshellCommandRegistry"/> instance.
+        /// </summary>
+        private static PenshellCommandRegistry Registry { get; } = new PenshellCommandRegistry();
+
+        /// <summary>
         /// Gets or sets the static <see cref="ServiceProvider"/> instance.
         /// </summary>
         private static ServiceProvider? ServiceProvider { get; set; } = null;
@@ -90,8 +95,11 @@ namespace PenshellCLI
                 adapterRootCommands.AddRange(cliAdapter.CreateCommands(ServiceProvider));
             }
 
+            // register command for later usage
+            Registry.Register(adapterRootCommands);
+
             // build command structure
-            var rootCommand = new RootCommand("Welcome to the penshell root command. This command is useless.");
+            var rootCommand = new RootCommand("Welcome to the penshell cli.");
             foreach (var adapterRootCommand in adapterRootCommands)
             {
                 rootCommand.AddCommand(adapterRootCommand);
@@ -110,6 +118,7 @@ namespace PenshellCLI
             services.AddTransient<IFormatProvider>((_) => CultureInfo.InvariantCulture);
             services.AddTransient<IConsole, SystemConsole>();
             services.AddTransient((_) => Log.Logger);
+            services.AddSingleton((_) => Registry);
         }
     }
 }

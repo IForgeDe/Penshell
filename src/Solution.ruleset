@@ -7,6 +7,8 @@
     <Rule Id="CA1303" Action="None" />
     <!-- neverrequired -->
     <Rule Id="CA1710" Action="None" />
+    <!-- laterrequired -->
+    <Rule Id="CA1822" Action="None" />
     <!-- neverrequired -->
     <Rule Id="CA2214" Action="None" />
   </Rules>
