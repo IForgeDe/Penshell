@@ -1,7 +1,8 @@
 namespace Penshell.Commands.Net
 {
+    using System.Collections.Generic;
+    using System.CommandLine;
     using System.Composition;
-    using Dawn;
     using Microsoft.Extensions.DependencyInjection;
     using Penshell.Core;
 
@@ -12,17 +13,20 @@ namespace Penshell.Commands.Net
     public class PenshellCLIAdapter : IPenshellCLIAdapter
     {
         /// <inheritdoc />
-        public void ConfigureServices(ServiceCollection services)
+        public void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient<HttpGetCommand>();
         }
 
         /// <inheritdoc />
-        public void RegisterCommandOptionValueConverters(PenshellCommandOptionValueConverterDictionary registry)
+        public IEnumerable<Command> CreateCommands(ServiceProvider serviceProvider)
         {
-            registry = Guard.Argument(registry).NotNull().Value;
-
-            registry.Add(new UriConverter());
+            var domainCommand = new Command("net");
+            var commandsList = new List<Command>
+            {
+                domainCommand,
+            };
+            return commandsList;
         }
     }
 }

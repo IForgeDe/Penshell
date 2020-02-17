@@ -19,6 +19,7 @@
             : base(name, description)
         {
             this.Console = console ?? throw new ArgumentNullException(nameof(console));
+            this.Handler = this.CreateCommandHandler();
         }
 
         /// <summary>
