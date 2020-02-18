@@ -30,6 +30,7 @@ namespace Penshell.Commands.Math
             domainCommand.AddCommand(serviceProvider.GetService<AbsCommand>());
             domainCommand.AddCommand(serviceProvider.GetService<AddCommand>());
             domainCommand.AddCommand(serviceProvider.GetService<DivideCommand>());
+            domainCommand.AddCommand(serviceProvider.GetService<MultiplyCommand>());
             var commandsList = new List<Command>
             {
                 domainCommand,

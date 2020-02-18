@@ -16,9 +16,8 @@ namespace Penshell.Commands.Math
         /// <param name="console">The <see cref="IConsole"/> instance.</param>
         /// <param name="formatProvider">The <see cref="IFormatProvider"/> instance.</param>
         public AbsCommand(IConsole console, IFormatProvider formatProvider)
-            : base(console, "abs", "Returns the absolute value of a specified number.")
+            : base(console, formatProvider, "abs", "Returns the absolute value of a specified number.")
         {
-            this.FormatProvider = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
             this.AddOption(
                 new Option(
                     new string[] { "-v", "--value" },
@@ -28,11 +27,6 @@ namespace Penshell.Commands.Math
                     Required = true,
                 });
         }
-
-        /// <summary>
-        /// Gets the <see cref="IFormatProvider"/> instance.
-        /// </summary>
-        public IFormatProvider FormatProvider { get; }
 
         /// <inheritdoc />
         protected override ICommandHandler CreateCommandHandler()

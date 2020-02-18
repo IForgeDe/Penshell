@@ -16,9 +16,8 @@ namespace Penshell.Commands.Math
         /// <param name="console">The <see cref="IConsole"/> instance.</param>
         /// <param name="formatProvider">The <see cref="IFormatProvider"/> instance.</param>
         public DivideCommand(IConsole console, IFormatProvider formatProvider)
-            : base(console, "divide", "Calculates the division of two values.")
+            : base(console, formatProvider, "divide", "Calculates the division of two values.")
         {
-            this.FormatProvider = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
             this.AddOption(
                 new Option(
                     new string[] { "-x", "--dividend" },
@@ -36,11 +35,6 @@ namespace Penshell.Commands.Math
                     Required = true,
                 });
         }
-
-        /// <summary>
-        /// Gets the <see cref="IFormatProvider"/> instance.
-        /// </summary>
-        public IFormatProvider FormatProvider { get; }
 
         /// <inheritdoc />
         protected override ICommandHandler CreateCommandHandler()

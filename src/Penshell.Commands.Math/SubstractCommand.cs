@@ -1,43 +1,48 @@
 namespace Penshell.Commands.Math
 {
-    using System.Threading.Tasks;
-    using CliFx;
-    using CliFx.Attributes;
-    using CliFx.Services;
-    using Dawn;
+    using System;
+    using System.CommandLine;
+    using System.CommandLine.Invocation;
+    using Penshell.Core;
 
     /// <summary>
     /// Calculates the substraction of two values.
     /// </summary>
-    [Command("math substract", Description = "Calculates the substraction of two values.")]
-    public class SubstractCommand : ICommand
+    public class SubstractCommand : PenshellCommand
     {
         /// <summary>
-        /// Gets or sets the minuend.
+        /// Initializes a new instance of the <see cref="SubstractCommand"/> class.
         /// </summary>
-        /// <value>
-        /// The minuend.
-        /// </value>
-        [CommandOption("minuend", 'x', IsRequired = true, Description = "The minuend.")]
-        public double Minuend { get; set; }
-
-        /// <summary>
-        /// Gets or sets the subtrahend.
-        /// </summary>
-        /// <value>
-        /// The subtrahend.
-        /// </value>
-        [CommandOption("subtrahend", 'y', IsRequired = true, Description = "The subtrahend.")]
-        public double Subtrahend { get; set; }
+        /// <param name="console">The <see cref="IConsole"/> instance.</param>
+        /// <param name="formatProvider">The <see cref="IFormatProvider"/> instance.</param>
+        public SubstractCommand(IConsole console, IFormatProvider formatProvider)
+            : base(console, formatProvider, "substract", "Calculates the substraction of two values.")
+        {
+            this.AddOption(
+                new Option(
+                    new string[] { "-x", "--minuend" },
+                    "The minuend.")
+                {
+                    Argument = new Argument<double>(),
+                    Required = true,
+                });
+            this.AddOption(
+                new Option(
+                    new string[] { "-y", "--subtrahend" },
+                    "The subtrahend.")
+                {
+                    Argument = new Argument<double>(),
+                    Required = true,
+                });
+        }
 
         /// <inheritdoc />
-        public Task ExecuteAsync(IConsole console)
+        protected override ICommandHandler CreateCommandHandler()
         {
-            console = Guard.Argument(console).NotNull().Value;
-
-            var result = this.Minuend - this.Subtrahend;
-            console.Output.WriteLine(result);
-            return Task.CompletedTask;
+            return CommandHandler.Create<double, double>((minuend, subtrahend) =>
+            {
+                this.Console.Out.Write(Convert.ToString(minuend - subtrahend, this.FormatProvider));
+            });
         }
     }
 }
