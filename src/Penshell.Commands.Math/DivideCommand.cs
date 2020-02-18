@@ -1,52 +1,54 @@
 namespace Penshell.Commands.Math
 {
     using System;
-    using System.Globalization;
-    using System.Threading.Tasks;
-    using CliFx;
-    using CliFx.Attributes;
-    using CliFx.Exceptions;
-    using CliFx.Services;
-    using Dawn;
+    using System.CommandLine;
+    using System.CommandLine.Invocation;
+    using Penshell.Core;
 
     /// <summary>
     /// Calculates the division of two values.
     /// </summary>
-    [Command("math divide", Description = "Calculates the division of two values.")]
-    public class DivideCommand : ICommand
+    public class DivideCommand : PenshellCommand
     {
         /// <summary>
-        /// Gets or sets the dividend.
+        /// Initializes a new instance of the <see cref="DivideCommand"/> class.
         /// </summary>
-        /// <value>
-        /// The dividend.
-        /// </value>
-        [CommandOption("dividend", 'x', IsRequired = true, Description = "The dividend.")]
-        public double Dividend { get; set; }
+        /// <param name="console">The <see cref="IConsole"/> instance.</param>
+        /// <param name="formatProvider">The <see cref="IFormatProvider"/> instance.</param>
+        public DivideCommand(IConsole console, IFormatProvider formatProvider)
+            : base(console, "divide", "Calculates the division of two values.")
+        {
+            this.FormatProvider = formatProvider ?? throw new ArgumentNullException(nameof(formatProvider));
+            this.AddOption(
+                new Option(
+                    new string[] { "-x", "--dividend" },
+                    "The dividend.")
+                {
+                    Argument = new Argument<double>(),
+                    Required = true,
+                });
+            this.AddOption(
+                new Option(
+                    new string[] { "-y", "--divisor" },
+                    "The devisor.")
+                {
+                    Argument = new Argument<double>(),
+                    Required = true,
+                });
+        }
 
         /// <summary>
-        /// Gets or sets the devisor.
+        /// Gets the <see cref="IFormatProvider"/> instance.
         /// </summary>
-        /// <value>
-        /// The devisor.
-        /// </value>
-        [CommandOption("divisor", 'y', IsRequired = true, Description = "The devisor.")]
-        public double Divisor { get; set; }
+        public IFormatProvider FormatProvider { get; }
 
         /// <inheritdoc />
-        public Task ExecuteAsync(IConsole console)
+        protected override ICommandHandler CreateCommandHandler()
         {
-            console = Guard.Argument(console).NotNull().Value;
-
-            if (Math.Abs(this.Divisor) < double.Epsilon)
+            return CommandHandler.Create<double, double>((dividend, divisor) =>
             {
-                throw new CommandException("Division by zero is not supported.", 1337);
-            }
-
-            var result = this.Dividend / this.Divisor;
-            console.Output.WriteLine(Convert.ToString(result, CultureInfo.InvariantCulture));
-
-            return Task.CompletedTask;
+                this.Console.Out.Write(Convert.ToString(dividend / divisor, this.FormatProvider));
+            });
         }
     }
 }
