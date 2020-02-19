@@ -34,13 +34,13 @@ namespace Penshell.Commands.Scripting.Engine
         public static string RemoveMatchingQuotes(string stringToTrim)
         {
             stringToTrim = Guard.Argument(stringToTrim).NotNull().Value;
-            int firstQuoteIndex = stringToTrim.IndexOf('"', StringComparison.Ordinal);
+            int firstQuoteIndex = stringToTrim.IndexOf('"');
             int lastQuoteIndex = stringToTrim.LastIndexOf('"');
             while (firstQuoteIndex != lastQuoteIndex)
             {
                 stringToTrim = stringToTrim.Remove(firstQuoteIndex, 1);
                 stringToTrim = stringToTrim.Remove(lastQuoteIndex - 1, 1); // -1 because we've shifted the indicies left by one
-                firstQuoteIndex = stringToTrim.IndexOf('"', StringComparison.Ordinal);
+                firstQuoteIndex = stringToTrim.IndexOf('"');
                 lastQuoteIndex = stringToTrim.LastIndexOf('"');
             }
 
@@ -77,7 +77,7 @@ namespace Penshell.Commands.Scripting.Engine
             for (int i = 0; i < toReturn.Length; i++)
             {
                 toReturn[i] = RemoveMatchingQuotes(toReturn[i]);
-                toReturn[i] = toReturn[i].Replace("\r", "\"", StringComparison.Ordinal);
+                toReturn[i] = toReturn[i].Replace("\r", "\"");
             }
 
             return toReturn;
@@ -115,7 +115,7 @@ namespace Penshell.Commands.Scripting.Engine
             }
             else
             {
-                var crumbs = _rawLine.Split(_commandDelimiter);
+                var crumbs = _rawLine.Split(new string[] { _commandDelimiter }, StringSplitOptions.RemoveEmptyEntries);
                 var arguments = SplitCommandLineArgument(crumbs[1]);
                 return new ScriptLine(_lineNumber, _rawLine, isScriptLine, crumbs[0].Trim(), arguments);
             }

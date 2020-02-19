@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net48</TargetFramework>
+    <StartupObject>PenshellFXCLI.Program</StartupObject>
+    <AssemblyName>penfx</AssemblyName>
+    <PackageId>Penshell</PackageId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.1" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
+    <PackageReference Include="System.Composition.TypedParts" Version="1.4.0" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <ProjectReference Include="..\Penshell.Core\Penshell.Core.csproj" />
+  </ItemGroup>
+
+  <Choose>
+    <When Condition=" '$(Configuration)' == 'Debug' ">
+      <ItemGroup>
+        <ProjectReference Include="..\Penshell.Commands.IO\Penshell.Commands.IO.csproj" />
+        <ProjectReference Include="..\Penshell.Commands.Math\Penshell.Commands.Math.csproj" />
+        <ProjectReference Include="..\Penshell.Commands.Net\Penshell.Commands.Net.csproj" />
+        <ProjectReference Include="..\Penshell.Commands.Process\Penshell.Commands.Process.csproj" />
+        <ProjectReference Include="..\Penshell.Commands.Scripting\Penshell.Commands.Scripting.csproj" />
+      </ItemGroup>
+    </When>
+  </Choose>
+
+</Project>
