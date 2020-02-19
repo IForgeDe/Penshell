@@ -4,6 +4,7 @@ namespace Penshell.Commands.Math
     using System.CommandLine;
     using System.CommandLine.Invocation;
     using Penshell.Core;
+    using Penshell.Core.Console;
 
     /// <summary>
     /// Calculates the addition of two values.
@@ -13,10 +14,9 @@ namespace Penshell.Commands.Math
         /// <summary>
         /// Initializes a new instance of the <see cref="AddCommand"/> class.
         /// </summary>
-        /// <param name="console">The <see cref="IConsole"/> instance.</param>
-        /// <param name="formatProvider">The <see cref="IFormatProvider"/> instance.</param>
-        public AddCommand(IConsole console, IFormatProvider formatProvider)
-            : base(console, formatProvider, "add", "Calculates the addition of two values.")
+        /// <param name="console">The <see cref="IPenshellConsole"/> instance.</param>
+        public AddCommand(IPenshellConsole console)
+            : base(console, "add", "Calculates the addition of two values.")
         {
             this.AddOption(
                 new Option(
@@ -39,7 +39,7 @@ namespace Penshell.Commands.Math
         /// <inheritdoc />
         protected override ICommandHandler CreateCommandHandler()
         {
-            return CommandHandler.Create<double, double>((first, second) => this.Console.Out.Write(Convert.ToString(first + second, this.FormatProvider)));
+            return CommandHandler.Create<double, double>((first, second) => this.Console.Out.Write(Convert.ToString(first + second, this.Console.CultureInfo)));
         }
     }
 }

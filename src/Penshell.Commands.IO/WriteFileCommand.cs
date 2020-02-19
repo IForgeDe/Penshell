@@ -1,50 +1,63 @@
 namespace Penshell.Commands.IO
 {
+    using System.CommandLine;
+    using System.CommandLine.Invocation;
     using System.IO;
-    using System.Threading.Tasks;
-    using CliFx;
-    using CliFx.Attributes;
-    using CliFx.Services;
     using Dawn;
+    using Penshell.Core;
+    using Penshell.Core.Console;
 
     /// <summary>
     /// Writes content to a file.
     /// </summary>
-    [Command("io writefile", Description = "Writes content to a file.")]
-    public class WriteFileCommand : ICommand
+    public class WriteFileCommand : PenshellCommand
     {
         /// <summary>
-        /// Gets or sets the content to write.
+        /// Initializes a new instance of the <see cref="WriteFileCommand"/> class.
         /// </summary>
-        /// <value>
-        /// The content to write.
-        /// </value>
-        [CommandOption("content", 'c', IsRequired = true, Description = "The content to write.")]
-        public string? Content { get; set; }
+        /// <param name="console">The <see cref="IPenshellConsole"/> instance.</param>
+        public WriteFileCommand(IPenshellConsole console)
+            : base(console, "writefile", "Writes content to a file.")
+        {
+            this.AddOption(
+                new Option(
+                    new string[] { "-p", "--path" },
+                    "The fully qualified name of the file, or the relative file name, to write to.")
+                {
+                    Argument = new Argument<FileInfo>(),
+                    Required = true,
+                });
+            this.AddOption(
+                new Option(
+                    new string[] { "-c", "--content" },
+                    "The content to write.")
+                {
+                    Argument = new Argument<string>(),
+                    Required = true,
+                });
+        }
 
         /// <summary>
-        /// Gets or sets the fully qualified name of the file, or the relative file name, to write to.
+        /// Executes this command.
         /// </summary>
-        /// <value>
-        /// The fully qualified name of the file, or the relative file name, to write to.
-        /// </value>
-        [CommandOption("path", 'p', IsRequired = true, Description = "The fully qualified name of the file, or the relative file name, to write to.")]
-        public string? Path { get; set; }
-
-        /// <inheritdoc />
-        public Task ExecuteAsync(IConsole console)
+        /// <param name="fileInfo">The <see cref="FileInfo"/> to write to.</param>
+        /// <param name="content">The conente to write.</param>
+        public void Execute(FileInfo fileInfo, string content)
         {
-            console = Guard.Argument(console).NotNull().Value;
-            this.Path = Guard.Argument(this.Path).NotNull().NotEmpty().Value;
-            this.Content = Guard.Argument(this.Content).NotNull().NotEmpty().Value;
-
-            using (var streamWriter = new StreamWriter(this.Path))
+            fileInfo = Guard.Argument(fileInfo).NotNull();
+            using (var fileStream = fileInfo.OpenWrite())
             {
-                streamWriter.Write(this.Content);
+                using var streamWriter = new StreamWriter(fileStream);
+                streamWriter.Write(content);
             }
 
-            console.Output.WriteLine("Success");
-            return Task.CompletedTask;
+            this.Console.Out.Write("Success");
+        }
+
+        /// <inheritdoc />
+        protected override ICommandHandler CreateCommandHandler()
+        {
+            return CommandHandler.Create<FileInfo, string>((path, content) => this.Execute(path, content));
         }
     }
 }

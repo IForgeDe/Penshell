@@ -4,6 +4,7 @@ namespace Penshell.Commands.Math
     using System.CommandLine;
     using System.CommandLine.Invocation;
     using Penshell.Core;
+    using Penshell.Core.Console;
 
     /// <summary>
     /// Calculates the substraction of two values.
@@ -13,10 +14,9 @@ namespace Penshell.Commands.Math
         /// <summary>
         /// Initializes a new instance of the <see cref="SubstractCommand"/> class.
         /// </summary>
-        /// <param name="console">The <see cref="IConsole"/> instance.</param>
-        /// <param name="formatProvider">The <see cref="IFormatProvider"/> instance.</param>
-        public SubstractCommand(IConsole console, IFormatProvider formatProvider)
-            : base(console, formatProvider, "substract", "Calculates the substraction of two values.")
+        /// <param name="console">The <see cref="IPenshellConsole"/> instance.</param>
+        public SubstractCommand(IPenshellConsole console)
+            : base(console, "substract", "Calculates the substraction of two values.")
         {
             this.AddOption(
                 new Option(
@@ -41,7 +41,7 @@ namespace Penshell.Commands.Math
         {
             return CommandHandler.Create<double, double>((minuend, subtrahend) =>
             {
-                this.Console.Out.Write(Convert.ToString(minuend - subtrahend, this.FormatProvider));
+                this.Console.Out.Write(Convert.ToString(minuend - subtrahend, this.Console.CultureInfo));
             });
         }
     }

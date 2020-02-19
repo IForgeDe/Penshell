@@ -4,6 +4,7 @@ namespace Penshell.Commands.Math
     using System.CommandLine;
     using System.CommandLine.Invocation;
     using Penshell.Core;
+    using Penshell.Core.Console;
 
     /// <summary>
     /// Returns the absolute value of a specified number.
@@ -13,10 +14,9 @@ namespace Penshell.Commands.Math
         /// <summary>
         /// Initializes a new instance of the <see cref="AbsCommand"/> class.
         /// </summary>
-        /// <param name="console">The <see cref="IConsole"/> instance.</param>
-        /// <param name="formatProvider">The <see cref="IFormatProvider"/> instance.</param>
-        public AbsCommand(IConsole console, IFormatProvider formatProvider)
-            : base(console, formatProvider, "abs", "Returns the absolute value of a specified number.")
+        /// <param name="console">The <see cref="IPenshellConsole"/> instance.</param>
+        public AbsCommand(IPenshellConsole console)
+            : base(console, "abs", "Returns the absolute value of a specified number.")
         {
             this.AddOption(
                 new Option(
@@ -31,7 +31,7 @@ namespace Penshell.Commands.Math
         /// <inheritdoc />
         protected override ICommandHandler CreateCommandHandler()
         {
-            return CommandHandler.Create<double>((value) => this.Console.Out.Write(Convert.ToString(System.Math.Abs(value), this.FormatProvider)));
+            return CommandHandler.Create<double>((value) => this.Console.Out.Write(Convert.ToString(System.Math.Abs(value), this.Console.CultureInfo)));
         }
     }
 }

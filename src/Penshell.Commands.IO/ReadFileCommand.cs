@@ -1,43 +1,53 @@
 namespace Penshell.Commands.IO
 {
+    using System.CommandLine;
+    using System.CommandLine.Invocation;
     using System.IO;
-    using System.Threading.Tasks;
-    using CliFx;
-    using CliFx.Attributes;
-    using CliFx.Services;
     using Dawn;
+    using Penshell.Core;
+    using Penshell.Core.Console;
 
     /// <summary>
     /// Reads a file.
     /// </summary>
-    [Command("io readfile", Description = "Reads a file.")]
-    public class ReadFileCommand : ICommand
+    public class ReadFileCommand : PenshellCommand
     {
         /// <summary>
-        /// Gets or sets the fully qualified name of the file, or the relative file name, to read.
+        /// Initializes a new instance of the <see cref="ReadFileCommand"/> class.
         /// </summary>
-        /// <value>
-        /// The fully qualified name of the file, or the relative file name, to read.
-        /// </value>
-        [CommandOption("path", 'p', IsRequired = true, Description = "The fully qualified name of the file, or the relative file name, to read.")]
-        public string? Path { get; set; }
+        /// <param name="console">The <see cref="IPenshellConsole"/> instance.</param>
+        public ReadFileCommand(IPenshellConsole console)
+            : base(console, "readfile", "Reads a file.")
+        {
+            this.AddOption(
+                new Option(
+                    new string[] { "-p", "--path" },
+                    "The fully qualified name of the file, or the relative file name, to read.")
+                {
+                    Argument = new Argument<FileInfo>(),
+                    Required = true,
+                });
+        }
+
+        /// <summary>
+        /// Executes this command.
+        /// </summary>
+        /// <param name="fileInfo">The <see cref="FileInfo"/> to read.</param>
+        public void Execute(FileInfo fileInfo)
+        {
+            fileInfo = Guard.Argument(fileInfo).NotNull();
+            using var stream = new BinaryReader(fileInfo.OpenRead());
+            var buffer = new byte[1024];
+            while (stream.Read(buffer, 0, buffer.Length) > 0)
+            {
+                this.Console.Out.Write(this.Console.Encoding.GetString(buffer));
+            }
+        }
 
         /// <inheritdoc />
-        public Task ExecuteAsync(IConsole console)
+        protected override ICommandHandler CreateCommandHandler()
         {
-            console = Guard.Argument(console).NotNull().Value;
-            this.Path = Guard.Argument(this.Path).NotNull().NotEmpty().Value;
-
-            using (var stream = new BinaryReader(File.OpenRead(this.Path)))
-            {
-                var buffer = new byte[1024];
-                while (stream.Read(buffer, 0, buffer.Length) > 0)
-                {
-                    console.Output.WriteLine(console.Output.Encoding.GetString(buffer));
-                }
-            }
-
-            return Task.CompletedTask;
+            return CommandHandler.Create<FileInfo>((path) => this.Execute(path));
         }
     }
 }

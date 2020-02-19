@@ -3,13 +3,12 @@ namespace PenshellCLI
     using System;
     using System.Collections.Generic;
     using System.CommandLine;
-    using System.CommandLine.IO;
     using System.Composition.Hosting;
-    using System.Globalization;
     using System.IO;
     using System.Reflection;
     using Microsoft.Extensions.DependencyInjection;
     using Penshell.Core;
+    using Penshell.Core.Console;
     using Serilog;
     using Serilog.Events;
     using Serilog.Sinks.SystemConsole.Themes;
@@ -115,8 +114,7 @@ namespace PenshellCLI
         /// <param name="services">The <see cref="IServiceCollection"/> instance.</param>
         private static void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient<IFormatProvider>((_) => CultureInfo.InvariantCulture);
-            services.AddTransient<IConsole, SystemConsole>();
+            services.AddTransient((_) => new PenshellConsoleBuilder().Build());
             services.AddTransient((_) => Log.Logger);
             services.AddSingleton((_) => Registry);
         }

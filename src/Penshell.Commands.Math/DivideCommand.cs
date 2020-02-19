@@ -4,6 +4,7 @@ namespace Penshell.Commands.Math
     using System.CommandLine;
     using System.CommandLine.Invocation;
     using Penshell.Core;
+    using Penshell.Core.Console;
 
     /// <summary>
     /// Calculates the division of two values.
@@ -13,10 +14,9 @@ namespace Penshell.Commands.Math
         /// <summary>
         /// Initializes a new instance of the <see cref="DivideCommand"/> class.
         /// </summary>
-        /// <param name="console">The <see cref="IConsole"/> instance.</param>
-        /// <param name="formatProvider">The <see cref="IFormatProvider"/> instance.</param>
-        public DivideCommand(IConsole console, IFormatProvider formatProvider)
-            : base(console, formatProvider, "divide", "Calculates the division of two values.")
+        /// <param name="console">The <see cref="IPenshellConsole"/> instance.</param>
+        public DivideCommand(IPenshellConsole console)
+            : base(console, "divide", "Calculates the division of two values.")
         {
             this.AddOption(
                 new Option(
@@ -41,7 +41,7 @@ namespace Penshell.Commands.Math
         {
             return CommandHandler.Create<double, double>((dividend, divisor) =>
             {
-                this.Console.Out.Write(Convert.ToString(dividend / divisor, this.FormatProvider));
+                this.Console.Out.Write(Convert.ToString(dividend / divisor, this.Console.CultureInfo));
             });
         }
     }

@@ -4,6 +4,7 @@ namespace Penshell.Commands.Math
     using System.CommandLine;
     using System.CommandLine.Invocation;
     using Penshell.Core;
+    using Penshell.Core.Console;
 
     /// <summary>
     /// Calculates the multiplication of two values.
@@ -13,10 +14,9 @@ namespace Penshell.Commands.Math
         /// <summary>
         /// Initializes a new instance of the <see cref="MultiplyCommand"/> class.
         /// </summary>
-        /// <param name="console">The <see cref="IConsole"/> instance.</param>
-        /// <param name="formatProvider">The <see cref="IFormatProvider"/> instance.</param>
-        public MultiplyCommand(IConsole console, IFormatProvider formatProvider)
-            : base(console, formatProvider, "multiply", "Calculates the multiplication of two values.")
+        /// <param name="console">The <see cref="IPenshellConsole"/> instance.</param>
+        public MultiplyCommand(IPenshellConsole console)
+            : base(console, "multiply", "Calculates the multiplication of two values.")
         {
             this.AddOption(
                 new Option(
@@ -41,7 +41,7 @@ namespace Penshell.Commands.Math
         {
             return CommandHandler.Create<double, double>((multiplyer, multiplicand) =>
             {
-                this.Console.Out.Write(Convert.ToString(multiplyer * multiplicand, this.FormatProvider));
+                this.Console.Out.Write(Convert.ToString(multiplyer * multiplicand, this.Console.CultureInfo));
             });
         }
     }

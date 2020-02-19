@@ -25,6 +25,9 @@ namespace Penshell.Commands.IO
         public IEnumerable<Command> CreateCommands(ServiceProvider serviceProvider)
         {
             var domainCommand = new Command("io");
+            domainCommand.AddCommand(serviceProvider.GetService<CreateFileCommand>());
+            domainCommand.AddCommand(serviceProvider.GetService<ReadFileCommand>());
+            domainCommand.AddCommand(serviceProvider.GetService<WriteFileCommand>());
             var commandsList = new List<Command>
             {
                 domainCommand,
