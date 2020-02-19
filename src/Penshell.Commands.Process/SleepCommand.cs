@@ -1,101 +1,113 @@
 namespace Penshell.Commands.Process
 {
     using System;
+    using System.CommandLine;
+    using System.CommandLine.Invocation;
     using System.Threading;
-    using System.Threading.Tasks;
-    using CliFx;
-    using CliFx.Attributes;
-    using CliFx.Services;
-    using Dawn;
+    using Penshell.Core;
+    using Penshell.Core.Console;
 
     /// <summary>
     /// Command to let the current process sleep for a defined time.
     /// </summary>
-    [Command("process sleep", Description = "Let the current process sleep for a defined time.")]
-    public class SleepCommand : ICommand
+    public class SleepCommand : PenshellCommand
     {
         /// <summary>
-        /// Gets or sets the time in hours that the process should sleep.
+        /// Initializes a new instance of the <see cref="SleepCommand"/> class.
         /// </summary>
-        /// <value>
-        /// The time in hours that the process should sleep.
-        /// </value>
-        [CommandOption("hours", 'H', IsRequired = false, Description = "The time in hours that the process should sleep.")]
-        public int? Hours { get; set; }
-
-        /// <summary>
-        /// Gets or sets the time in milliseconds that the process should sleep.
-        /// </summary>
-        /// <value>
-        /// The time in milliseconds that the process should sleep.
-        /// </value>
-        [CommandOption("milliseconds", 'z', IsRequired = false, Description = "The time in milliseconds that the process should sleep.")]
-        public int? Milliseconds { get; set; }
-
-        /// <summary>
-        /// Gets or sets the time in minutes that the process should sleep.
-        /// </summary>
-        /// <value>
-        /// The time in minutes that the process should sleep.
-        /// </value>
-        [CommandOption("minutes", 'm', IsRequired = false, Description = "The time in minutes that the process should sleep.")]
-        public int? Minutes { get; set; }
-
-        /// <summary>
-        /// Gets or sets the time in seconds that the process should sleep.
-        /// </summary>
-        /// <value>
-        /// The time in seconds that the process should sleep.
-        /// </value>
-        [CommandOption("seconds", 's', IsRequired = false, Description = "The time in seconds that the process should sleep.")]
-        public int? Seconds { get; set; }
-
-        /// <inheritdoc />
-        public Task ExecuteAsync(IConsole console)
+        /// <param name="console">The <see cref="IPenshellConsole"/> instance.</param>
+        public SleepCommand(IPenshellConsole console)
+            : base(console, "sleep", "Let the current process sleep for a defined time.")
         {
-            console = Guard.Argument(console).NotNull().Value;
+            this.AddOption(
+                new Option(
+                    new string[] { "-H", "--hours" },
+                    "The time in hours that the process should sleep.")
+                {
+                    Argument = new Argument<int>(),
+                    Required = false,
+                });
+            this.AddOption(
+                new Option(
+                    new string[] { "-z", "--milliseconds" },
+                    "The time in milliseconds that the process should sleep.")
+                {
+                    Argument = new Argument<int>(),
+                    Required = false,
+                });
+            this.AddOption(
+                new Option(
+                    new string[] { "-m", "--minutes" },
+                    "The time in minutes that the process should sleep.")
+                {
+                    Argument = new Argument<int>(),
+                    Required = false,
+                });
+            this.AddOption(
+                new Option(
+                    new string[] { "-s", "--seconds" },
+                    "The time in seconds that the process should sleep.")
+                {
+                    Argument = new Argument<int>(),
+                    Required = false,
+                });
+        }
 
-            var delay = CalculateTimeSpanFromArguments();
-
-            delay = Guard.Argument(delay)
-                .NotNegative()
-                .Value;
+        /// <summary>
+        /// Executes this command.
+        /// </summary>
+        /// <param name="milliseconds">The milliseconds to sleep.</param>
+        /// <param name="seconds">The seconds to sleep.</param>
+        /// <param name="minutes">The minutes to sleep.</param>
+        /// <param name="hours">The hours to sleep.</param>
+        public void Execute(int milliseconds, int seconds, int minutes, int hours)
+        {
+            var delay = CalculateTimeSpanFromArguments(milliseconds, seconds, minutes, hours);
 
             Thread.Sleep(delay);
 
-            console.Output.WriteLine("Success");
-            return Task.CompletedTask;
+            this.Console.Out.Write("Success");
         }
 
         /// <summary>
         /// Calculates the <see cref="TimeSpan"/> instance from the given arguments.
         /// </summary>
-        /// <returns>The calculated <see cref="TimeSpan"/> instance from the given arguments.</returns>
-        internal TimeSpan CalculateTimeSpanFromArguments()
+        /// <param name="milliseconds">The milliseconds to sleep.</param>
+        /// <param name="seconds">The seconds to sleep.</param>
+        /// <param name="minutes">The minutes to sleep.</param>
+        /// <param name="hours">The hours to sleep.</param>
+        /// <returns>The <see cref="TimeSpan"/> instance of the calculated delay.</returns>
+        internal TimeSpan CalculateTimeSpanFromArguments(int milliseconds, int seconds, int minutes, int hours)
         {
             var delay = TimeSpan.Zero;
 
-            if (this.Milliseconds != null)
+            if (milliseconds > 0)
             {
-                delay = delay.Add(TimeSpan.FromMilliseconds(this.Milliseconds.Value));
+                delay = delay.Add(TimeSpan.FromMilliseconds(milliseconds));
             }
 
-            if (this.Seconds != null)
+            if (seconds > 0)
             {
-                delay = delay.Add(TimeSpan.FromSeconds(this.Seconds.Value));
+                delay = delay.Add(TimeSpan.FromSeconds(seconds));
             }
 
-            if (this.Minutes != null)
+            if (minutes > 0)
             {
-                delay = delay.Add(TimeSpan.FromMinutes(this.Minutes.Value));
+                delay = delay.Add(TimeSpan.FromMinutes(minutes));
             }
 
-            if (this.Hours != null)
+            if (hours > 0)
             {
-                delay = delay.Add(TimeSpan.FromHours(this.Hours.Value));
+                delay = delay.Add(TimeSpan.FromHours(hours));
             }
 
             return delay;
+        }
+
+        /// <inheritdoc />
+        protected override ICommandHandler CreateCommandHandler()
+        {
+            return CommandHandler.Create<int, int, int, int>((milliseconds, seconds, minutes, hours) => this.Execute(milliseconds, seconds, minutes, hours));
         }
     }
 }

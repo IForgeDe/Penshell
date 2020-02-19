@@ -25,6 +25,9 @@ namespace Penshell.Commands.Process
         public IEnumerable<Command> CreateCommands(ServiceProvider serviceProvider)
         {
             var domainCommand = new Command("process");
+            domainCommand.AddCommand(serviceProvider.GetService<OpenBrowserCommand>());
+            domainCommand.AddCommand(serviceProvider.GetService<SleepCommand>());
+            domainCommand.AddCommand(serviceProvider.GetService<StartCommand>());
             var commandsList = new List<Command>
             {
                 domainCommand,

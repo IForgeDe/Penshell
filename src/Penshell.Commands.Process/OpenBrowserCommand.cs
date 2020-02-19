@@ -1,39 +1,47 @@
 namespace Penshell.Commands.Process
 {
     using System;
+    using System.CommandLine;
+    using System.CommandLine.Invocation;
     using System.Diagnostics;
     using System.Runtime.InteropServices;
-    using System.Threading.Tasks;
-    using CliFx;
-    using CliFx.Attributes;
-    using CliFx.Services;
     using Dawn;
+    using Penshell.Core;
+    using Penshell.Core.Console;
 
     /// <summary>
     /// Command for opening the browser of the os with a specified Uri.
     /// </summary>
-    [Command("process openbrowser", Description = "Opens the browser of a uri.")]
-    public class OpenBrowserCommand : ICommand
+    public class OpenBrowserCommand : PenshellCommand
     {
         /// <summary>
-        /// Gets or sets the Uri, which will be opened in the browser.
+        /// Initializes a new instance of the <see cref="OpenBrowserCommand"/> class.
         /// </summary>
-        /// <value>
-        /// The Uri, which will be opened in the browser.
-        /// </value>
-        [CommandOption("url", 'u', IsRequired = true, Description = "The Uri, which will be opened in the browser.")]
-        public Uri? Uri { get; set; }
-
-        /// <inheritdoc />
-        public Task ExecuteAsync(IConsole console)
+        /// <param name="console">The <see cref="IPenshellConsole"/> instance.</param>
+        public OpenBrowserCommand(IPenshellConsole console)
+            : base(console, "openbrowser", "Opens the browser of a uri.")
         {
-            console = Guard.Argument(console).NotNull().Value;
-            this.Uri = Guard.Argument(this.Uri).NotNull().Value;
+            this.AddOption(
+                new Option(
+                    new string[] { "-u", "--uri" },
+                    "The Uri, which will be opened in the browser.")
+                {
+                    Argument = new Argument<Uri>(),
+                    Required = true,
+                });
+        }
 
-            var url = this.Uri!.AbsoluteUri;
+        /// <summary>
+        /// Executes this command.
+        /// </summary>
+        /// <param name="uri">The Uri, which will be opened in the browser.</param>
+        public void Execute(Uri uri)
+        {
+            uri = Guard.Argument(uri).NotNull();
+            var url = uri.AbsoluteUri;
             try
             {
-                Process.Start(url);
+                System.Diagnostics.Process.Start(url);
             }
             catch
             {
@@ -41,15 +49,15 @@ namespace Penshell.Commands.Process
                 if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                 {
                     url = url.Replace("&", "^&", StringComparison.Ordinal);
-                    Process.Start(new ProcessStartInfo("cmd", $"/c start {url}") { CreateNoWindow = true });
+                    System.Diagnostics.Process.Start(new ProcessStartInfo("cmd", $"/c start {url}") { CreateNoWindow = true });
                 }
                 else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 {
-                    Process.Start("xdg-open", url);
+                    System.Diagnostics.Process.Start("xdg-open", url);
                 }
                 else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
                 {
-                    Process.Start("open", url);
+                    System.Diagnostics.Process.Start("open", url);
                 }
                 else
                 {
@@ -57,8 +65,13 @@ namespace Penshell.Commands.Process
                 }
             }
 
-            console.Output.WriteLine("Success");
-            return Task.CompletedTask;
+            this.Console.Out.Write("Success");
+        }
+
+        /// <inheritdoc />
+        protected override ICommandHandler CreateCommandHandler()
+        {
+            return CommandHandler.Create<Uri>((uri) => this.Execute(uri));
         }
     }
 }
