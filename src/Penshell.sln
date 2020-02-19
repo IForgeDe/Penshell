@@ -13,6 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Solution Items", "_Solutio
 	ProjectSection(SolutionItems) = preProject
 		Directory.Build.props = Directory.Build.props
 		Directory.Build.targets = Directory.Build.targets
+		..\README.md = ..\README.md
 		Solution.ruleset = Solution.ruleset
 		stylecop.json = stylecop.json
 	EndProjectSection
@@ -34,7 +35,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Penshell.Commands.Net", "Pe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Penshell.Commands.Process", "Penshell.Commands.Process\Penshell.Commands.Process.csproj", "{DAB70589-DFA2-42F9-8F7D-BC6449B4F77B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PenshellFXCLI", "PenshellFXCLI\PenshellFXCLI.csproj", "{4F95092A-1982-49F8-8210-5DEA38395DCC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PenshellFXCLI", "PenshellFXCLI\PenshellFXCLI.csproj", "{4F95092A-1982-49F8-8210-5DEA38395DCC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

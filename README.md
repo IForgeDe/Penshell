@@ -12,7 +12,7 @@ The PenshellCLI is for collecting, managing and enhancing the functionality for 
 
 ## Why Penshell
 
-The intention of this project was initially to automate recurring processes of all kind in an easy way.
+The intention of this project was initially an automation of recurring processes of all kind in an easy way.
 The result of this idea is a project to design simple commands in a
 script pipeline, which is easy to understand, write, manage and test.
 
