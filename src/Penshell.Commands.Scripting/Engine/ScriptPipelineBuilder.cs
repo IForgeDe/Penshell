@@ -10,7 +10,6 @@ namespace Penshell.Commands.Scripting.Engine
     /// </summary>
     public class ScriptPipelineBuilder
     {
-        private PenshellCommandRegistry? _commandRegistry;
         private ILogger? _logger;
         private IScriptReader? _scriptReader;
 
@@ -26,23 +25,7 @@ namespace Penshell.Commands.Scripting.Engine
         public IScriptPipeline Build()
         {
             _scriptReader ??= GetDefaultScriptReader();
-            _commandRegistry = Guard.Argument(_commandRegistry).NotNull("Command registry not set.");
             return new ScriptPipeline(_scriptReader.Read(), _logger);
-        }
-
-        /// <summary>
-        /// A fluent method to inject a <see cref="PenshellCommandRegistry"/> instance.
-        /// </summary>
-        /// <param name="registry">
-        /// The <see cref="PenshellCommandRegistry"/> instance.
-        /// </param>
-        /// <returns>
-        /// The fluent instance.
-        /// </returns>
-        public ScriptPipelineBuilder UseCommandRegistry(PenshellCommandRegistry registry)
-        {
-            _commandRegistry = registry;
-            return this;
         }
 
         /// <summary>
