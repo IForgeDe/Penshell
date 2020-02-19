@@ -7,7 +7,7 @@
 Penshell is a experimental command line pipeline with scrippting support written in pure dotnet.
 Its is for developing short Tasks via a simple command line interface and chaining them to a complex scripting process.
 The command assemblies of this project are reusable in applications
-based on the [CliFx](https://github.com/Tyrrrz/CliFx) project.
+based on the [dotnet / command-line-api](https://github.com/dotnet/command-line-api) project.
 The PenshellCLI is for collecting, managing and enhancing the functionality for scripting.
 
 ## Why Penshell
@@ -26,8 +26,8 @@ The release build of Penshell is prepared for the setup process  with compiling 
 
 ## Libraries used
 
-- [NUnit](https://github.com/nunit/nunit)
-- [CliFx](https://github.com/Tyrrrz/CliFx)
+- [dotnet / command-line-api](https://github.com/dotnet/command-line-api)
 - [Guard](https://github.com/safakgur/guard)
+- [NUnit](https://github.com/nunit/nunit)
 - [Serilog](https://github.com/serilog/serilog)
   
