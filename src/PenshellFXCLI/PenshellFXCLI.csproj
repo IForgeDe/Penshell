@@ -29,6 +29,19 @@
         <ProjectReference Include="..\Penshell.Commands.Scripting\Penshell.Commands.Scripting.csproj" />
       </ItemGroup>
     </When>
+    <When Condition=" '$(Configuration)' == 'Release' ">
+      <ItemGroup>
+        <DataFiles Include="$(ProjectDir)..\Penshell.Commands.IO\bin\Release\**\*.*" />
+        <DataFiles Include="$(ProjectDir)..\Penshell.Commands.Math\bin\Release\**\*.*" />
+        <DataFiles Include="$(ProjectDir)..\Penshell.Commands.Net\bin\Release\**\*.*" />
+        <DataFiles Include="$(ProjectDir)..\Penshell.Commands.Process\bin\Release\**\*.*" />
+        <DataFiles Include="$(ProjectDir)..\Penshell.Commands.Scripting\bin\Release\**\*.*" />
+      </ItemGroup>
+    </When>
   </Choose>
+
+  <Target Name="AddPayloadsFolder" AfterTargets="Publish">
+    <Copy SourceFiles="@(DataFiles)" DestinationFiles="@(DataFiles->'$(PublishDir)%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
+  </Target>
 
 </Project>
