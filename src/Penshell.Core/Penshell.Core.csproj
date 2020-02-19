@@ -6,8 +6,8 @@
 
   <ItemGroup>
     <PackageReference Include="Dawn.Guard" Version="1.9.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.1" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.2" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.2" />
     <PackageReference Include="Serilog" Version="2.9.0" />
     <PackageReference Include="System.CommandLine" Version="2.0.0-beta1.20104.2" />
   </ItemGroup>
