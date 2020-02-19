@@ -1,5 +1,7 @@
 namespace Penshell.Core
 {
+    using System.Collections.Generic;
+    using System.CommandLine;
     using Microsoft.Extensions.DependencyInjection;
 
     /// <summary>
@@ -16,19 +18,13 @@ namespace Penshell.Core
         /// </code>
         /// </example>
         /// <param name="services">The service instance, where the injections can be parametrized.</param>
-        void ConfigureServices(ServiceCollection services);
+        void ConfigureServices(IServiceCollection services);
 
         /// <summary>
-        /// This optionally method is called via mef to allow registering of specific command option value converters.
+        /// Creates the commands.
         /// </summary>
-        /// <example>
-        /// <code>
-        /// registry.Add(new ExampleConverter());
-        /// </code>
-        /// </example>
-        /// <param name="registry">The registry instance.</param>
-        void RegisterCommandOptionValueConverters(PenshellCommandOptionValueConverterDictionary registry)
-        {
-        }
+        /// <param name="serviceProvider">The <see cref="ServiceProvider"/> instance.</param>
+        /// <returns>The enumerable <see cref="ICommand"/> instance.</returns>
+        IEnumerable<Command> CreateCommands(ServiceProvider serviceProvider);
     }
 }

@@ -1,5 +1,7 @@
 namespace Penshell.Commands.IO
 {
+    using System.Collections.Generic;
+    using System.CommandLine;
     using System.Composition;
     using Microsoft.Extensions.DependencyInjection;
     using Penshell.Core;
@@ -11,12 +13,26 @@ namespace Penshell.Commands.IO
     public class PenshellCLIAdapter : IPenshellCLIAdapter
     {
         /// <inheritdoc />
-        public void ConfigureServices(ServiceCollection services)
+        public void ConfigureServices(IServiceCollection services)
         {
             services
                 .AddTransient<CreateFileCommand>()
                 .AddTransient<ReadFileCommand>()
                 .AddTransient<WriteFileCommand>();
+        }
+
+        /// <inheritdoc />
+        public IEnumerable<Command> CreateCommands(ServiceProvider serviceProvider)
+        {
+            var domainCommand = new Command("io");
+            domainCommand.AddCommand(serviceProvider.GetService<CreateFileCommand>());
+            domainCommand.AddCommand(serviceProvider.GetService<ReadFileCommand>());
+            domainCommand.AddCommand(serviceProvider.GetService<WriteFileCommand>());
+            var commandsList = new List<Command>
+            {
+                domainCommand,
+            };
+            return commandsList;
         }
     }
 }

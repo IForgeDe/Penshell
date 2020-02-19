@@ -1,20 +1,35 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <RuleSet Name="Solution-Ruleset" Description="Default Ruleset for Penshell-Solution." ToolsVersion="16.0">
   <Rules AnalyzerId="Microsoft.Analyzers.ManagedCodeAnalysis" RuleNamespace="Microsoft.Rules.Managed">
-    <Rule Id="CA1056" Action="None" /> <!-- neverrequired -->
-    <Rule Id="CA1303" Action="None" /> <!-- neverrequired -->
+    <!-- neverrequired -->
+    <Rule Id="CA1056" Action="None" />
+    <!-- neverrequired -->
+    <Rule Id="CA1303" Action="None" />
+    <!-- neverrequired -->
+    <Rule Id="CA1710" Action="None" />
+    <!-- laterrequired -->
+    <Rule Id="CA1822" Action="None" />
+    <!-- neverrequired -->
+    <Rule Id="CA2214" Action="None" />
   </Rules>
   <Rules AnalyzerId="Microsoft.CodeAnalysis.CSharp" RuleNamespace="Microsoft.CodeAnalysis.CSharp">
-    <Rule Id="CS1591" Action="Warning" /> <!-- laterrequired -->
+    <!-- laterrequired -->
+    <Rule Id="CS1591" Action="Warning" />
   </Rules>
   <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers">
-    <Rule Id="SA1101" Action="None" /> <!-- neverrequired -->
-    <Rule Id="SA1309" Action="None" /> <!-- neverrequired -->
-    <Rule Id="SA1600" Action="Warning" /> <!-- laterrequired -->
-    <Rule Id="SA1633" Action="None" /> <!-- neverrequired -->
+    <!-- neverrequired -->
+    <Rule Id="SA1101" Action="None" />
+    <!-- neverrequired -->
+    <Rule Id="SA1309" Action="None" />
+    <!-- laterrequired -->
+    <Rule Id="SA1600" Action="Warning" /> 
+    <!-- neverrequired -->
+    <Rule Id="SA1633" Action="None" /> 
   </Rules>
   <Rules AnalyzerId="Microsoft.CodeQuality.Analyzers" RuleNamespace="Microsoft.CodeQuality.Analyzers">
-    <Rule Id="CA1016" Action="None" /> <!-- laterrequired -->
-    <Rule Id="CA1056" Action="None" /> <!-- neverrequired -->
+    <!-- laterrequired -->
+    <Rule Id="CA1016" Action="None" />
+    <!-- neverrequired -->
+    <Rule Id="CA1056" Action="None" /> 
   </Rules>
 </RuleSet>

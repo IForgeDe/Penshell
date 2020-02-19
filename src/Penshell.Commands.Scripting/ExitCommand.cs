@@ -1,25 +1,37 @@
 namespace Penshell.Commands.Scripting
 {
     using System;
-    using System.Threading.Tasks;
-    using CliFx;
-    using CliFx.Attributes;
-    using CliFx.Services;
-    using Dawn;
+    using System.CommandLine.Invocation;
+    using Penshell.Core;
+    using Penshell.Core.Console;
 
     /// <summary>
     /// Exits a penshell script.
     /// </summary>
-    [Command("script exit", Description = "Exits a penshell script.")]
-    public class ExitCommand : ICommand
+    public class ExitCommand : PenshellCommand
     {
-        /// <inheritdoc />
-        public Task ExecuteAsync(IConsole console)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ExitCommand"/> class.
+        /// </summary>
+        /// <param name="console">The <see cref="IPenshellConsole"/> instance.</param>
+        public ExitCommand(IPenshellConsole console)
+            : base(console, "exit", "Exits a penshell script.")
         {
-            console = Guard.Argument(console).NotNull().Value;
-            console.Output.Write("Exit");
+        }
+
+        /// <summary>
+        /// Executes this command.
+        /// </summary>
+        public void Execute()
+        {
+            this.Console.Out.Write("Exit");
             Environment.Exit(0);
-            return Task.CompletedTask;
+        }
+
+        /// <inheritdoc />
+        protected override ICommandHandler CreateCommandHandler()
+        {
+            return CommandHandler.Create(() => this.Execute());
         }
     }
 }

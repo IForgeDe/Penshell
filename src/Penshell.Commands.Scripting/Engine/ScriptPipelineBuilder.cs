@@ -1,7 +1,7 @@
 namespace Penshell.Commands.Scripting.Engine
 {
     using System;
-    using CliFx.Services;
+    using Dawn;
     using Penshell.Core;
     using Serilog;
 
@@ -10,10 +10,8 @@ namespace Penshell.Commands.Scripting.Engine
     /// </summary>
     public class ScriptPipelineBuilder
     {
-        private ICommandFactory? _commandFactory;
-        private ILogger? _logger;
         private PenshellCommandRegistry? _commandRegistry;
-        private ICommandOptionInputConverter? _commandOptionInputConverter;
+        private ILogger? _logger;
         private IScriptReader? _scriptReader;
 
         /// <summary>
@@ -28,40 +26,8 @@ namespace Penshell.Commands.Scripting.Engine
         public IScriptPipeline Build()
         {
             _scriptReader ??= GetDefaultScriptReader();
-            _commandRegistry = _commandRegistry ?? throw new InvalidOperationException("Command registry not set.");
-            _commandOptionInputConverter = _commandOptionInputConverter ?? throw new InvalidOperationException("Command option input converter not set.");
-            _commandFactory = _commandFactory ?? throw new InvalidOperationException("Command factory not set.");
-            return new ScriptPipeline(_scriptReader.Read(), _commandRegistry, _commandFactory, _commandOptionInputConverter, _logger);
-        }
-
-        /// <summary>
-        /// A fluent method to inject a <see cref="ICommandFactory"/> instance.
-        /// </summary>
-        /// <param name="commandFactory">
-        /// The <see cref="ICommandFactory"/> instance.
-        /// </param>
-        /// <returns>
-        /// The fluent instance.
-        /// </returns>
-        public ScriptPipelineBuilder UseCommandFactory(ICommandFactory commandFactory)
-        {
-            _commandFactory = commandFactory;
-            return this;
-        }
-
-        /// <summary>
-        /// A fluent method to inject a <see cref="ICommandOptionInputConverter"/> instance.
-        /// </summary>
-        /// <param name="commandOptionInputConverter">
-        /// The <see cref="ICommandOptionInputConverter"/> instance.
-        /// </param>
-        /// <returns>
-        /// The fluent instance.
-        /// </returns>
-        public ScriptPipelineBuilder UseCommandOptionInputConverter(ICommandOptionInputConverter commandOptionInputConverter)
-        {
-            _commandOptionInputConverter = commandOptionInputConverter;
-            return this;
+            _commandRegistry = Guard.Argument(_commandRegistry).NotNull("Command registry not set.");
+            return new ScriptPipeline(_scriptReader.Read(), _logger);
         }
 
         /// <summary>

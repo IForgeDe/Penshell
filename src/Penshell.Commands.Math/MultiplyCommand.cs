@@ -1,43 +1,48 @@
 namespace Penshell.Commands.Math
 {
-    using System.Threading.Tasks;
-    using CliFx;
-    using CliFx.Attributes;
-    using CliFx.Services;
-    using Dawn;
+    using System;
+    using System.CommandLine;
+    using System.CommandLine.Invocation;
+    using Penshell.Core;
+    using Penshell.Core.Console;
 
     /// <summary>
     /// Calculates the multiplication of two values.
     /// </summary>
-    [Command("math multiply", Description = "Calculates the multiplication of two values.")]
-    public class MultiplyCommand : ICommand
+    public class MultiplyCommand : PenshellCommand
     {
         /// <summary>
-        /// Gets or sets the multiplicand.
+        /// Initializes a new instance of the <see cref="MultiplyCommand"/> class.
         /// </summary>
-        /// <value>
-        /// The multiplicand.
-        /// </value>
-        [CommandOption("multiplicand", 'y', IsRequired = true, Description = "The multiplicand.")]
-        public double Multiplicand { get; set; }
-
-        /// <summary>
-        /// Gets or sets the multiplyer.
-        /// </summary>
-        /// <value>
-        /// The multiplyer.
-        /// </value>
-        [CommandOption("multiplyer", 'x', IsRequired = true, Description = "The multiplyer.")]
-        public double Multiplyer { get; set; }
+        /// <param name="console">The <see cref="IPenshellConsole"/> instance.</param>
+        public MultiplyCommand(IPenshellConsole console)
+            : base(console, "multiply", "Calculates the multiplication of two values.")
+        {
+            this.AddOption(
+                new Option(
+                    new string[] { "-x", "--multiplyer" },
+                    "The multiplyer.")
+                {
+                    Argument = new Argument<double>(),
+                    Required = true,
+                });
+            this.AddOption(
+                new Option(
+                    new string[] { "-y", "--multiplicand" },
+                    "The multiplicand.")
+                {
+                    Argument = new Argument<double>(),
+                    Required = true,
+                });
+        }
 
         /// <inheritdoc />
-        public Task ExecuteAsync(IConsole console)
+        protected override ICommandHandler CreateCommandHandler()
         {
-            console = Guard.Argument(console).NotNull().Value;
-
-            var result = this.Multiplyer * this.Multiplicand;
-            console.Output.WriteLine(result);
-            return Task.CompletedTask;
+            return CommandHandler.Create<double, double>((multiplyer, multiplicand) =>
+            {
+                this.Console.Out.Write(Convert.ToString(multiplyer * multiplicand, this.Console.CultureInfo));
+            });
         }
     }
 }

@@ -1,5 +1,7 @@
 namespace Penshell.Commands.Math
 {
+    using System.Collections.Generic;
+    using System.CommandLine;
     using System.Composition;
     using Microsoft.Extensions.DependencyInjection;
     using Penshell.Core;
@@ -11,7 +13,7 @@ namespace Penshell.Commands.Math
     public class PenshellCLIAdapter : IPenshellCLIAdapter
     {
         /// <inheritdoc />
-        public void ConfigureServices(ServiceCollection services)
+        public void ConfigureServices(IServiceCollection services)
         {
             services
                 .AddTransient<AbsCommand>()
@@ -19,6 +21,21 @@ namespace Penshell.Commands.Math
                 .AddTransient<DivideCommand>()
                 .AddTransient<MultiplyCommand>()
                 .AddTransient<SubstractCommand>();
+        }
+
+        /// <inheritdoc />
+        public IEnumerable<Command> CreateCommands(ServiceProvider serviceProvider)
+        {
+            var domainCommand = new Command("math");
+            domainCommand.AddCommand(serviceProvider.GetService<AbsCommand>());
+            domainCommand.AddCommand(serviceProvider.GetService<AddCommand>());
+            domainCommand.AddCommand(serviceProvider.GetService<DivideCommand>());
+            domainCommand.AddCommand(serviceProvider.GetService<MultiplyCommand>());
+            var commandsList = new List<Command>
+            {
+                domainCommand,
+            };
+            return commandsList;
         }
     }
 }
