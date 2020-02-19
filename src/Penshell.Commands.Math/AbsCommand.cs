@@ -28,10 +28,19 @@ namespace Penshell.Commands.Math
                 });
         }
 
+        /// <summary>
+        /// Executes this command.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        public void Execute(double value)
+        {
+            this.Console.Out.Write(Convert.ToString(System.Math.Abs(value), this.Console.CultureInfo));
+        }
+
         /// <inheritdoc />
         protected override ICommandHandler CreateCommandHandler()
         {
-            return CommandHandler.Create<double>((value) => this.Console.Out.Write(Convert.ToString(System.Math.Abs(value), this.Console.CultureInfo)));
+            return CommandHandler.Create<double>((value) => this.Execute(value));
         }
     }
 }
