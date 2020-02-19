@@ -22,6 +22,7 @@ namespace Penshell.Commands.Net
         public IEnumerable<Command> CreateCommands(ServiceProvider serviceProvider)
         {
             var domainCommand = new Command("net");
+            domainCommand.AddCommand(serviceProvider.GetService<HttpGetCommand>());
             var commandsList = new List<Command>
             {
                 domainCommand,

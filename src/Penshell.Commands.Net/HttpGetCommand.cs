@@ -1,51 +1,59 @@
 namespace Penshell.Commands.Net
 {
     using System;
+    using System.CommandLine;
+    using System.CommandLine.Invocation;
     using System.Net.Http;
-    using System.Threading.Tasks;
-    using CliFx;
-    using CliFx.Attributes;
-    using CliFx.Services;
-    using Dawn;
+    using Penshell.Core;
+    using Penshell.Core.Console;
 
     /// <summary>
     /// Gets the response of a http get method call.
     /// </summary>
-    [Command("net httpget", Description = "Gets the response of a http get method call.")]
-    public class HttpGetCommand : ICommand
+    public class HttpGetCommand : PenshellCommand
     {
         /// <summary>
-        /// Gets or sets the property of the response for the output (default is StatusCode).
+        /// Initializes a new instance of the <see cref="HttpGetCommand"/> class.
         /// </summary>
-        /// <value>
-        /// The property of the response for the output (default is StatusCode).
-        /// </value>
-        [CommandOption("property", 'p', IsRequired = false, Description = "The property of the response for the output (default is StatusCode).")]
-        public string? Property { get; set; }
+        /// <param name="console">The <see cref="IPenshellConsole"/> instance.</param>
+        public HttpGetCommand(IPenshellConsole console)
+            : base(console, "httpget", "Gets the response of a http get method call.")
+        {
+            this.AddOption(
+                new Option(
+                    new string[] { "-u", "--uri" },
+                    "The uri for the http request.")
+                {
+                    Argument = new Argument<Uri>(),
+                    Required = true,
+                });
+            this.AddOption(
+                new Option(
+                    new string[] { "-p", "--property" },
+                    "The property of the response for the output (default is StatusCode).")
+                {
+                    Argument = new Argument<string>(getDefaultValue: () => "StatusCode"),
+                    Required = false,
+                });
+        }
 
         /// <summary>
-        /// Gets or sets the uri for the http request.
+        /// Executes this command.
         /// </summary>
-        /// <value>
-        /// The uri for the http request.
-        /// </value>
-        [CommandOption("uri", 'u', IsRequired = true, Description = "The uri for the http request.")]
-        public Uri? Uri { get; set; }
+        /// <param name="uri">The <see cref="Uri"/> instance.</param>
+        /// <param name="property">The property.</param>
+        public void Execute(Uri uri, string property)
+        {
+            using var httpClient = new HttpClient();
+            var result = httpClient.GetAsync(uri).Result;
+            var output = FromProperty(result, property);
+            this.Console.Out.Write(output);
+        }
 
         /// <inheritdoc />
-        public Task ExecuteAsync(IConsole console)
+        protected override ICommandHandler CreateCommandHandler()
         {
-            // validate
-            console = Guard.Argument(console).NotNull().Value;
-            this.Property ??= "StatusCode";
-            this.Uri = Guard.Argument(this.Uri).NotNull().Value;
-
-            // perform
-            using var httpClient = new HttpClient();
-            var result = httpClient.GetAsync(this.Uri).Result;
-            var output = FromProperty(result, this.Property);
-            console.Output.WriteLine(output);
-            return Task.CompletedTask;
+            return CommandHandler.Create<Uri, string>((uri, property) => this.Execute(uri, property));
         }
 
         private static string FromProperty(HttpResponseMessage httpResponseMessage, string property)
