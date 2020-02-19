@@ -24,6 +24,8 @@ namespace Penshell.Commands.Scripting
         public IEnumerable<Command> CreateCommands(ServiceProvider serviceProvider)
         {
             var domainCommand = new Command("script");
+            domainCommand.AddCommand(serviceProvider.GetService<ExitCommand>());
+            domainCommand.AddCommand(serviceProvider.GetService<RunCommand>());
             var commandsList = new List<Command>
             {
                 domainCommand,
