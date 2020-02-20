@@ -3,7 +3,6 @@
     using System;
     using System.CommandLine;
     using System.CommandLine.Invocation;
-    using Penshell.Core.Console;
 
     /// <summary>
     /// Abstract base class for all penshell commands.

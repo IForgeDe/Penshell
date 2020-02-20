@@ -1,4 +1,4 @@
-﻿namespace Penshell.Core.Console
+﻿namespace Penshell.Core
 {
     using System;
     using System.CommandLine.IO;
@@ -58,7 +58,7 @@
             }
             else
             {
-                this.Out.Write(value);
+                this.Out.WriteLine(value);
             }
         }
     }

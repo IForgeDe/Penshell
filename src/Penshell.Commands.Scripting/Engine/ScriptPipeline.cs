@@ -6,7 +6,6 @@ namespace Penshell.Commands.Scripting.Engine
     using System.Linq;
     using System.Text;
     using Penshell.Core;
-    using Penshell.Core.Console;
     using Serilog;
 
     /// <summary>
@@ -14,10 +13,10 @@ namespace Penshell.Commands.Scripting.Engine
     /// </summary>
     internal class ScriptPipeline : IScriptPipeline
     {
+        private readonly IPenshellConsole _console;
         private readonly ILogger? _logger = null;
         private readonly PenshellCommandRegistry _registry;
         private readonly IEnumerable<ScriptLine> _scriptLines;
-        private readonly IPenshellConsole _console;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ScriptPipeline"/> class.

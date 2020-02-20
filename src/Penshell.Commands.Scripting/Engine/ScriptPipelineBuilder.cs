@@ -2,7 +2,6 @@ namespace Penshell.Commands.Scripting.Engine
 {
     using System;
     using Penshell.Core;
-    using Penshell.Core.Console;
     using Serilog;
 
     /// <summary>

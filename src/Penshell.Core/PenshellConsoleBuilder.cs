@@ -1,4 +1,4 @@
-namespace Penshell.Core.Console
+namespace Penshell.Core
 {
     using System.CommandLine;
     using System.Globalization;

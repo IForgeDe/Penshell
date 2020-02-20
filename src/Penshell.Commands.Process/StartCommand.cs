@@ -7,7 +7,6 @@ namespace Penshell.Commands.Process
     using System.Threading.Tasks;
     using Dawn;
     using Penshell.Core;
-    using Penshell.Core.Console;
 
     /// <summary>
     /// Starts a process.

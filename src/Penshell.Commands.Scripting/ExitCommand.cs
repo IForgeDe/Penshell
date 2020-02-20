@@ -3,7 +3,6 @@ namespace Penshell.Commands.Scripting
     using System;
     using System.CommandLine.Invocation;
     using Penshell.Core;
-    using Penshell.Core.Console;
 
     /// <summary>
     /// Exits a penshell script.

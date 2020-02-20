@@ -7,7 +7,6 @@ namespace Penshell.Commands.Process
     using System.Runtime.InteropServices;
     using Dawn;
     using Penshell.Core;
-    using Penshell.Core.Console;
 
     /// <summary>
     /// Command for opening the browser of the os with a specified Uri.

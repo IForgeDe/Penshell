@@ -5,7 +5,6 @@ namespace Penshell.Commands.Net
     using System.CommandLine.Invocation;
     using System.Net.Http;
     using Penshell.Core;
-    using Penshell.Core.Console;
 
     /// <summary>
     /// Gets the response of a http get method call.

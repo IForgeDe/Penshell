@@ -5,7 +5,6 @@ namespace Penshell.Commands.IO
     using System.IO;
     using Dawn;
     using Penshell.Core;
-    using Penshell.Core.Console;
 
     /// <summary>
     /// Creates a file.

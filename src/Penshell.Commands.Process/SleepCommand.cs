@@ -5,7 +5,6 @@ namespace Penshell.Commands.Process
     using System.CommandLine.Invocation;
     using System.Threading;
     using Penshell.Core;
-    using Penshell.Core.Console;
 
     /// <summary>
     /// Command to let the current process sleep for a defined time.

@@ -5,7 +5,6 @@ namespace Penshell.Commands.Scripting
     using System.IO;
     using Penshell.Commands.Scripting.Engine;
     using Penshell.Core;
-    using Penshell.Core.Console;
     using Serilog;
 
     /// <summary>

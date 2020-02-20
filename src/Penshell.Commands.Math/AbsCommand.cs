@@ -4,7 +4,6 @@ namespace Penshell.Commands.Math
     using System.CommandLine;
     using System.CommandLine.Invocation;
     using Penshell.Core;
-    using Penshell.Core.Console;
 
     /// <summary>
     /// Returns the absolute value of a specified number.
