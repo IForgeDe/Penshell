@@ -65,7 +65,7 @@ namespace Penshell.Commands.Process
                 }
             }
 
-            this.Console.Out.Write("Success");
+            this.Console.WriteLine("Success");
         }
 
         /// <inheritdoc />

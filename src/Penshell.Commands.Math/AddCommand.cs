@@ -36,10 +36,20 @@ namespace Penshell.Commands.Math
                 });
         }
 
+        /// <summary>
+        /// Executes this command.
+        /// </summary>
+        /// <param name="x">The first summand.</param>
+        /// <param name="y">The second summand.</param>
+        public void Execute(double x, double y)
+        {
+            this.Console.WriteLine(Convert.ToString(x + y, this.Console.CultureInfo));
+        }
+
         /// <inheritdoc />
         protected override ICommandHandler CreateCommandHandler()
         {
-            return CommandHandler.Create<double, double>((first, second) => this.Console.Out.Write(Convert.ToString(first + second, this.Console.CultureInfo)));
+            return CommandHandler.Create<double, double>((first, second) => this.Execute(first, second));
         }
     }
 }

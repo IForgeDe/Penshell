@@ -1,8 +1,8 @@
 namespace Penshell.Commands.Scripting.Engine
 {
     using System;
-    using Dawn;
     using Penshell.Core;
+    using Penshell.Core.Console;
     using Serilog;
 
     /// <summary>
@@ -10,7 +10,9 @@ namespace Penshell.Commands.Scripting.Engine
     /// </summary>
     public class ScriptPipelineBuilder
     {
+        private IPenshellConsole? _console;
         private ILogger? _logger;
+        private PenshellCommandRegistry? _registry;
         private IScriptReader? _scriptReader;
 
         /// <summary>
@@ -24,8 +26,48 @@ namespace Penshell.Commands.Scripting.Engine
         /// </returns>
         public IScriptPipeline Build()
         {
+            if (_console == null)
+            {
+                throw new InvalidOperationException("Console not set");
+            }
+
+            if (_registry == null)
+            {
+                throw new InvalidOperationException("Command registry not set");
+            }
+
             _scriptReader ??= GetDefaultScriptReader();
-            return new ScriptPipeline(_scriptReader.Read(), _logger);
+            return new ScriptPipeline(_console, _scriptReader.Read(), _logger, _registry);
+        }
+
+        /// <summary>
+        /// A fluent method to inject a <see cref="PenshellCommandRegistry"/> instance.
+        /// </summary>
+        /// <param name="registry">
+        /// The <see cref="PenshellCommandRegistry"/> instance.
+        /// </param>
+        /// <returns>
+        /// The fluent instance.
+        /// </returns>
+        public ScriptPipelineBuilder UseCommandRegistry(PenshellCommandRegistry registry)
+        {
+            _registry = registry;
+            return this;
+        }
+
+        /// <summary>
+        /// A fluent method to inject a <see cref="IPenshellConsole"/> instance.
+        /// </summary>
+        /// <param name="console">
+        /// The <see cref="IPenshellConsole"/> instance.
+        /// </param>
+        /// <returns>
+        /// The fluent instance.
+        /// </returns>
+        public ScriptPipelineBuilder UseConsole(IPenshellConsole console)
+        {
+            _console = console;
+            return this;
         }
 
         /// <summary>

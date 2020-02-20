@@ -1,9 +1,9 @@
 namespace Penshell.Commands.Scripting
 {
-    using System;
     using System.CommandLine;
     using System.CommandLine.Invocation;
     using System.IO;
+    using Penshell.Commands.Scripting.Engine;
     using Penshell.Core;
     using Penshell.Core.Console;
     using Serilog;
@@ -65,17 +65,16 @@ namespace Penshell.Commands.Scripting
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Redesign required.")]
         public void Execute(FileInfo fileInfo)
         {
-            throw new NotImplementedException("Currently not implemented. Redesign required.");
-
-            ////var scriptReader = new ScriptReaderBuilder(fileInfo)
-            ////    .Build();
-            ////var scriptPipeline = new ScriptPipelineBuilder()
-            ////    .UseScriptReader(scriptReader)
-            ////    .UseCommandRegistry(this.Registry)
-            ////    .UseLogger(this.Logger)
-            ////    .Build();
-            ////var result = scriptPipeline.Execute();
-            ////this.Console.Out.Write(result);
+            var scriptReader = new ScriptReaderBuilder(fileInfo)
+                .Build();
+            var scriptPipeline = new ScriptPipelineBuilder()
+                .UseConsole(this.Console)
+                .UseScriptReader(scriptReader)
+                .UseCommandRegistry(this.Registry)
+                .UseLogger(this.Logger)
+                .Build();
+            var result = scriptPipeline.Execute();
+            this.Console.WriteLine(result);
         }
 
         /// <inheritdoc />

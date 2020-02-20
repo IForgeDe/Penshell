@@ -34,7 +34,7 @@ namespace Penshell.Commands.Math
         /// <param name="value">The value.</param>
         public void Execute(double value)
         {
-            this.Console.Out.Write(Convert.ToString(System.Math.Abs(value), this.Console.CultureInfo));
+            this.Console.WriteLine(Convert.ToString(System.Math.Abs(value), this.Console.CultureInfo));
         }
 
         /// <inheritdoc />

@@ -10,6 +10,8 @@
     /// </summary>
     public class PenshellConsole : SystemConsole, IPenshellConsole
     {
+        private StringBuilder? _redirectOutputStringBuilder;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="PenshellConsole"/> class.
         /// </summary>
@@ -27,5 +29,37 @@
 
         /// <inheritdoc/>
         public Encoding Encoding { get; }
+
+        /// <inheritdoc/>
+        public void RedirectOutput(StringBuilder stringBuilder)
+        {
+            _redirectOutputStringBuilder = stringBuilder;
+        }
+
+        /// <inheritdoc/>
+        public void Write(string value)
+        {
+            if (_redirectOutputStringBuilder != null)
+            {
+                _redirectOutputStringBuilder.Append(value);
+            }
+            else
+            {
+                this.Out.Write(value);
+            }
+        }
+
+        /// <inheritdoc/>
+        public void WriteLine(string value)
+        {
+            if (_redirectOutputStringBuilder != null)
+            {
+                _redirectOutputStringBuilder.Append(value).Append(Environment.NewLine);
+            }
+            else
+            {
+                this.Out.Write(value);
+            }
+        }
     }
 }

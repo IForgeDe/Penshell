@@ -47,7 +47,7 @@ namespace Penshell.Commands.Net
             using var httpClient = new HttpClient();
             var result = httpClient.GetAsync(uri).Result;
             var output = FromProperty(result, property);
-            this.Console.Out.Write(output);
+            this.Console.WriteLine(output);
         }
 
         /// <inheritdoc />

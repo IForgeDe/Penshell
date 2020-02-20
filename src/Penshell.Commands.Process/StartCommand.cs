@@ -39,7 +39,7 @@ namespace Penshell.Commands.Process
         {
             fileInfo = Guard.Argument(fileInfo).NotNull();
             _ = RunProcessAsync(fileInfo.FullName, string.Empty);
-            this.Console.Out.Write("Success");
+            this.Console.WriteLine("Success");
         }
 
         /// <inheritdoc />

@@ -66,7 +66,7 @@ namespace Penshell.Commands.Process
 
             Thread.Sleep(delay);
 
-            this.Console.Out.Write("Success");
+            this.Console.WriteLine("Success");
         }
 
         /// <summary>

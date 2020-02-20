@@ -36,13 +36,20 @@ namespace Penshell.Commands.Math
                 });
         }
 
+        /// <summary>
+        /// Executes this command.
+        /// </summary>
+        /// <param name="multiplyer">The multiplyer.</param>
+        /// <param name="multiplicand">The divisor.</param>
+        public void Execute(double multiplyer, double multiplicand)
+        {
+            this.Console.WriteLine(Convert.ToString(multiplyer * multiplicand, this.Console.CultureInfo));
+        }
+
         /// <inheritdoc />
         protected override ICommandHandler CreateCommandHandler()
         {
-            return CommandHandler.Create<double, double>((multiplyer, multiplicand) =>
-            {
-                this.Console.Out.Write(Convert.ToString(multiplyer * multiplicand, this.Console.CultureInfo));
-            });
+            return CommandHandler.Create<double, double>((multiplyer, multiplicand) => this.Execute(multiplyer, multiplicand));
         }
     }
 }

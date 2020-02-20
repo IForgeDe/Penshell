@@ -36,13 +36,20 @@ namespace Penshell.Commands.Math
                 });
         }
 
+        /// <summary>
+        /// Executes this command.
+        /// </summary>
+        /// <param name="dividend">The dividend.</param>
+        /// <param name="divisor">The divisor.</param>
+        public void Execute(double dividend, double divisor)
+        {
+            this.Console.WriteLine(Convert.ToString(dividend / divisor, this.Console.CultureInfo));
+        }
+
         /// <inheritdoc />
         protected override ICommandHandler CreateCommandHandler()
         {
-            return CommandHandler.Create<double, double>((dividend, divisor) =>
-            {
-                this.Console.Out.Write(Convert.ToString(dividend / divisor, this.Console.CultureInfo));
-            });
+            return CommandHandler.Create<double, double>((dividend, divisor) => this.Execute(dividend, divisor));
         }
     }
 }

@@ -38,7 +38,7 @@ namespace Penshell.Commands.IO
             fileInfo = Guard.Argument(fileInfo).NotNull();
             var fileStream = fileInfo.Create();
             fileStream.Close();
-            this.Console.Out.Write("Success");
+            this.Console.WriteLine("Success");
         }
 
         /// <inheritdoc />

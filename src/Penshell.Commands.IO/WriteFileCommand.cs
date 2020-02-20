@@ -51,7 +51,7 @@ namespace Penshell.Commands.IO
                 streamWriter.Write(content);
             }
 
-            this.Console.Out.Write("Success");
+            this.Console.WriteLine("Success");
         }
 
         /// <inheritdoc />

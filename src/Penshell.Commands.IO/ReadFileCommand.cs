@@ -40,7 +40,7 @@ namespace Penshell.Commands.IO
             var buffer = new byte[1024];
             while (stream.Read(buffer, 0, buffer.Length) > 0)
             {
-                this.Console.Out.Write(this.Console.Encoding.GetString(buffer));
+                this.Console.WriteLine(this.Console.Encoding.GetString(buffer));
             }
         }
 

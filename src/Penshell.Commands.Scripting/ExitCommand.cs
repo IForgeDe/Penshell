@@ -24,7 +24,7 @@ namespace Penshell.Commands.Scripting
         /// </summary>
         public void Execute()
         {
-            this.Console.Out.Write("Exit");
+            this.Console.WriteLine("Exit");
             Environment.Exit(0);
         }
 

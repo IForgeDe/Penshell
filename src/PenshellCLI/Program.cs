@@ -94,15 +94,15 @@ namespace PenshellCLI
                 adapterRootCommands.AddRange(cliAdapter.CreateCommands(ServiceProvider));
             }
 
-            // register command for later usage
-            Registry.Register(adapterRootCommands);
-
             // build command structure
             var rootCommand = new RootCommand("Welcome to the penshell cli.");
             foreach (var adapterRootCommand in adapterRootCommands)
             {
                 rootCommand.AddCommand(adapterRootCommand);
             }
+
+            // register command for later usage
+            Registry.Register(rootCommand);
 
             // Parse the incoming args and invoke the handler
             return rootCommand.InvokeAsync(args).Result;
@@ -114,7 +114,7 @@ namespace PenshellCLI
         /// <param name="services">The <see cref="IServiceCollection"/> instance.</param>
         private static void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient((_) => new PenshellConsoleBuilder().Build());
+            services.AddSingleton((_) => new PenshellConsoleBuilder().Build());
             services.AddTransient((_) => Log.Logger);
             services.AddSingleton((_) => Registry);
         }

@@ -36,13 +36,20 @@ namespace Penshell.Commands.Math
                 });
         }
 
+        /// <summary>
+        /// Executes this command.
+        /// </summary>
+        /// <param name="minuend">The minuend.</param>
+        /// <param name="subtrahend">The divisor.</param>
+        public void Execute(double minuend, double subtrahend)
+        {
+            this.Console.WriteLine(Convert.ToString(minuend - subtrahend, this.Console.CultureInfo));
+        }
+
         /// <inheritdoc />
         protected override ICommandHandler CreateCommandHandler()
         {
-            return CommandHandler.Create<double, double>((minuend, subtrahend) =>
-            {
-                this.Console.Out.Write(Convert.ToString(minuend - subtrahend, this.Console.CultureInfo));
-            });
+            return CommandHandler.Create<double, double>((minuend, subtrahend) => this.Execute(minuend, subtrahend));
         }
     }
 }

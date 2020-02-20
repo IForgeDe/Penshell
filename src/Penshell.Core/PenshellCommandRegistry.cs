@@ -1,31 +1,30 @@
 ﻿namespace Penshell.Core
 {
     using System;
-    using System.Collections.Generic;
     using System.CommandLine;
 
     /// <summary>
-    /// A specialized penshell registry to hold references for the <see cref="ICommand"/> instances.
+    /// A specialized penshell registry to hold references to command instances.
     /// </summary>
     public class PenshellCommandRegistry
     {
         /// <summary>
-        /// Gets the list of known <see cref="ICommand"/> instances.
+        /// Gets the <see cref="RootCommand"/> instance.
         /// </summary>
-        public IReadOnlyList<ICommand>? Commands { get; private set; }
+        public RootCommand? RootCommand { get; private set; }
 
         /// <summary>
-        /// Registers the command schemas in this registry.
+        /// Registers the root command schemas in this registry.
         /// </summary>
-        /// <param name="commands">The list of commands to register.</param>
-        public void Register(IReadOnlyList<ICommand> commands)
+        /// <param name="rootCommand">The <see cref="RootCommand"/> instance.</param>
+        public void Register(RootCommand rootCommand)
         {
-            if (this.Commands != null)
+            if (this.RootCommand != null)
             {
-                throw new InvalidOperationException("Commands already set to this registry.");
+                throw new InvalidOperationException("RootCommand already set to this registry.");
             }
 
-            this.Commands = commands;
+            this.RootCommand = rootCommand;
         }
     }
 }
