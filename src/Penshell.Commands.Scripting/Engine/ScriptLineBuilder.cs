@@ -12,7 +12,7 @@ namespace Penshell.Commands.Scripting.Engine
         private string? _commandDelimiter;
         private long _lineNumber;
         private string _rawLine = string.Empty;
-        private bool _substitute = false;
+        private bool _substitute;
 
         /// <summary>
         /// Gets the default command delimiter.

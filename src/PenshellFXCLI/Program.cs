@@ -25,7 +25,7 @@
         /// <summary>
         /// Gets or sets the static <see cref="ServiceProvider"/> instance.
         /// </summary>
-        private static ServiceProvider? ServiceProvider { get; set; } = null;
+        private static ServiceProvider? ServiceProvider { get; set; }
 
         /// <summary>
         /// Gets the <see cref="IServiceCollection"/> instance.

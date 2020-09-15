@@ -14,7 +14,7 @@ namespace Penshell.Commands.Scripting.Engine
     internal class ScriptPipeline : IScriptPipeline
     {
         private readonly IPenshellConsole _console;
-        private readonly ILogger? _logger = null;
+        private readonly ILogger? _logger;
         private readonly PenshellCommandRegistry _registry;
         private readonly IEnumerable<ScriptLine> _scriptLines;
 
