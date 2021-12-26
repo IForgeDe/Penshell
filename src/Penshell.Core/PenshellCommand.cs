@@ -15,7 +15,7 @@
         /// <param name="console">The <see cref="IPenshellConsole"/> instance.</param>
         /// <param name="name">The name.</param>
         /// <param name="description">The desciption.</param>
-        public PenshellCommand(IPenshellConsole console, string name, string? description = null)
+        protected PenshellCommand(IPenshellConsole console, string name, string? description = null)
             : base(name, description)
         {
             this.Console = console ?? throw new ArgumentNullException(nameof(console));

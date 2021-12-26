@@ -27,6 +27,9 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <DebugType>full</DebugType>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <AnalysisMode>AllEnabledByDefault</AnalysisMode>
 
     <!-- Common ruleset shared by all projects -->
     <CodeAnalysisRuleset>$(MSBuildThisFileDirectory)Solution.ruleset</CodeAnalysisRuleset>
@@ -54,9 +57,6 @@
   <ItemGroup>
     <!-- Add reference to StyleCop analyzers to all projects  -->
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" />
-
-    <!-- Add reference to FxCopAnalyzers to all projects  -->
-    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.0" />
 
     <!-- Common StyleCop configuration -->
     <AdditionalFiles Include="$(MSBuildThisFileDirectory)stylecop.json" />
